@@ -1,0 +1,30 @@
+import Image from "next/image";
+import { Header } from "@/components/Header";
+import { Hero } from "@/components/Hero";
+import { AboutUs } from "@/components/AboutUs";
+import { OurServices } from "@/components/OurServices";
+import { BannerScroll } from "@/components/BannerScroll";
+import { OurPlan } from "@/components/OurPlan";
+import { Appointment } from "@/components/Appointment";
+import { Testimonials } from "@/components/Testimonials";
+import { Status } from "@/components/Status";
+import { TryOurOil } from "@/components/TryOurOil";
+import { LatestNews } from "@/components/LatestNews";
+import { Footer } from "@/components/Footer";
+
+export default function Home() {
+  return (
+    <>
+      <Hero />
+      <AboutUs />
+      <OurServices />
+      <BannerScroll />
+      <OurPlan />
+      <Appointment />
+      <Testimonials />
+      <Status />
+      <TryOurOil />
+      <LatestNews />
+    </>
+  );
+}
