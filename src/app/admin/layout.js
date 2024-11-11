@@ -12,7 +12,7 @@ import { RiNotification2Fill } from "react-icons/ri";
 const play = Play({ weight: ["400", "700"], subsets: ["latin"] });
 
 export const metadata = {
-  title: "Admin | Abrelo HD",
+  title: "Admin | Spaville",
   description: "Admin Page",
 };
 export default function RootLayout({ children }) {
