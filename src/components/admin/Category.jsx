@@ -104,7 +104,7 @@ export default function Category() {
           <div className="flex item gap-2">
             <Link
               href="/admin/addCategory"
-              className="text-sm p-2  text-white rounded bg-opacity-35 bg-hero"
+              className="text-sm p-2 hover:bg-blackish-color    text-white rounded  bg-link-color-hover transition-all duration-200 ease-in-out"
             >
               <button>+ Add Category</button>
             </Link>
