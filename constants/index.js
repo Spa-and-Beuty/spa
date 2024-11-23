@@ -136,3 +136,66 @@ export const services = [
     tag: "#",
   },
 ];
+
+export const appointments = [
+  {
+    id: 1,
+    full_name: "John Doe",
+    email: null, // Missing email (should be a string, NOT NULL)
+    service: "Haircut",
+    date: "2024-12-01 10:00:00",
+    message: "Looking forward to the session",
+    payment_status: "completed",
+    appointment_status: "booked",
+    created_at: "2024-11-20 12:00:00",
+    updated_at: "2024-11-20 12:00:00",
+  },
+  {
+    id: 2,
+    full_name: "Jane Smith",
+    email: "jane.smith@example.com",
+    service: "Therapy",
+    date: "2024-12-02 15:00:00",
+    message: "Important meeting prep",
+    payment_status: "paid", // Invalid value (should be 'pending', 'completed', or 'failed')
+    appointment_status: "booked",
+    created_at: "2024-11-20 12:30:00",
+    updated_at: "2024-11-20 12:30:00",
+  },
+  {
+    id: 3,
+    full_name: "Mike Johnson",
+    email: "mike.johnson@example.com",
+    service: "", // Missing service (should not be empty)
+    date: "2024-12-03 09:00:00",
+    message: "Urgent help needed",
+    payment_status: "pending",
+    appointment_status: "booked",
+    created_at: "2024-11-20 13:00:00",
+    updated_at: "2024-11-20 13:00:00",
+  },
+  {
+    id: 4,
+    full_name: "Emily Brown",
+    email: "emily.brown@example.com",
+    service: "Consultation",
+    date: "2024-12-04 14:30:00",
+    message: "First consultation",
+    payment_status: "pending",
+    appointment_status: "rescheduled", // Invalid value (should be 'booked', 'completed', or 'cancelled')
+    created_at: "2024-11-20 14:00:00",
+    updated_at: "2024-11-20 14:00:00",
+  },
+  {
+    id: 5,
+    full_name: "Chris Green",
+    email: "chris.green@example.com",
+    service: "Photography",
+    date: "December 5th, 2024", // Invalid date format
+    message: "Need high-quality shots",
+    payment_status: "completed",
+    appointment_status: "booked",
+    created_at: "2024-11-20 15:00:00",
+    updated_at: "2024-11-20 15:00:00",
+  },
+];

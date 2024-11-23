@@ -4,6 +4,8 @@ import ApexChart from "@/components/admin/ApexChart";
 import StatusCard from "@/components/admin/StatusCard";
 // import { getManyProducts } from "@/data/products";
 import React from "react";
+import { Appointments } from "@/components/admin/Appointments";
+import Services from "@/components/admin/Services";
 
 export default function page() {
   return (
@@ -17,6 +19,8 @@ export default function page() {
         </div>
         <ApexChart />
       </div>
+      <Services />
+      <Appointments />
       {/*<Orders />*/}
       {/*<ProductsList />*/}
     </div>

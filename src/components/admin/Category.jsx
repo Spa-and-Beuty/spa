@@ -143,7 +143,9 @@ export default function Category() {
                 </span>
               </td>
               <td className="text-[#8686a7] text-left text-sm">ETB 5,000</td>
-              <td className="text-sm">Abrelo</td>
+              <td className="text-sm">
+                <Spaville></Spaville>
+              </td>
               <td className="text-[#8686a7] text-sm">
                 {categ.id.slice(0, 10)}...
               </td>
