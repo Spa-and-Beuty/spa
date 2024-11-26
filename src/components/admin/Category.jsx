@@ -4,6 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Pagination from "./Pagination";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import AddService from "@/components/AddService";
+import AddCategory from "@/components/admin/AddCategory";
 // import { getManyCategories } from "@/data/category";
 // import { getManyProducts } from "@/data/products";
 
@@ -102,12 +112,23 @@ export default function Category() {
         <div className="flex items-center justify-between">
           <h4 className="card-title">Categories</h4>
           <div className="flex item gap-2">
-            <Link
-              href="/admin/addCategory"
-              className="text-sm p-2 hover:bg-blackish-color    text-white rounded  bg-link-color-hover transition-all duration-200 ease-in-out"
-            >
-              <button>+ Add Category</button>
-            </Link>
+            <Dialog>
+              <DialogTrigger
+                className={
+                  " text-sm p-2 text-white rounded bg-link-color-hover transition-all duration-200 ease-in-out hover:bg-blackish-color"
+                }
+              >
+                + Add Category
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Add Category</DialogTitle>
+                  <DialogDescription className={"w-full"}>
+                    <AddCategory />
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
             <div className="relative">
               <button className="p-2 rounded bg-gray-200 flex items-center gap-1 text-sm">
                 File <ChevronDown size={15} />
@@ -143,9 +164,7 @@ export default function Category() {
                 </span>
               </td>
               <td className="text-[#8686a7] text-left text-sm">ETB 5,000</td>
-              <td className="text-sm">
-                <Spaville></Spaville>
-              </td>
+              <td className="text-sm">Spaville</td>
               <td className="text-[#8686a7] text-sm">
                 {categ.id.slice(0, 10)}...
               </td>

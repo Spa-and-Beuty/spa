@@ -79,7 +79,9 @@ export default function SideBar({ show, setShow }) {
             <li
               key={sidebar.name}
               className={`hover:text-link-color-hover ${
-                pathname === sidebar.href ? "border-l-2 border-hero" : ""
+                pathname === sidebar.href
+                  ? "bg-white px-4 text-link-color-hover py-2 rounded-full"
+                  : ""
               } transition-all duration-300 ease-linear mb-3`}
             >
               <Link className="flex items-center gap-4" href={sidebar.href}>

@@ -3,6 +3,33 @@ export const bitter = Bitter({
   subsets: ["latin"],
   weight: ["200", "400", "500", "600", "700", "800", "900"],
 });
+export const blogs = [
+  {
+    id: 1,
+    image: "https://via.placeholder.com/150",
+    title: "10 Tips for Learning JavaScript",
+    tag: "JavaScript",
+    description: "Learn the top 10 tips for mastering JavaScript efficiently.",
+    date: "2024-11-01T10:00:00Z",
+    author: "John Doe",
+    status: "PUBLISHED",
+    updated_at: "2024-11-25T08:30:00Z",
+  },
+  {
+    id: 2,
+    image: "https://via.placeholder.com/150",
+    title: "Understanding Async/Await",
+    tag: "Programming",
+    description:
+      "A beginner's guide to asynchronous programming in JavaScript.",
+    date: "2024-10-15T14:00:00Z",
+    author: "Jane Smith",
+    status: "DRAFT",
+    updated_at: "2024-11-20T14:45:00Z",
+  },
+  // Add more blog entries as needed
+];
+
 export const posts = [
   {
     id: 1,

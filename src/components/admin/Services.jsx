@@ -5,6 +5,16 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Pagination from "./Pagination";
 import { services } from "../../../constants";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import AddBlog from "@/components/admin/AddBlog";
+import AddService from "@/components/AddService";
 // import { deleteProduct, getManyProducts } from "@/data/products";
 
 export default function Services() {
@@ -24,12 +34,23 @@ export default function Services() {
           Recent Services
         </h4>
         <div className="flex items-center gap-2 mt-4 lg:mt-0">
-          <Link
-            href="/admin/services/addService"
-            className="text-sm p-2 text-white rounded bg-link-color-hover transition-all duration-200 ease-in-out hover:bg-blackish-color"
-          >
-            <button>+ Add Service</button>
-          </Link>
+          <Dialog>
+            <DialogTrigger
+              className={
+                " text-sm p-2 text-white rounded bg-link-color-hover transition-all duration-200 ease-in-out hover:bg-blackish-color"
+              }
+            >
+              + Add Service
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Add Service</DialogTitle>
+                <DialogDescription className={"w-full"}>
+                  <AddService />
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
           <div className="relative">
             <button className="p-2 rounded bg-gray-200 flex items-center gap-1 text-sm">
               File <ChevronDown size={15} />

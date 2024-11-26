@@ -32,7 +32,7 @@ export default function TestimonialCard({
               alt={full_name}
               width={230}
               height={230}
-              className={"rounded-full"}
+              className={"rounded-full h-100 w-100"}
             />
             <span className="rounded-full text-white uppercase relative -top-10 bg-link-color-hover px-4 py-2 ">
               {role}
@@ -43,7 +43,7 @@ export default function TestimonialCard({
             <div className="flex items-center gap-3 ">
               <Link
                 className="p-4 rounded-full bg-secondary-color"
-                href={socialMedia.facebook}
+                href={socialMedia.facebook || "#"}
               >
                 <BsFacebook size={20} />
               </Link>

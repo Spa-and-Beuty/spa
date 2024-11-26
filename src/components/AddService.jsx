@@ -13,7 +13,7 @@ import {
 // import { createBlogCategory } from "@/data/blogCategories";
 import Image from "next/image";
 
-export default function AddCategory() {
+export default function AddService() {
   const [imagePreview, setImagePreview] = useState("");
   const [image, setImage] = useState(null);
   const [name, setName] = useState("");

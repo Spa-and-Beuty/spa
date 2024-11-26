@@ -105,7 +105,7 @@ export default function AddCategory() {
               />
               <Link
                 className="px-4 py-2 border-hero border text-hero rounded"
-                href="/admin/products"
+                href="/admin/category"
               >
                 Cancel
               </Link>
@@ -133,7 +133,7 @@ export default function AddCategory() {
           />
         </div>
 
-        <div className="mt-4 rounded shadow-md">
+        <div className="mt-4 rounded ">
           <div className="bg-white border-b p-4">Category Details</div>
           <form className="bg-white p-4 text-[#5d7186]">
             <div className="flex gap-10 items-center">
