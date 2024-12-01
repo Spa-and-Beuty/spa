@@ -1,7 +1,11 @@
 import Image from "next/image";
 import { bitter } from "../../constants";
+import { PlanItem } from "@/components/PlanItem";
+import { getManyPriceing } from "@/data/pricing";
 
-export const OurPlan = () => {
+export const OurPlan = async () => {
+  const data = await getManyPriceing();
+
   return (
     <div className={"flex max-lg:px-10  mt-20 flex-col items-center"}>
       <span
@@ -23,74 +27,15 @@ export const OurPlan = () => {
         }
       >
         {" "}
-        <PlanItem
-          image_url={"/assets/images/pricing-plan-01.jpg"}
-          title={"Full body massage"}
-          price={"110"}
-          description="Classic relaxation massfae eases tension and promotes circulation"
-        />
-        <PlanItem
-          image_url={"/assets/images/pricing-plan-02.jpg"}
-          title={"Craniosacral Therapy"}
-          price={"110"}
-          description="Classic relaxation massfae eases tension and promotes circulation"
-        />
-        <PlanItem
-          image_url={"/assets/images/pricing-plan-03.jpg"}
-          title={"Therapeutic Massage"}
-          price={"110"}
-          description="Classic relaxation massfae eases tension and promotes circulation"
-        />
-        <PlanItem
-          image_url={"/assets/images/pricing-plan-04.jpg"}
-          title={"Swedish Massage"}
-          price={"110"}
-          description="Classic relaxation massfae eases tension and promotes circulation"
-        />
-        <PlanItem
-          image_url={"/assets/images/pricing-plan-05.jpg"}
-          title={"Luxury Group Massage"}
-          price={"110"}
-          description="Classic relaxation massfae eases tension and promotes circulation"
-        />
-        <PlanItem
-          image_url={"/assets/images/pricing-plan-06.jpg"}
-          title={"Scrub Massage"}
-          price={"110"}
-          description="Classic relaxation massfae eases tension and promotes circulation"
-        />
-      </div>
-    </div>
-  );
-};
-
-const PlanItem = ({ title, description, image_url, price }) => {
-  return (
-    <div
-      className={
-        "flex max-sm:flex-col max-sm:text-center gap-4 items-center justify-center"
-      }
-    >
-      <Image
-        src={image_url}
-        alt={title}
-        width={100}
-        className={"rounded-lg"}
-        height={100}
-      />
-      <div className={"p-5"}>
-        <div
-          className={
-            "flex max-sm:flex-col max-sm:order-1 items-center justify-between "
-          }
-        >
-          <h1 className={`text-2xl mb-3 font-bold`}>{title}</h1>
-          <span className={"max-sm:hidden text-2xl"}>
-            ...............................
-          </span>
-          <p className={"text-link-color-hover text-3xl"}>${price}</p>
-        </div>
-        <p className={"w-2/3 max-sm:w-full"}>{description}</p>
+        {data.map((plan) => (
+          <PlanItem
+            key={plan.id}
+            image_url={plan.image}
+            title={plan.title}
+            price={plan.price}
+            description={plan.description}
+          />
+        ))}
       </div>
     </div>
   );

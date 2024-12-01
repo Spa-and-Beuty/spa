@@ -15,13 +15,13 @@ export default function NewsItem({
     <div
       className={`${flex ? "flex" : "flex-col"} max-lg:flex-col gap-4 items-center justify-center`}
     >
-      <div className={"relative  group"}>
+      <div className={"relative flex-1  group"}>
         <Image
           src={image}
           alt={title}
           width={500}
           className={
-            "rounded-3xl transition-transform duration-700 ease-in-out group-hover:scale-[1.0101]"
+            "rounded-3xl h-[300px] object-fit w-[500px] transition-transform duration-700 ease-in-out group-hover:scale-[1.0101]"
           }
           height={500}
         />

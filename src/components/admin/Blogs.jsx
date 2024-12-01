@@ -12,8 +12,17 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import AddBlog from "@/components/admin/AddBlog";
+import { getManyBlog } from "@/data/blogs";
+import Image from "next/image";
 
-export const Blogs = () => {
+export const Blogs = async () => {
+  const blogList = await getManyBlog();
+  const allBlogs = blogList.blogs;
+  if (!allBlogs) {
+    return {
+      notFound: true,
+    };
+  }
   return (
     <div className="col w-full my-8">
       <div className="card">
@@ -72,7 +81,7 @@ export const Blogs = () => {
             </thead>
 
             <tbody className="text-[#8686a7]">
-              {blogs.map((blog) => (
+              {allBlogs.map((blog) => (
                 <tr
                   key={blog.id}
                   className="border-b border-inherit bg-white dark:bg-[#1E1E1E]"
@@ -81,7 +90,9 @@ export const Blogs = () => {
                     <Link href={`/admin/blogs/${blog.id}`}>{blog.id}</Link>
                   </td>
                   <td className="px-2 py-3.5">
-                    <img
+                    <Image
+                      height={16}
+                      width={16}
                       src={blog.image}
                       alt={blog.title}
                       className="w-16 h-16 object-cover"

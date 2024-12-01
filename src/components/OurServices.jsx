@@ -14,45 +14,27 @@ import { BsArrowRight } from "react-icons/bs";
 import { bitter } from "../../constants";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import ServiceCard from "./ServiceCard";
+import { useEffect, useState } from "react";
+import { getManyServices } from "@/data/services";
 export const OurServices = () => {
-  const services = [
-    {
-      id: 1,
-      title: "Thai Massage",
-      image_url: "/assets/images/service-01.jpg",
-      tag: "#",
-    },
-    {
-      id: 2,
-      title: "Stone Treatment",
-      image_url: "/assets/images/service-02.jpg",
-      tag: "#",
-    },
-    {
-      id: 3,
-      title: "Revitalize Facial",
-      image_url: "/assets/images/service-03.jpg",
-      tag: "#",
-    },
-    {
-      id: 4,
-      title: "Salt & Aroma",
-      image_url: "/assets/images/service-04.jpg",
-      tag: "#",
-    },
-    {
-      id: 5,
-      title: "Body Massage",
-      image_url: "/assets/images/service-05.jpg",
-      tag: "#",
-    },
-    {
-      id: 6,
-      title: "Skin Care",
-      image_url: "/assets/images/service-06.jpg",
-      tag: "#",
-    },
-  ];
+  const [services, setServices] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    async function getServices() {
+      setIsLoading(true);
+
+      try {
+        const data = await getManyServices();
+        console.log("Data", data);
+        setServices(data);
+      } catch (e) {
+        console.log(e.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    getServices();
+  }, []);
   return (
     <section
       className={
@@ -118,7 +100,7 @@ export const OurServices = () => {
             <SwiperSlide key={service.id}>
               <ServiceCard
                 id={service.id}
-                image_url={service.image_url}
+                image_url={service.imageUrl}
                 tag={service.tag}
                 title={service.title}
               />

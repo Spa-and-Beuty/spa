@@ -2,7 +2,7 @@
 // import { createCategory } from "@/data/category";
 import { CloudUpload } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -12,16 +12,52 @@ import {
 } from "@/components/ui/select";
 // import { createBlogCategory } from "@/data/blogCategories";
 import Image from "next/image";
+import { createService } from "@/data/services";
+import JoditEditor from "jodit-react";
+import { joditConfig } from "../../constants/joditConfig";
 
 export default function AddService() {
   const [imagePreview, setImagePreview] = useState("");
   const [image, setImage] = useState(null);
-  const [name, setName] = useState("");
+  const [title, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [slug, setSlug] = useState("");
+  const [tag, setSlug] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [forWhat, setForWhat] = useState("");
+
+  const options = [
+    "bold",
+    "italic",
+    "|",
+    "ul",
+    "ol",
+    "|",
+    "font",
+    "fontsize",
+    "|",
+    "outdent",
+    "indent",
+    "align",
+    "|",
+    "hr",
+    "|",
+    "fullsize",
+    "brush",
+    "|",
+    "table",
+    "link",
+    "|",
+    "undo",
+    "redo",
+  ];
+  const editor = useRef(null);
+  const config = useMemo(
+    () => ({
+      ...joditConfig,
+    }),
+    [],
+  );
 
   const handleImageUpload = (e) => {
     setError("");
@@ -36,38 +72,34 @@ export default function AddService() {
 
   async function onSubmit(e) {
     e.preventDefault();
-    if (!name || !slug || !description || !image || !forWhat) {
+    if (!title || !tag || !description || !image) {
       setError("All fields are required.");
       return;
     }
 
     setIsLoading(true);
     const formData = new FormData();
-    formData.append("name", name);
-    formData.append("slug", slug);
+    formData.append("title", title);
+    formData.append("tag", tag);
     formData.append("description", description);
     if (image) {
       formData.append("image", image);
     }
 
-    // try {
-    //   let res;
-    //   if (forWhat === "blogs") {
-    //     res = await createBlogCategory(formData);
-    //   } else if (forWhat === "products") {
-    //     res = await createCategory(formData);
-    //   }
-    //
-    //   if (res.error) {
-    //     setError(
-    //       res.message || "An error occurred while creating the category."
-    //     );
-    //   }
-    // } catch (error) {
-    //   setError("Failed to create category. Please try again.");
-    // } finally {
-    //   setIsLoading(false);
-    // }
+    try {
+      const res = await createService(formData);
+
+      if (res.error) {
+        setError(
+          res.message || "An error occurred while creating the category.",
+        );
+        console.log("response", res);
+      }
+    } catch (error) {
+      setError("Failed to create category. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -87,7 +119,7 @@ export default function AddService() {
 
         <div>
           <h1 className="text-xl mt-4 text-[#313b5e]">
-            {name || "Service Name"}
+            {title || "Service Name"}
           </h1>
           <p className="text-sm mt-3">{description || "Service Description"}</p>
 
@@ -125,59 +157,53 @@ export default function AddService() {
           <input
             required
             onChange={handleImageUpload}
-            name="image"
+            title="image"
             type="file"
             className="w-full opacity-0 absolute inset-0 h-full"
           />
         </div>
 
-        <div className="mt-4 rounded shadow-md">
+        <div className="mt-4 rounded ">
           <div className="bg-white border-b p-4">Service Details</div>
           <form className="bg-white p-4 text-[#5d7186]">
             <div className="flex gap-10 items-center">
               <div className="flex flex-col w-1/2">
-                <label htmlFor="name">Service Name</label>
+                <label htmlFor="title">Service Title</label>
                 <input
                   required
                   type="text"
-                  id="name"
+                  id="title"
                   onChange={(e) => setName(e.target.value)}
                   className="px-4 py-2 border"
                   placeholder="Category Name"
                 />
               </div>
               <div className="flex flex-col w-1/2">
-                <label htmlFor="slug">Service Slug</label>
+                <label htmlFor="tag">Service Tag</label>
                 <input
                   required
                   type="text"
-                  id="slug"
+                  id="tag"
                   onChange={(e) => setSlug(e.target.value)}
                   className="px-4 py-2 border rounded"
                 />
               </div>
             </div>
             <div className="flex items-start flex-col lg:flex-row md:flex-row gap-10">
-              <div className=" flex w-full flex-col mt-4">
-                <label htmlFor="description">For What</label>
-                <Select onValueChange={setForWhat}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="For What ?" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value={"service"}>Service</SelectItem>
-                    <SelectItem value={"blogs"}>Blogs</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
               <div className="flex w-full flex-col mt-4">
                 <label htmlFor="description">Description</label>
-                <textarea
-                  required
-                  id="description"
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="border outline-none p-2"
-                ></textarea>
+                <JoditEditor
+                  className="dark:bg-[#1e1e1e] text-black"
+                  theme="dark"
+                  ref={editor}
+                  value={description}
+                  config={config}
+                  tabIndex={1} // tabIndex of textarea
+                  onBlur={(newContent) => setBlogContent(newContent)}
+                  onChange={(newContent) => {
+                    setDescription(newContent);
+                  }}
+                />
               </div>
             </div>
           </form>

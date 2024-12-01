@@ -21,9 +21,6 @@ export default function AddEmployeeDetail() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const employmentStatuses = ["Active", "On Leave", "Terminated"];
-  const roles = ["Admin", "Stylist", "Manager", "Receptionist"];
-
   const handleImageUpload = (e) => {
     setError("");
     const file = e.target.files[0];

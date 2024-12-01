@@ -23,6 +23,7 @@ import { usePathname } from "next/navigation";
 import { FaBlog, FaBook, FaServicestack } from "react-icons/fa";
 import { Logo } from "@/components/Logo";
 import { FaMessage, FaPerson } from "react-icons/fa6";
+import { BiMoney } from "react-icons/bi";
 
 export default function SideBar({ show, setShow }) {
   const [shrink, setShrink] = useState(false);
@@ -38,6 +39,7 @@ export default function SideBar({ show, setShow }) {
     { icon: FaBook, name: "Appointments", href: "/admin/appointments" },
     { icon: FaServicestack, name: "Services", href: "/admin/services" },
 
+    { icon: BiMoney, name: "Pricing", href: "/admin/pricing" },
     { icon: RiSettings2Fill, name: "Settings", href: "#" },
   ];
 

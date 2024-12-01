@@ -6,10 +6,9 @@ import Link from "next/link";
 import "swiper/css/navigation";
 import "swiper/css/virtual";
 import "swiper/css/pagination";
-import "swiper/css/scrollbar";
 import "swiper/css/effect-fade";
 import "swiper/css/autoplay";
-
+import gsap from "gsap";
 import { BsArrowBarRight } from "react-icons/bs";
 import {
   Navigation,
@@ -20,7 +19,36 @@ import {
   Autoplay,
 } from "swiper/modules";
 import { bitter } from "../../constants";
+import { useEffect, useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
 export const Hero = () => {
+  const heroRef = useRef();
+  //
+  // useEffect(() => {
+  useGSAP(() => {
+    const heroHeadings = gsap.utils.toArray(".hero");
+    gsap.from(heroHeadings[0], {
+      opacity: 0,
+      y: 50,
+      duration: 2,
+      stagger: 0.3,
+      ease: "power1.out",
+    });
+  });
+  //   if (heroHeadings.length) {
+  //     gsap.from(heroHeadings, {
+  //       opacity: 0,
+  //       y: 50,
+  //       duration: 1.5,
+  //       stagger: 0.3,
+  //       ease: "power1.out",
+  //     });
+  //   }
+  // }, []);
+
   const slides = [
     {
       id: 1,
@@ -41,69 +69,100 @@ export const Hero = () => {
       image: "/assets/images/demo1-slide03.png",
     },
   ];
+
   return (
-    <div className={"lg:px-16 lg:rounded-3xl sm:h-[800px]"}>
+    <div ref={heroRef} className={"lg:px-16 lg:rounded-3xl sm:h-[800px]"}>
       <Swiper
         virtual={true}
         modules={[Navigation, EffectFade, Autoplay, Virtual, Pagination, A11y]}
         pagination
+        loop={true}
         autoplay={{
-          delay: 2500,
+          delay: 4000,
           disableOnInteraction: false,
         }}
         effect={"fade"}
+        onSlideChange={() => {
+          const newHeroHeadings = document.querySelectorAll(".hero"); // Update selector for current slide
+          const ideas = document.querySelectorAll(".idea"); // Update selector for current slide
+          const details = document.querySelectorAll(".detail"); // Update selector for current slide
+          gsap.from(newHeroHeadings, {
+            opacity: 0,
+            y: 50,
+            duration: 1.5,
+            stagger: 0.3,
+            ease: "power1.out",
+          });
+          gsap.from(ideas, {
+            opacity: 0,
+
+            duration: 1.5,
+            stagger: 0.6,
+            ease: "power1.out",
+          });
+          gsap.from(details, {
+            opacity: 0,
+            y: 50,
+            duration: 1.5,
+            stagger: 0.8,
+            ease: "power1.out",
+          });
+        }}
         spaceBetween={50}
         slidesPerView={1}
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper) => console.log(swiper)}
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
-            <div
-              className={
-                "relative  flex items-center h-[800px] max-md:h-[580px] max-sm:h-[450px]   "
-              }
-            >
-              <Image
-                src={slide.image}
-                alt={slide.title}
-                width={600}
-                height={100}
-                quality={100}
-                className={"w-full h-full object-cover  lg:rounded-3xl"}
-              />
+            {(
               <div
                 className={
-                  "flex absolute items-start justify-start flex-col gap-10 text-white-color top-1/2 max-sm:pl-4 pl-20   rounded-3xl  -translate-y-1/2"
+                  "relative flex items-center h-[800px] max-md:h-[580px] max-sm:h-[450px]"
                 }
               >
-                <span
+                <Image
+                  src={slide.image}
+                  alt={slide.title}
+                  width={600}
+                  height={100}
+                  quality={100}
+                  priority={true}
+                  className={"w-full h-full object-cover lg:rounded-3xl"}
+                />
+                <div
                   className={
-                    "px-4 uppercase text-sm py-1 border-2 flex-inline border-white rounded-full"
+                    "flex absolute items-start justify-start flex-col gap-10 text-white-color top-1/2 max-sm:pl-4 pl-20 rounded-3xl -translate-y-1/2"
                   }
                 >
-                  {slide.idea}
-                </span>
-                <h1
-                  className={`${bitter.className}  text-4xl 
-    md:text-6xl 
-    lg:text-7xl xl:text-7xl 2xl:text-9xl  flex flex-col gap-4`}
-                >
-                  <span className={"font-bold "}>
-                    {slide.title.split(",")[0]}
+                  <span
+                    className={
+                      "px-4 uppercase idea text-sm py-1 border-2 flex-inline border-white rounded-full"
+                    }
+                  >
+                    {slide.idea}
                   </span>
-                  {slide.title.split(",")[1]}
-                </h1>
-                <Link
-                  href={"#"}
-                  className={
-                    "flex items-center gap-1 bg-white text-blackish-color p-4 rounded-full"
-                  }
-                >
-                  More Detail <BsArrowBarRight />
-                </Link>
+                  <h1
+                    className={`${bitter.className} hero text-4xl md:text-6xl lg:text-7xl xl:text-7xl 2xl:text-9xl flex flex-col gap-4`}
+                  >
+                    <span className={"font-bold"}>
+                      {slide.title.split(",")[0]}
+                    </span>
+                    {slide.title.split(",")[1]}
+                  </h1>
+                  <Link
+                    href={"#"}
+                    className={
+                      "flex detail items-center gap-1 bg-white text-blackish-color p-4 rounded-full"
+                    }
+                  >
+                    More Detail <BsArrowBarRight />
+                  </Link>
+                </div>
               </div>
-            </div>
+            ) || (
+              <div>
+                <Skeleton className={"w-full h-full bg-red-300"} />
+              </div>
+            )}
           </SwiperSlide>
         ))}
       </Swiper>

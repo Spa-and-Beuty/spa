@@ -1,5 +1,5 @@
 "use client";
-import { ChevronDown, DeleteIcon, Edit, EyeIcon, Star } from "lucide-react";
+import { ChevronDown, DeleteIcon, Edit, EyeIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -12,43 +12,41 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import AddBlog from "@/components/admin/AddBlog";
-import AddService from "@/components/AddService";
-import { getManyServices } from "@/data/services";
-// import { deleteProduct, getManyProducts } from "@/data/products";
+import AddPricing from "@/components/admin/AddPricing";
+import { getManyPriceing } from "@/data/pricing";
 
-export default function Services() {
-  const [services, setServices] = useState([]);
+export default function Pricing() {
+  const [pricing, setPricing] = useState([]);
 
-  // const [products, setProductList] = useState([]);
   useEffect(() => {
-    async function getServices() {
-      const data = await getManyServices();
-      setServices(data);
+    // Simulate fetching pricing data
+    async function fetchPricing() {
+      const res = await getManyPriceing();
+      setPricing(res);
     }
-    getServices();
+    fetchPricing();
   }, []);
 
   return (
     <div className="p-4 lg:p-6 mb-3 w-full rounded bg-white dark:bg-[#1E1E1E]">
       <div className="flex flex-col lg:flex-row dark:bg-[#1E1E1E] px-2 py-4 items-center justify-between mb-4">
-        <h4 className="card-title text-center  lg:text-left text-lg lg:text-xl font-semibold">
-          Recent Services
+        <h4 className="card-title text-center lg:text-left text-lg lg:text-xl font-semibold">
+          Recent Pricing Plans
         </h4>
         <div className="flex items-center gap-2 mt-4 lg:mt-0">
           <Dialog>
             <DialogTrigger
               className={
-                " text-sm p-2 text-white rounded bg-link-color-hover transition-all duration-200 ease-in-out hover:bg-blackish-color"
+                "text-sm p-2 text-white rounded bg-link-color-hover transition-all duration-200 ease-in-out hover:bg-blackish-color"
               }
             >
-              + Add Service
+              + Add Pricing
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Add Service</DialogTitle>
+                <DialogTitle>Add Pricing</DialogTitle>
                 <DialogDescription className={"w-full"}>
-                  <AddService />
+                  <AddPricing />
                 </DialogDescription>
               </DialogHeader>
             </DialogContent>
@@ -65,35 +63,32 @@ export default function Services() {
         <table className="w-full min-w-[1000px] text-sm lg:text-base">
           <thead>
             <tr className="border-b bg-white dark:bg-inherit dark:text-white text-[#5d7186]">
-              <th className="p-4 text-left">Service</th>
-              <th className="p-4 text-left">Category</th>
+              <th className="p-4 text-left">Plan</th>
+              <th className="p-4 text-left">Price</th>
               <th className="p-4 text-left">Description</th>
-              {/*<th className="p-4 text-left">Category</th>*/}
-              {/*<th className="p-4 text-left">Rating</th>*/}
-              {/*<th className="p-4 text-left">Action</th>*/}
+              <th className="p-4 text-left">Action</th>
             </tr>
           </thead>
           <tbody>
-            {services.map((service, index) => (
+            {pricing.map((plan) => (
               <tr
-                key={service.id}
+                key={plan.id}
                 className="border-b bg-white dark:bg-inherit dark:bg-opacity-5"
               >
                 <td className="flex items-center gap-2 p-4">
                   <Image
-                    src={service?.imageUrl}
+                    src={plan.image}
                     width={50}
                     height={50}
                     className="w-10 h-10 object-cover rounded shadow"
-                    alt={service?.title}
+                    alt={plan.title}
                   />
                   <span>
-                    <h1 className="font-medium">{service?.title}</h1>
+                    <h1 className="font-medium">{plan.title}</h1>
                   </span>
                 </td>
-
-                <td className="text-[#8686a7] p-4">{service?.tag}</td>
-
+                <td className="text-[#8686a7] p-4">${plan.price}</td>
+                <td className="p-4">{plan.description}</td>
                 <td className="p-4">
                   <div className="flex items-center gap-3">
                     <Link href={"#"} className="p-1 bg-[#8686a7] rounded">
