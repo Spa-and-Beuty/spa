@@ -1,4 +1,5 @@
 import { Bitter } from "next/font/google";
+import { useMemo } from "react";
 export const bitter = Bitter({
   subsets: ["latin"],
   weight: ["200", "400", "500", "600", "700", "800", "900"],

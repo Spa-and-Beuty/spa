@@ -24,97 +24,26 @@ import Rating from "@/components/Rating";
 import { AiOutlineFacebook } from "react-icons/ai";
 import { Facebook } from "lucide-react";
 import TestimonialCard from "./TestimonialCard";
+import { useEffect, useState } from "react";
+import { getManyEmployees } from "@/data/employee";
 export const OurExperts = () => {
-  const experts = [
-    {
-      id: 1,
-      role: "Massage Expert",
-      socialMedia: {
-        instagram: "",
-        twitterX: "",
-        linkedIn: "",
-        facebook: "",
-      },
-      full_name: " Evangeline lee",
-      image_url: "/assets/images/team-01.jpg",
-    },
-    {
-      id: 1,
-      role: "massage expert",
-      socialMedia: {
-        instagram: "#",
-        twitterX: "#",
-        linkedIn: "#",
-        facebook: "#",
-      },
-      full_name: " David Green",
-      image_url: "/assets/images/team-01.jpg",
-    },
+  const [experts, setExperts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    {
-      id: 2,
-      role: "spa manager",
-      socialMedia: {
-        instagram: "#",
-        twitterX: "#",
-        linkedIn: "#",
-        facebook: "#",
-      },
-      full_name: " Amy Walker",
-      image_url: "/assets/images/team-02.jpg",
-    },
-
-    {
-      id: 3,
-      role: "massage expert",
-      socialMedia: {
-        instagram: "#",
-        twitterX: "#",
-        linkedIn: "#",
-        facebook: "#",
-      },
-      full_name: " Natalie Jones",
-      image_url: "/assets/images/team-03.jpg",
-    },
-
-    {
-      id: 4,
-      role: "massage expert",
-      socialMedia: {
-        instagram: "#",
-        twitterX: "#",
-        linkedIn: "#",
-        facebook: "#",
-      },
-      full_name: " Paula Deen",
-      image_url: "/assets/images/team-04.jpg",
-    },
-
-    {
-      id: 5,
-      role: "relaxing spa",
-      socialMedia: {
-        instagram: "#",
-        twitterX: "#",
-        linkedIn: "#",
-        facebook: "#",
-      },
-      full_name: " Carla Hall",
-      image_url: "/assets/images/team-05.jpg",
-    },
-    {
-      id: 6,
-      role: "massage expert",
-      socialMedia: {
-        instagram: "#",
-        twitterX: "#",
-        linkedIn: "#",
-        facebook: "#",
-      },
-      full_name: " Bobby Flay",
-      image_url: "/assets/images/team-06.jpg",
-    },
-  ];
+  useEffect(() => {
+    setLoading(true);
+    async function fetchExperts() {
+      try {
+        const data = await getManyEmployees();
+        setExperts(data.employees);
+      } catch (e) {
+        console.log(e.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchExperts();
+  }, []);
   return (
     <section
       className={

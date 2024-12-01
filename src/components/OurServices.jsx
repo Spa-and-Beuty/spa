@@ -20,7 +20,7 @@ export const OurServices = () => {
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    async function getServices() {
+    async function getAllServices() {
       setIsLoading(true);
 
       try {
@@ -33,7 +33,7 @@ export const OurServices = () => {
         setIsLoading(false);
       }
     }
-    getServices();
+    getAllServices();
   }, []);
   return (
     <section

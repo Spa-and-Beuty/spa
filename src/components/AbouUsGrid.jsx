@@ -79,7 +79,7 @@ export default function AbouUsGrid() {
         </div>
         <div className={`justify-self-end `}>
           <Link
-            href={"#"}
+            href={"/contact"}
             className={
               "items-center flex max-sm:mt-4 gap-4 bg-blackish-color text-white hover:bg-secondary-color hover:text-blackish hover:text-blackish-color transition-colors duration-200  px-6 py-3 rounded-full"
             }

@@ -9,9 +9,26 @@ import { LatestNews } from "@/components/LatestNews";
 import RecentPost from "@/components/RecentPost";
 import Link from "next/link";
 import { FlowerIcon } from "lucide-react";
+import { getOneBlog } from "@/data/blogs";
+import { Remarkable } from "remarkable";
+import { notFound } from "next/navigation";
 
-export default function page({ params }) {
-  const singleBlog = posts.find((post) => post.id == params.blogId);
+const md = new Remarkable();
+
+function renderMarkdownToHTML(markdown) {
+  // This is ONLY safe because the output HTML
+  // is shown to the same user, and because you
+  // trust this Markdown parser to not have bugs.
+  const renderedHTML = md.render(markdown);
+  return { __html: renderedHTML };
+}
+export default async function page({ params }) {
+  // const singleBlogs = posts.find((post) => post.id == params.blogId);
+  const singleBlog = await getOneBlog(params.blogId);
+  if (!singleBlog) {
+    notFound();
+  }
+  const markup = renderMarkdownToHTML(singleBlog.description);
   const tags = [
     "Beauty",
     "fitness",
@@ -22,6 +39,7 @@ export default function page({ params }) {
     "Treatments",
     "Wellness",
   ];
+
   return (
     <main>
       <PagesHero title={singleBlog.title} />
@@ -37,7 +55,7 @@ export default function page({ params }) {
               width={600}
               height={400}
               alt={singleBlog.title}
-              className="w-full rounded-xl"
+              className="w-full h-[400px] object-cover rounded-xl"
             />
             <div className="mt-10 flex items-center gap-4">
               <span className="px-4 py-2 rounded-full uppercase text-sm bg-secondary-color">
@@ -52,12 +70,13 @@ export default function page({ params }) {
                 {singleBlog.author}
               </span>
             </div>
-            <p className="text-lg  py-2 mt-10 text-darkish-color ">
-              <span className="float-left mr-2 text-link-color-hover text-7xl ">
-                {singleBlog.description[0]}
-              </span>
-              {singleBlog.description.slice(1)}
-            </p>
+            <div className="text-lg  py-2 mt-10 text-darkish-color ">
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: singleBlog.description,
+                }}
+              ></span>
+            </div>
             <div className="p-10  my-10 rounded-3xl border flex items-start gap-10">
               <div className="p-4 text-3xl rounded-full bg-link-color-hover">
                 <BsQuote size={50} className="text-white" />

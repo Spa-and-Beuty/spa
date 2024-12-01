@@ -27,41 +27,45 @@ export default function TestimonialCard({
               "flex justify-center flex-col box-border py-5 gap-4 items-center"
             }
           >
-            <Image
-              src={image_url}
-              alt={full_name}
-              width={230}
-              height={230}
-              className={"rounded-full h-100 w-100"}
-            />
-            <span className="rounded-full text-white uppercase relative -top-10 bg-link-color-hover px-4 py-2 ">
-              {role}
-            </span>
+            <div className={"relative"}>
+              {" "}
+              <Image
+                src={image_url}
+                alt={full_name}
+                width={230}
+                height={230}
+                className={"rounded-full  h-64 w-64 object-cover"}
+              />
+              <span className="rounded-full text-white uppercase absolute bottom-0 left-1/2 -translate-x-1/2 bg-link-color-hover px-4 z-50 py-2 ">
+                {role}
+              </span>
+            </div>
+
             <div>
               <h1 className={` text-xl font-semibold`}>{full_name}</h1>
             </div>
             <div className="flex items-center gap-3 ">
               <Link
                 className="p-4 rounded-full bg-secondary-color"
-                href={socialMedia.facebook || "#"}
+                href={socialMedia?.facebook || "#"}
               >
                 <BsFacebook size={20} />
               </Link>
               <Link
                 className="p-4 rounded-full bg-secondary-color"
-                href={socialMedia.twitterX}
+                href={socialMedia?.twitterX || "#"}
               >
                 <BsTwitterX size={20} />
               </Link>
               <Link
                 className="p-4 rounded-full bg-secondary-color"
-                href={socialMedia.facebook}
+                href={socialMedia?.facebook || "#"}
               >
                 <BsLinkedin size={20} />
               </Link>
               <Link
                 className="p-4 rounded-full bg-secondary-color"
-                href={socialMedia.linkedIn}
+                href={socialMedia?.linkedIn || "#"}
               >
                 <BsInstagram size={20} />
               </Link>

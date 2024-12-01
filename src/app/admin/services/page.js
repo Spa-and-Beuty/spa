@@ -1,6 +1,10 @@
+"use client";
 import React from "react";
 import { services } from "../../../../constants";
-import Services from "@/components/admin/Services";
+import dynamic from "next/dynamic";
+const Services = dynamic(() => import("@/components/admin/Services"), {
+  ssr: false,
+});
 
 const Home = () => {
   return (

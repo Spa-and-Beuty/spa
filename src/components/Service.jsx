@@ -1,10 +1,9 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import ServiceCard from "./ServiceCard";
 import { getManyServices } from "@/data/services";
 
-export default async function Service() {
-  const data = await getManyServices();
-
+export default function Service({ data }) {
   return (
     <section
       className={

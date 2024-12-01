@@ -11,7 +11,11 @@ import { Status } from "@/components/Status";
 import { TryOurOil } from "@/components/TryOurOil";
 import { LatestNews } from "@/components/LatestNews";
 import { Footer } from "@/components/Footer";
-
+// import gsap from "gsap";
+// import { useGSAP } from "@gsap/react";
+// import { ScrollTrigger } from "gsap/ScrollTrigger";
+// import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+// gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, useGSAP);
 export default function Home() {
   return (
     <>

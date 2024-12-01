@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import AddService from "@/components/AddService";
+import AddEmployeeDetail from "@/components/admin/AddEmployeeDetail";
 
 export default function page() {
   return (
@@ -30,7 +31,7 @@ export default function page() {
               <DialogHeader>
                 <DialogTitle>Add Employee</DialogTitle>
                 <DialogDescription className={"w-full"}>
-                  <AddService />
+                  <AddEmployeeDetail />
                 </DialogDescription>
               </DialogHeader>
             </DialogContent>

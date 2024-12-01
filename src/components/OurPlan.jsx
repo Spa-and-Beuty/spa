@@ -1,10 +1,20 @@
+"use client";
 import Image from "next/image";
 import { bitter } from "../../constants";
 import { PlanItem } from "@/components/PlanItem";
 import { getManyPriceing } from "@/data/pricing";
+import { useEffect, useState } from "react";
 
-export const OurPlan = async () => {
-  const data = await getManyPriceing();
+export const OurPlan = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    async function getPlan() {
+      const res = await getManyPriceing();
+      setData(res);
+    }
+    getPlan();
+  }, []);
 
   return (
     <div className={"flex max-lg:px-10  mt-20 flex-col items-center"}>

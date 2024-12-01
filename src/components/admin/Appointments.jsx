@@ -1,8 +1,28 @@
+"use client";
 import Pagination from "@/components/admin/Pagination";
-import { appointments } from "../../../constants";
+// import { appointments } from "../../../constants";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { getManyAppointments } from "@/data/appointment";
 
-export const Appointments = () => {
+export default function Appointments() {
+  const [appointments, setAppointments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setIsLoading(true);
+    async function getAllAppointments() {
+      try {
+        const data = await getManyAppointments();
+        setAppointments(data);
+      } catch (e) {
+        console.error(e.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    getAllAppointments();
+  }, []);
+
   return (
     <div className="col w-full  my-8">
       <div className="card">
@@ -30,37 +50,41 @@ export const Appointments = () => {
             </thead>
 
             <tbody className="text-[#8686a7]">
-              {appointments.map((appointment) => (
-                <tr
-                  key={appointment.id}
-                  className="border-b border-inherit bg-white dark:bg-[#1E1E1E]"
-                >
-                  <td className="px-2 py-3.5">
-                    <Link href={`/admin/appointments/${appointment.id}`}>
-                      {appointment.id}
-                    </Link>
-                  </td>
-                  <td className="px-2 py-3.5">
-                    {new Date(appointment.created_at).getFullYear()}{" "}
-                    {new Date(appointment.created_at).toLocaleString(
-                      "default",
-                      {
-                        month: "long",
-                      },
-                    )}{" "}
-                    {new Date(appointment.created_at).getDate()}{" "}
-                  </td>
-                  <td className="px-2 py-3.5">{appointment.service}</td>
-                  <td className="px-2 py-3.5">{appointment.full_name}</td>
+              {appointments
+                ? appointments.map((appointment) => (
+                    <tr
+                      key={appointment.id}
+                      className="border-b border-inherit bg-white dark:bg-[#1E1E1E]"
+                    >
+                      <td className="px-2 py-3.5">
+                        <Link href={`/admin/appointments/${appointment.id}`}>
+                          {appointment.id}
+                        </Link>
+                      </td>
+                      <td className="px-2 py-3.5">
+                        {new Date(appointment.created_at).getFullYear()}{" "}
+                        {new Date(appointment.created_at).toLocaleString(
+                          "default",
+                          {
+                            month: "long",
+                          },
+                        )}{" "}
+                        {new Date(appointment.created_at).getDate()}{" "}
+                      </td>
+                      <td className="px-2 py-3.5">{appointment.service}</td>
+                      <td className="px-2 py-3.5">{appointment.full_name}</td>
 
-                  <td className="px-2 py-3.5">{appointment.email}</td>
-                  <td className="px-2 py-3.5">{appointment.message}</td>
-                  <td className="px-2 py-3.5">{appointment.payment_status}</td>
-                  <td className="px-2 py-3.5">
-                    {appointment.appointment_status}
-                  </td>
-                </tr>
-              ))}
+                      <td className="px-2 py-3.5">{appointment.email}</td>
+                      <td className="px-2 py-3.5">{appointment.message}</td>
+                      <td className="px-2 py-3.5">
+                        {appointment.payment_status}
+                      </td>
+                      <td className="px-2 py-3.5">
+                        {appointment.appointment_status}
+                      </td>
+                    </tr>
+                  ))
+                : "No Appointments"}
             </tbody>
           </table>
         </div>
@@ -69,4 +93,4 @@ export const Appointments = () => {
       </div>
     </div>
   );
-};
+}

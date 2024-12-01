@@ -74,47 +74,49 @@ export default function Services() {
             </tr>
           </thead>
           <tbody>
-            {services.map((service, index) => (
-              <tr
-                key={service.id}
-                className="border-b bg-white dark:bg-inherit dark:bg-opacity-5"
-              >
-                <td className="flex items-center gap-2 p-4">
-                  <Image
-                    src={service?.imageUrl}
-                    width={50}
-                    height={50}
-                    className="w-10 h-10 object-cover rounded shadow"
-                    alt={service?.title}
-                  />
-                  <span>
-                    <h1 className="font-medium">{service?.title}</h1>
-                  </span>
-                </td>
+            {services
+              ? services.map((service, index) => (
+                  <tr
+                    key={service.id}
+                    className="border-b bg-white dark:bg-inherit dark:bg-opacity-5"
+                  >
+                    <td className="flex items-center gap-2 p-4">
+                      <Image
+                        src={service?.imageUrl}
+                        width={50}
+                        height={50}
+                        className="w-10 h-10 object-cover rounded shadow"
+                        alt={service?.title}
+                      />
+                      <span>
+                        <h1 className="font-medium">{service?.title}</h1>
+                      </span>
+                    </td>
 
-                <td className="text-[#8686a7] p-4">{service?.tag}</td>
+                    <td className="text-[#8686a7] p-4">{service?.tag}</td>
 
-                <td className="p-4">
-                  <div className="flex items-center gap-3">
-                    <Link href={"#"} className="p-1 bg-[#8686a7] rounded">
-                      <EyeIcon color="white" />
-                    </Link>
-                    <Link
-                      href={"#"}
-                      className="p-1 rounded group hover:bg-[#ff6c2f] transition-colors duration-200 bg-[#ff3d5430]"
-                    >
-                      <Edit className="text-[#ff6c2f] group-hover:text-white" />
-                    </Link>
-                    <Link
-                      href={"#"}
-                      className="p-1 rounded group hover:bg-hero transition-colors duration-200 bg-[#ff3d5430]"
-                    >
-                      <DeleteIcon className="text-hero group-hover:text-white" />
-                    </Link>
-                  </div>
-                </td>
-              </tr>
-            ))}
+                    <td className="p-4">
+                      <div className="flex items-center gap-3">
+                        <Link href={"#"} className="p-1 bg-[#8686a7] rounded">
+                          <EyeIcon color="white" />
+                        </Link>
+                        <Link
+                          href={"#"}
+                          className="p-1 rounded group hover:bg-[#ff6c2f] transition-colors duration-200 bg-[#ff3d5430]"
+                        >
+                          <Edit className="text-[#ff6c2f] group-hover:text-white" />
+                        </Link>
+                        <Link
+                          href={"#"}
+                          className="p-1 rounded group hover:bg-hero transition-colors duration-200 bg-[#ff3d5430]"
+                        >
+                          <DeleteIcon className="text-hero group-hover:text-white" />
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              : "No Services"}
           </tbody>
         </table>
       </div>

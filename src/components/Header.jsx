@@ -20,7 +20,7 @@ export const Header = () => {
   const hide = pathname.split("/").includes("admin");
   return (
     <header
-      className={` justify-between items-center sm:px-8 md:px-10 px-6 lg:px-16 py-10 max-sm:py-6 ${hide ? "hidden" : "flex"}`}
+      className={` justify-between sticky top-0 z-50 backdrop-blur-2xl items-center sm:px-8 md:px-10 px-6 lg:px-16 py-10 max-sm:py-6 ${hide ? "hidden" : "flex"}`}
     >
       <div className={"flex items-center lg:gap-10"}>
         <Link href={"/"}>
@@ -38,16 +38,12 @@ export const Header = () => {
             }
           >
             <li
-              className={
-                "hover:text-link-color-hover transition-colors duration-200"
-              }
+              className={`hover:text-link-color-hover transition-colors duration-200 }`}
             >
               <Link href={"/"}>Home</Link>
             </li>
             <li
-              className={
-                "hover:text-link-color-hover transition-colors duration-200"
-              }
+              className={`hover:text-link-color-hover transition-colors duration-200 ${pathname.split("/").includes("team") ? "text-link-color-hover" : ""}`}
             >
               <Link href={"/team"}>Our Team</Link>
             </li>{" "}

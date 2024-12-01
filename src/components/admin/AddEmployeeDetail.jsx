@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CloudUpload, Delete } from "lucide-react";
 import Link from "next/link";
 // import Image from "next/image";
 import TestimonialCard from "@/components/TestimonialCard";
+import { createEmployee } from "@/data/employee";
 
 export default function AddEmployeeDetail() {
   const [imagePreview, setImagePreview] = useState("");
@@ -21,34 +22,48 @@ export default function AddEmployeeDetail() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const [status, setStatus] = useState("");
+
+  const employmentStatuses = ["Active", "OnLeave", "Terminated"];
+  const roles = ["Admin", "Stylist", "Manager", "Receptionist", "ordinary"];
+
   const handleImageUpload = (e) => {
-    setError("");
     const file = e.target.files[0];
+    if (!file) {
+      setError("No file selected.");
+      return;
+    }
 
     if (
       !["image/jpeg", "image/png", "image/gif", "image/avif"].includes(
         file.type,
       )
     ) {
-      setError("Only JPG, PNG, and GIF formats are allowed.");
+      setError("Only JPG, PNG, GIF, and AVIF formats are allowed.");
+      setStatus("Only JPG, PNG, GIF, and AVIF formats are allowed.");
       return;
     }
 
     setImage(file);
     setImagePreview(URL.createObjectURL(file));
+    setError(""); // Clear error on valid input
+    setStatus("");
   };
 
-  const handleRemoveImage = () => {
-    setImage("");
-    setImagePreview("");
-  };
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   async function onSubmit(e) {
     e.preventDefault();
     setError("");
 
-    if (!image) {
-      setError("Please upload a profile image.");
+    if (!image || !fullName || !email || !employmentStatus || !role) {
+      setError("All required fields must be filled.");
+      setStatus("All required fields must be filled.");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setError("Invalid email address.");
       return;
     }
 
@@ -66,20 +81,44 @@ export default function AddEmployeeDetail() {
     formData.append("role", role);
     formData.append("image", image);
 
-    // Simulate API submission
     try {
-      // Replace with your API call
-      // const response = await createEmployee(formData);
-      console.log("Form submitted:", Object.fromEntries(formData.entries()));
+      const employee = await createEmployee(formData);
+      if (employee.error) {
+        setStatus("Unable to create an employee. Please try again");
+      }
+      if (!employee.error) {
+        setStatus("Employee successfully created!");
+      }
     } catch (err) {
       setError("An error occurred while saving employee details.");
+      console.log(err);
     } finally {
       setIsLoading(false);
+      setError("");
+      setRole("");
+      setEmail("");
+      setStatus("");
+      setEmploymentStatus("");
+      setExperienceYears("");
+      setFullName("");
+      setImage("");
+      setImagePreview("");
+      setPersonalInfo("");
+
+      setPhoneNo("");
+
+      setSkills("");
     }
   }
 
   const isSubmitDisabled =
-    !image || !fullName || !email || !employmentStatus || !role;
+    !image || !fullName || !email || !employmentStatus || !role || isLoading;
+
+  useEffect(() => {
+    return () => {
+      if (imagePreview) URL.revokeObjectURL(imagePreview);
+    };
+  }, [imagePreview]);
 
   return (
     <section className="flex lg:flex-row flex-col items-start p-10 w-full gap-10">
@@ -97,34 +136,6 @@ export default function AddEmployeeDetail() {
           full_name={fullName}
           image_url={imagePreview}
         />
-        {/*{imagePreview ? (*/}
-        {/*  <Image*/}
-        {/*    width={400}*/}
-        {/*    height={400}*/}
-        {/*    src={imagePreview}*/}
-        {/*    alt="Employee Preview"*/}
-        {/*    className="w-full h-[300px] rounded object-cover"*/}
-        {/*  />*/}
-        {/*) : (*/}
-        {/*  <p className="my-4 text-hero text-sm text-color-body">*/}
-        {/*    Please upload a profile image.*/}
-        {/*  </p>*/}
-        {/*)}*/}
-
-        {/*{imagePreview && (*/}
-        {/*  <button*/}
-        {/*    type="button"*/}
-        {/*    onClick={handleRemoveImage}*/}
-        {/*    className="cursor-pointer text-red-500 mt-2"*/}
-        {/*  >*/}
-        {/*    Remove Image*/}
-        {/*  </button>*/}
-        {/*)}*/}
-
-        <div>
-          <h1 className="text-xl mt-4 text-[#313b5e]">{fullName}</h1>
-          <p className="text-sm mt-3">{personalInfo}</p>
-        </div>
       </div>
 
       <div className="w-full">
@@ -147,7 +158,7 @@ export default function AddEmployeeDetail() {
           onSubmit={onSubmit}
           className="w-full text-[#5d7186] dark:text-white"
         >
-          <div className="bg-white dark:bg-[#1e1e1e] p-4 mt-4 rounded shadow-md">
+          <div className="bg-white dark:bg-[#1e1e1e] p-4 mt-4 rounded ">
             <div className="flex gap-10 items-center">
               <div className="flex flex-col w-1/2">
                 <label>Full Name</label>
@@ -163,6 +174,7 @@ export default function AddEmployeeDetail() {
                 <label>Email</label>
                 <input
                   required
+                  value={email}
                   type="email"
                   onChange={(e) => setEmail(e.target.value)}
                   className="px-4 py-2 border"
@@ -175,6 +187,7 @@ export default function AddEmployeeDetail() {
               <div className="flex flex-col w-1/2">
                 <label>Phone Number</label>
                 <input
+                  value={phoneNo}
                   required
                   type="text"
                   onChange={(e) => setPhoneNo(e.target.value)}
@@ -185,6 +198,7 @@ export default function AddEmployeeDetail() {
               <div className="flex flex-col w-1/2">
                 <label>Position</label>
                 <input
+                  value={position}
                   required
                   type="text"
                   onChange={(e) => setPosition(e.target.value)}
@@ -198,6 +212,7 @@ export default function AddEmployeeDetail() {
               <div className="flex flex-col w-1/2">
                 <label>Experience (Years)</label>
                 <input
+                  value={experienceYears}
                   type="number"
                   onChange={(e) => setExperienceYears(e.target.value)}
                   className="px-4 py-2 border"
@@ -208,6 +223,7 @@ export default function AddEmployeeDetail() {
                 <label>Employment Status</label>
                 <select
                   required
+                  value={employmentStatus}
                   onChange={(e) => setEmploymentStatus(e.target.value)}
                   className="px-4 py-2 border"
                 >
@@ -227,6 +243,7 @@ export default function AddEmployeeDetail() {
               <div className="flex flex-col w-1/2">
                 <label>Role</label>
                 <select
+                  value={role}
                   required
                   onChange={(e) => setRole(e.target.value)}
                   className="px-4 py-2 border"
@@ -244,6 +261,7 @@ export default function AddEmployeeDetail() {
               <div className="flex flex-col w-1/2">
                 <label>Skills (Comma Separated)</label>
                 <input
+                  value={skills}
                   type="text"
                   onChange={(e) =>
                     setSkills(e.target.value.split(",").map((s) => s.trim()))
@@ -257,14 +275,21 @@ export default function AddEmployeeDetail() {
             <div className="flex flex-col mt-4">
               <label>Personal Info</label>
               <textarea
+                value={personalInfo}
                 onChange={(e) => setPersonalInfo(e.target.value)}
-                className="border outline-none"
+                className="border mt-2 p-10 rounded outline-none"
                 placeholder="Short bio or description"
               ></textarea>
             </div>
           </div>
 
-          {error && <div className="text-hero text-sm">{error}</div>}
+          {status && (
+            <div>
+              <p className={"my-10 text-sm font-bold text-link-color-hover"}>
+                {status}
+              </p>
+            </div>
+          )}
 
           <div className="flex gap-10 p-4 items-center">
             <button

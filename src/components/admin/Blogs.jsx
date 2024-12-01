@@ -1,8 +1,9 @@
+"use client";
 import Pagination from "@/components/admin/Pagination";
 import { blogs } from "../../../constants";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
-import React from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -11,18 +12,31 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import AddBlog from "@/components/admin/AddBlog";
+
 import { getManyBlog } from "@/data/blogs";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+const AddBlog = dynamic(() => import("@/components/admin/AddBlog"), {
+  ssr: false,
+});
+export const Blogs = () => {
+  const [blogs, setBlogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-export const Blogs = async () => {
-  const blogList = await getManyBlog();
-  const allBlogs = blogList.blogs;
-  if (!allBlogs) {
-    return {
-      notFound: true,
-    };
-  }
+  useEffect(() => {
+    setIsLoading(true);
+    async function getBlogs() {
+      try {
+        const alldata = await getManyBlog();
+        setBlogs(alldata.blogs);
+      } catch (e) {
+        console.log(e.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    getBlogs();
+  }, []);
   return (
     <div className="col w-full my-8">
       <div className="card">
@@ -81,35 +95,69 @@ export const Blogs = async () => {
             </thead>
 
             <tbody className="text-[#8686a7]">
-              {allBlogs.map((blog) => (
-                <tr
-                  key={blog.id}
-                  className="border-b border-inherit bg-white dark:bg-[#1E1E1E]"
-                >
-                  <td className="px-2 py-3.5">
-                    <Link href={`/admin/blogs/${blog.id}`}>{blog.id}</Link>
-                  </td>
-                  <td className="px-2 py-3.5">
-                    <Image
-                      height={16}
-                      width={16}
-                      src={blog.image}
-                      alt={blog.title}
-                      className="w-16 h-16 object-cover"
-                    />
-                  </td>
-                  <td className="px-2 py-3.5">{blog.title}</td>
-                  <td className="px-2 py-3.5">{blog.tag}</td>
-                  <td className="px-2 py-3.5">
-                    {new Date(blog.date).toLocaleDateString()}
-                  </td>
-                  <td className="px-2 py-3.5">{blog.author}</td>
-                  <td className="px-2 py-3.5">{blog.status}</td>
-                  <td className="px-2 py-3.5">
-                    {new Date(blog.updated_at).toLocaleDateString()}
-                  </td>
-                </tr>
-              ))}
+              {blogs
+                ? blogs.map((blog) => (
+                    <tr
+                      key={blog.id}
+                      className="border-b border-inherit bg-white dark:bg-[#1E1E1E]"
+                    >
+                      <td className="px-2 py-3.5">
+                        <Link href={`/admin/blogs/${blog.id}`}>{blog.id}</Link>
+                      </td>
+                      <td className="px-2 py-3.5">
+                        <Suspense
+                          fallback={<div className={"w-16 h-16"}></div>}
+                        >
+                          <Image
+                            height={16}
+                            width={16}
+                            src={blog.image}
+                            alt={blog.title}
+                            className="w-16 h-16 object-cover"
+                          />
+                        </Suspense>
+                      </td>
+                      <td className="px-2 py-3.5">
+                        <Suspense
+                          fallback={<div className={"w-60 h-10"}></div>}
+                        >
+                          {blog.title}
+                        </Suspense>
+                      </td>
+                      <td className="px-2 py-3.5">
+                        <Suspense
+                          fallback={<div className={"w-60 h-10"}></div>}
+                        >
+                          {blog.tag}
+                        </Suspense>
+                      </td>
+                      <td className="px-2 py-3.5">
+                        {new Date(blog.date).toLocaleDateString()}
+                      </td>
+                      <td className="px-2 py-3.5">
+                        <Suspense
+                          fallback={<div className={"w-60 h-10"}></div>}
+                        >
+                          {blog.author}
+                        </Suspense>
+                      </td>
+                      <td className="px-2 py-3.5">
+                        <Suspense
+                          fallback={<div className={"w-60 h-10"}></div>}
+                        >
+                          {blog.status}
+                        </Suspense>
+                      </td>
+                      <td className="px-2 py-3.5">
+                        <Suspense
+                          fallback={<div className={"w-60 h-10"}></div>}
+                        >
+                          {new Date(blog.updated_at).toLocaleDateString()}
+                        </Suspense>
+                      </td>
+                    </tr>
+                  ))
+                : "No Blogs"}
             </tbody>
           </table>
         </div>
