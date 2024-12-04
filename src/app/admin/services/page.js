@@ -1,12 +1,9 @@
-"use client";
 import React from "react";
 import { services } from "../../../../constants";
-import dynamic from "next/dynamic";
-const Services = dynamic(() => import("@/components/admin/Services"), {
-  ssr: false,
-});
+import Services from "@/components/admin/Services";
 
-const Home = () => {
+export const dynamic = "force-dynamic";
+export default function Home() {
   return (
     // <div className="container mx-auto p-6">
     //   <h2 className="text-2xl font-semibold text-gray-700 mb-4">
@@ -63,6 +60,4 @@ const Home = () => {
     // </div>
     <Services />
   );
-};
-
-export default Home;
+}

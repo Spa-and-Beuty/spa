@@ -5,6 +5,7 @@ import React, { Suspense } from "react";
 
 import Loading from "@/app/loading";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 
 const Services = dynamic(() => import("@/components/admin/Services"), {
   ssr: false,
@@ -12,7 +13,9 @@ const Services = dynamic(() => import("@/components/admin/Services"), {
 const Appointments = dynamic(() => import("@/components/admin/Appointments"), {
   ssr: false,
 });
-export default function page() {
+export default function Page() {
+  const router = useRouter();
+
   return (
     <div className="p-10  full w-full">
       <div className=" lg:flex lg:flex-row md:flex-row items-start flex md:flex flex-col gap-4">

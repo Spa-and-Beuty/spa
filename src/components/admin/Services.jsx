@@ -12,14 +12,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import AddBlog from "@/components/admin/AddBlog";
 import AddService from "@/components/AddService";
-import { getManyServices } from "@/data/services";
-// import { deleteProduct, getManyProducts } from "@/data/products";
-
+import { getManyServices, deleteService } from "@/data/services";
+import { useRouter } from "next/navigation";
+export const dynamic = "force-dynamic";
 export default function Services() {
+  // const services = await getManyServices();
   const [services, setServices] = useState([]);
-
+  const router = useRouter();
   // const [products, setProductList] = useState([]);
   useEffect(() => {
     async function getServices() {
@@ -28,6 +28,20 @@ export default function Services() {
     }
     getServices();
   }, []);
+
+  async function handleDeleteService(id) {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this service?",
+    );
+    if (confirm) {
+      try {
+        const data = await deleteService(id);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    router.push("/admin/services");
+  }
 
   return (
     <div className="p-4 lg:p-6 mb-3 w-full rounded bg-white dark:bg-[#1E1E1E]">
@@ -108,9 +122,13 @@ export default function Services() {
                         </Link>
                         <Link
                           href={"#"}
-                          className="p-1 rounded group hover:bg-hero transition-colors duration-200 bg-[#ff3d5430]"
+                          className="p-1 rounded group hover:bg-hero transition-colors duration-200
+                          bg-[#ff3d5430]"
                         >
-                          <DeleteIcon className="text-hero group-hover:text-white" />
+                          <DeleteIcon
+                            onClick={() => handleDeleteService(service.id)}
+                            className="text-hero group-hover:text-white"
+                          />
                         </Link>
                       </div>
                     </td>

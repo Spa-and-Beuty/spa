@@ -18,7 +18,7 @@ import dynamic from "next/dynamic";
 const AddBlog = dynamic(() => import("@/components/admin/AddBlog"), {
   ssr: false,
 });
-export const Blogs = () => {
+export default function Blogs() {
   const [blogs, setBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -165,4 +165,4 @@ export const Blogs = () => {
       </div>
     </div>
   );
-};
+}

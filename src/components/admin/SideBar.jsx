@@ -24,76 +24,116 @@ import { FaBlog, FaBook, FaServicestack } from "react-icons/fa";
 import { Logo } from "@/components/Logo";
 import { FaMessage, FaPerson } from "react-icons/fa6";
 import { BiMoney } from "react-icons/bi";
+import { SidebarBody, SidebarLink, Sidebar } from "@/components/ui/sidebar";
+import {
+  IconLogout,
+  IconDashboard,
+  IconCategory,
+  IconNews,
+  IconMan,
+  IconMessage,
+  IconServicemark,
+  IconMoneybag,
+  IconSettings,
+} from "@tabler/icons-react";
+import Image from "next/image";
 
 export default function SideBar({ show, setShow }) {
   const [shrink, setShrink] = useState(false);
+  const [open, setOpen] = useState(false);
   // New state for hover
   const pathname = usePathname();
 
   const sideBarLinks = [
-    { icon: RiDashboard2Fill, name: "Dashboard", href: "/admin" },
-    { icon: RiGroup2Fill, name: "Category", href: "/admin/category" },
-    { icon: FaBlog, name: "Blogs", href: "/admin/blogs" },
-    { icon: FaPerson, name: "Teams", href: "/admin/teams" },
-    { icon: FaMessage, name: "Messages", href: "/admin/messages" },
-    { icon: FaBook, name: "Appointments", href: "/admin/appointments" },
-    { icon: FaServicestack, name: "Services", href: "/admin/services" },
+    {
+      icon: (
+        <IconDashboard className="text-neutral-200 h-7 w-7 flex-shrink-0" />
+      ),
+      label: "Dashboard",
+      href: "/admin",
+    },
+    {
+      icon: <IconCategory className="text-neutral-200 h-7 w-7 flex-shrink-0" />,
+      label: "Category",
+      href: "#",
+    },
+    {
+      icon: <IconNews className="text-neutral-200 h-7 w-7 flex-shrink-0" />,
+      label: "Blogs",
+      href: "/admin/blogs",
+    },
+    {
+      icon: <IconMan className="text-neutral-200 h-7 w-7 flex-shrink-0" />,
+      label: "Teams",
+      href: "/admin/teams",
+    },
+    {
+      icon: <IconMessage className="text-neutral-200 h-7 w-7 flex-shrink-0" />,
+      label: "Messages",
+      href: "/admin/messages",
+    },
+    {
+      icon: (
+        <IconServicemark className="text-neutral-200 h-7 w-7 flex-shrink-0" />
+      ),
+      label: "Services",
+      href: "/admin/services",
+    },
 
-    { icon: BiMoney, name: "Pricing", href: "/admin/pricing" },
-    { icon: RiSettings2Fill, name: "Settings", href: "#" },
+    {
+      icon: <IconMoneybag className="text-neutral-200 h-7 w-7 flex-shrink-0" />,
+      label: "Pricing",
+      href: "/admin/pricing",
+    },
+    {
+      icon: <IconSettings className="text-neutral-200 h-7 w-7 flex-shrink-0" />,
+      label: "Settings",
+      href: "#",
+    },
   ];
 
   return (
-    <div
-      className={`${
-        shrink ? "w-[7%] " : "lg:w-[300px]  "
-      } lg:static  shadow-md h-full  transition-all duration-200  ${
-        show ? "show" : "hide"
-      }  hide-sidebar px-6 bg-secondary-color text-blackish-color text-`}
-    >
-      <div className="flex mb-10 items-center justify-between pt-5">
-        <div className="w-2/3  relative right-2">{!shrink && <Logo />}</div>
-        <div className="relative">
-          <button
-            onClick={() => setShrink(!shrink)}
-            className={`${
-              shrink ? " relative top-4 right-3" : ""
-            } button-hide block outline-none`}
-          >
-            {shrink ? (
-              <BsBoxArrowRight size={30} color="gray" />
-            ) : (
-              <BsBoxArrowLeft size={30} color="gray" />
-            )}
-          </button>
-          <button
-            onClick={() => setShow(false)}
-            className="absolute inset-0 button-show hidden right-10"
-          >
-            <RiCloseLine size={30} />
-          </button>
+    <Sidebar open={open} setOpen={setOpen} animate={true}>
+      <SidebarBody className="justify-between gap-10">
+        <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+          <>
+            <Logo />
+          </>
+          <div className="mt-8 flex flex-col gap-2">
+            {sideBarLinks.map((link, idx) => (
+              <SidebarLink key={idx} link={link} />
+            ))}
+            <button>
+              <SidebarLink
+                link={{
+                  label: "Logout",
+                  href: "#",
+                  icon: (
+                    <IconLogout className="text-neutral-200 h-7 w-7 flex-shrink-0" />
+                  ),
+                }}
+              />
+            </button>
+          </div>
         </div>
-      </div>
-      {!shrink && <span className="text-sm text-primary-p">General</span>}
-      <div className={`${shrink ? "mt-16" : "mt-4"}`}>
-        <ul>
-          {sideBarLinks.map((sidebar) => (
-            <li
-              key={sidebar.name}
-              className={`hover:text-link-color-hover ${
-                pathname === sidebar.href
-                  ? "bg-white px-4 text-link-color-hover py-2 rounded-full"
-                  : ""
-              } transition-all duration-300 ease-linear mb-3`}
-            >
-              <Link className="flex items-center gap-4" href={sidebar.href}>
-                <sidebar.icon size={shrink ? 35 : 20} />
-                <p className={`${shrink ? "hidden" : ""}`}>{sidebar.name}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+        <div>
+          <SidebarLink
+            link={{
+              label: "Spaville",
+              href: "#",
+              icon: (
+                <Image
+                  src={"/assets/new_logo.jpg"}
+                  className="h-7 w-7 flex-shrink-0 rounded-full"
+                  width={50}
+                  height={50}
+                  alt="Avatar"
+                />
+              ),
+            }}
+          />
+        </div>
+      </SidebarBody>
+    </Sidebar>
   );
 }

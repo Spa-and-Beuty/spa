@@ -36,6 +36,6 @@ export async function updateService(id, data) {
 }
 
 export async function deleteService(id) {
-  const res = await fetcher.get(`/categories/${id}`);
+  const res = await fetcher.delete(`/api/v1/services/${id}`);
   return res.data;
 }
