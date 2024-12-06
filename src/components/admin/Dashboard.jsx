@@ -12,10 +12,14 @@ export default function Dashboard({ children }) {
     <div
       className={`flex  relative full justify-between overflow-hidden h-svh`}
     >
-      <SideBar show={show} setShow={setShow} />
+      {!pathname.split("/").includes("login") && (
+        <SideBar show={show} setShow={setShow} />
+      )}
 
       <div className="w-full page-full  h-full  overflow-scroll bg-[#f9f7f7]">
-        <AdminHeader setShow={setShow} show={show} />
+        {!pathname.split("/").includes("login") && (
+          <AdminHeader setShow={setShow} show={show} />
+        )}
 
         {children}
       </div>

@@ -97,11 +97,15 @@ export default function SideBar({ show, setShow }) {
       <SidebarBody className="justify-between gap-10">
         <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
           <>
-            <Logo />
+            <Logo open={open} />
           </>
           <div className="mt-8 flex flex-col gap-2">
             {sideBarLinks.map((link, idx) => (
-              <SidebarLink key={idx} link={link} />
+              <SidebarLink
+                className={`${pathname.split("/").includes(link.label.toLowerCase()) && open ? "bg-link-color-hover p-4 text-blackish-color rounded-full" : "text-white"}`}
+                key={idx}
+                link={link}
+              />
             ))}
             <button>
               <SidebarLink
@@ -123,7 +127,7 @@ export default function SideBar({ show, setShow }) {
               href: "#",
               icon: (
                 <Image
-                  src={"/assets/new_logo.jpg"}
+                  src={"/assets/images/new_logo.jpg"}
                   className="h-7 w-7 flex-shrink-0 rounded-full"
                   width={50}
                   height={50}

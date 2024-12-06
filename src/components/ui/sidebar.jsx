@@ -98,7 +98,7 @@ export const MobileSidebar = ({ className, children, ...props }) => {
                 ease: "easeInOut",
               }}
               className={cn(
-                "fixed h-full w-full inset-0 bg-neutral-900 p-10 z-[100] flex flex-col justify-between",
+                "fixed h-full  w-full inset-0 bg-neutral-900 p-10 z-[100] flex flex-col justify-between",
                 className,
               )}
             >

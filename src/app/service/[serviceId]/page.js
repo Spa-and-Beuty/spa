@@ -10,6 +10,7 @@ export default async function page({ params }) {
     <div className="w-2/3 max-lg:w-full  max-lg:-order-1  flex flex-col">
       <div className="h-auto w-full">
         <Image
+          quality={100}
           src={service.imageUrl}
           width={600}
           height={200}

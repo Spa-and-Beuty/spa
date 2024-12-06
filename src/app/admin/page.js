@@ -1,11 +1,15 @@
 "use client";
 import ApexChart from "@/components/admin/ApexChart";
 import StatusCard from "@/components/admin/StatusCard";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 
 import Loading from "@/app/loading";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import { getManyAppointments } from "@/data/appointment";
+import { getManyMessages } from "@/data/contactMessage";
+import { getManyServices } from "@/data/services";
+import { getManyEmployees } from "@/data/employee";
 
 const Services = dynamic(() => import("@/components/admin/Services"), {
   ssr: false,
@@ -14,16 +18,51 @@ const Appointments = dynamic(() => import("@/components/admin/Appointments"), {
   ssr: false,
 });
 export default function Page() {
-  const router = useRouter();
+  // const router = useRouter();
+
+  const [appointments, setAppointments] = useState([]);
+  const [messages, setMessage] = useState([]);
+  const [services, setService] = useState([]);
+  const [employees, setEmployees] = useState([]);
+
+  useEffect(() => {
+    async function getData() {
+      const data = await getManyAppointments();
+      setAppointments(data);
+      const messages = await getManyMessages();
+      setMessage(messages);
+      const services = await getManyServices();
+      setService(services);
+      const employees = await getManyEmployees();
+      setEmployees(employees.employees);
+    }
+    getData();
+  }, []);
 
   return (
     <div className="p-10  full w-full">
       <div className=" lg:flex lg:flex-row md:flex-row items-start flex md:flex flex-col gap-4">
         <div className="lg:w-1/2 w-full text-[#5d7186] max-sm:justify-center md:w-1/2 flex gap-2 flex-wrap items-start">
-          <StatusCard />
-          <StatusCard />
-          <StatusCard />
-          <StatusCard />
+          <StatusCard
+            amount={appointments.length}
+            title={"Total Appointments"}
+            link={"admin/appointments"}
+          />
+          <StatusCard
+            amount={employees.length}
+            title={"Total Employees"}
+            link={"admin/teams"}
+          />
+          <StatusCard
+            amount={services.length}
+            title={"Total Services"}
+            link={"admin/services"}
+          />
+          <StatusCard
+            amount={messages.length}
+            title={"Total Messages"}
+            link={"#"}
+          />
         </div>
         <ApexChart />
       </div>

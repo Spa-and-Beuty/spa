@@ -17,9 +17,9 @@ export async function createContactMessage(data) {
   }
 }
 
-export async function getManyPriceing(query = "") {
+export async function getManyMessages(query = "") {
   try {
-    const res = await fetcher.get(`/api/v1/price/get-price`);
+    const res = await fetcher.get(`/api/v1/contact-message/get-message`);
     // console.log("Fetched data:", JSON.stringify(res)); // Ensure the response is what you expect
     return res.data; // Extract only the data part
   } catch (error) {

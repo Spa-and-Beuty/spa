@@ -15,6 +15,8 @@ import {
 import AddService from "@/components/AddService";
 import { getManyServices, deleteService } from "@/data/services";
 import { useRouter } from "next/navigation";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 export const dynamic = "force-dynamic";
 export default function Services() {
   // const services = await getManyServices();
@@ -102,6 +104,7 @@ export default function Services() {
                         className="w-10 h-10 object-cover rounded shadow"
                         alt={service?.title}
                       />
+                      <Skeleton className={"w-200 h-30 bg-red"} />
                       <span>
                         <h1 className="font-medium">{service?.title}</h1>
                       </span>
