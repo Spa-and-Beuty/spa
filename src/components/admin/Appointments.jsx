@@ -2,7 +2,7 @@
 import Pagination from "@/components/admin/Pagination";
 // import { appointments } from "../../../constants";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { getManyAppointments } from "@/data/appointment";
 
 export default function Appointments() {
@@ -57,30 +57,42 @@ export default function Appointments() {
                       className="border-b border-inherit bg-white dark:bg-[#1E1E1E]"
                     >
                       <td className="px-2 py-3.5">
-                        <Link href={`/admin/appointments/${appointment.id}`}>
-                          {appointment.id}
-                        </Link>
+                        <Suspense>
+                          <Link href={`/admin/appointments/${appointment.id}`}>
+                            {appointment.id}
+                          </Link>
+                        </Suspense>
                       </td>
                       <td className="px-2 py-3.5">
-                        {new Date(appointment.created_at).getFullYear()}{" "}
-                        {new Date(appointment.created_at).toLocaleString(
-                          "default",
-                          {
-                            month: "long",
-                          },
-                        )}{" "}
-                        {new Date(appointment.created_at).getDate()}{" "}
+                        <Suspense>
+                          {new Date(appointment.created_at).getFullYear()}{" "}
+                          {new Date(appointment.created_at).toLocaleString(
+                            "default",
+                            {
+                              month: "long",
+                            },
+                          )}{" "}
+                          {new Date(appointment.created_at).getDate()}{" "}
+                        </Suspense>
                       </td>
-                      <td className="px-2 py-3.5">{appointment.service}</td>
-                      <td className="px-2 py-3.5">{appointment.full_name}</td>
+                      <td className="px-2 py-3.5">
+                        <Suspense>{appointment.service}</Suspense>
+                      </td>
+                      <td className="px-2 py-3.5">
+                        <Suspense>{appointment.full_name}</Suspense>
+                      </td>
 
-                      <td className="px-2 py-3.5">{appointment.email}</td>
-                      <td className="px-2 py-3.5">{appointment.message}</td>
                       <td className="px-2 py-3.5">
-                        {appointment.payment_status}
+                        <Suspense>{appointment.email}</Suspense>
                       </td>
                       <td className="px-2 py-3.5">
-                        {appointment.appointment_status}
+                        <Suspense>{appointment.message}</Suspense>
+                      </td>
+                      <td className="px-2 py-3.5">
+                        <Suspense>{appointment.payment_status}</Suspense>
+                      </td>
+                      <td className="px-2 py-3.5">
+                        <Suspense>{appointment.appointment_status}</Suspense>
                       </td>
                     </tr>
                   ))

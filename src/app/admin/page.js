@@ -40,36 +40,52 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="p-10  full w-full">
+    <div className="p-10 w-full">
       <div className=" lg:flex lg:flex-row md:flex-row items-start flex md:flex flex-col gap-4">
         <div className="lg:w-1/2 w-full text-[#5d7186] max-sm:justify-center md:w-1/2 flex gap-2 flex-wrap items-start">
-          <StatusCard
-            amount={appointments.length}
-            title={"Total Appointments"}
-            link={"admin/appointments"}
-          />
-          <StatusCard
-            amount={employees.length}
-            title={"Total Employees"}
-            link={"admin/teams"}
-          />
-          <StatusCard
-            amount={services.length}
-            title={"Total Services"}
-            link={"admin/services"}
-          />
-          <StatusCard
-            amount={messages.length}
-            title={"Total Messages"}
-            link={"#"}
-          />
+          <Suspense fallback={<Loading />}>
+            {" "}
+            <StatusCard
+              amount={appointments.length}
+              title={"Total Appointments"}
+              link={"admin/appointments"}
+            />
+          </Suspense>
+          <Suspense fallback={<Loading />}>
+            {" "}
+            <StatusCard
+              amount={employees.length}
+              title={"Total Employees"}
+              link={"admin/teams"}
+            />
+          </Suspense>
+          <Suspense fallback={<Loading />}>
+            <StatusCard
+              amount={services.length}
+              title={"Total Services"}
+              link={"admin/services"}
+            />
+          </Suspense>
+          <Suspense fallback={<Loading />}>
+            <StatusCard
+              amount={messages.length}
+              title={"Total Messages"}
+              link={"#"}
+            />
+          </Suspense>
         </div>
-        <ApexChart />
+        <Suspense fallback={<Loading />}>
+          <ApexChart />
+        </Suspense>
       </div>
 
-      <Services />
+      <Suspense fallback={<Loading />}>
+        <Services />
+      </Suspense>
 
-      <Appointments />
+      <Suspense fallback={<Loading />}>
+        <Appointments />
+      </Suspense>
     </div>
   );
 }

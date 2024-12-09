@@ -32,7 +32,7 @@ export default function Faq({
         <p className="mb-7 text-darkish-color">{description}</p>
       </div>
       <div
-        className={` ${grid && "grid justify-start  items-start  grid-cols-2 gap-10"}`}
+        className={` ${grid && "grid justify-start max-md:grid-cols-1  items-start  grid-cols-2 gap-10"}`}
       >
         {questions.map((question) => (
           <Accordion

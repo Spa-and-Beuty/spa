@@ -13,22 +13,32 @@ import { getOneBlog } from "@/data/blogs";
 import { Remarkable } from "remarkable";
 import { notFound } from "next/navigation";
 
-const md = new Remarkable();
+export async function generateMetadata({ params, searchParams }, parent) {
+  // read route params
+  const id = (await params).blogId;
+  const singleBlog = await getOneBlog(id);
 
-function renderMarkdownToHTML(markdown) {
-  // This is ONLY safe because the output HTML
-  // is shown to the same user, and because you
-  // trust this Markdown parser to not have bugs.
-  const renderedHTML = md.render(markdown);
-  return { __html: renderedHTML };
+  // fetch data
+
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: singleBlog.title,
+    openGraph: {
+      images: [singleBlog.image, ...previousImages],
+    },
+  };
 }
+
 export default async function page({ params }) {
+  const id = (await params).blogId;
   // const singleBlogs = posts.find((post) => post.id == params.blogId);
-  const singleBlog = await getOneBlog(params.blogId);
+  const singleBlog = await getOneBlog(id);
   if (!singleBlog) {
     notFound();
   }
-  const markup = renderMarkdownToHTML(singleBlog.description);
+
   const tags = [
     "Beauty",
     "fitness",

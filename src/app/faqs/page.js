@@ -9,6 +9,13 @@ import { bitter } from "../../../constants";
 import { PagesHero } from "@/components/PagesHero";
 import Faq from "@/components/Faq";
 
+export const metadata = {
+  title: "Frequently Asked Questions",
+  openGraph: {
+    title: "Frequently Asked Questions",
+  },
+};
+
 export default function page() {
   const questions = [
     {

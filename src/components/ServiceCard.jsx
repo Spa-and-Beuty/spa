@@ -3,23 +3,34 @@ import { bitter } from "../../constants";
 import { BsArrowRight } from "react-icons/bs";
 import Link from "next/link";
 import Image from "next/image";
-
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 export default function ServiceCard({
   id,
   white = true,
   image_url,
   title,
   tag,
+  isLoading,
 }) {
   return (
     <div className={`rounded-3xl ${white ? "bg-white" : "bg-secondary-color"}`}>
-      <Image
-        src={image_url}
-        alt={title}
-        width={500}
-        height={500}
-        className={"w-full rounded-3xl "}
-      />
+      {isLoading ? (
+        <Skeleton
+          width={500}
+          height={500}
+          baseColor={"#010101"}
+          className={"w-[500px] h-[500px] bg-red-400"}
+        />
+      ) : (
+        <Image
+          src={image_url}
+          alt={title}
+          width={500}
+          height={500}
+          className={"w-full rounded-3xl "}
+        />
+      )}
       <div className={"flex px-5 py-4 items-center justify-between"}>
         <h1 className={`text-2xl font-semibold ${bitter.className}`}>
           {title}

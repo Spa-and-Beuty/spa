@@ -18,6 +18,15 @@ import { usePathname } from "next/navigation";
 export const Header = () => {
   const pathname = usePathname();
   const hide = pathname.split("/").includes("admin");
+  const headerLinks = [
+    { title: "Home", link: "/" },
+    { title: "Our Team", link: "team" },
+    { title: "Blog", link: "blog" },
+    { title: "Service", link: "service" },
+    { title: "About Us", link: "about" },
+    { title: "Contact", link: "contact" },
+    { title: "Faqs", link: "faqs" },
+  ];
   return (
     <header
       className={` justify-between sticky top-0 z-50 backdrop-blur-2xl items-center sm:px-8 md:px-10 px-6 lg:px-16 py-10 max-sm:py-6 ${hide ? "hidden" : "flex"}`}
@@ -37,44 +46,16 @@ export const Header = () => {
               "flex  font-bold uppercase text-link-color-normal items-center gap-4 justify-center"
             }
           >
-            <li
-              className={`hover:text-link-color-hover transition-colors duration-200 }`}
-            >
-              <Link href={"/"}>Home</Link>
-            </li>
-            <li
-              className={`hover:text-link-color-hover transition-colors duration-200 ${pathname.split("/").includes("team") ? "text-link-color-hover" : ""}`}
-            >
-              <Link href={"/team"}>Our Team</Link>
-            </li>{" "}
-            <li
-              className={
-                "hover:text-link-color-hover transition-colors duration-200"
-              }
-            >
-              <Link href={"/blog"}>Blog</Link>
-            </li>{" "}
-            <li
-              className={
-                "hover:text-link-color-hover transition-colors duration-200"
-              }
-            >
-              <Link href={"/service"}>Services</Link>
-            </li>{" "}
-            <li
-              className={
-                "hover:text-link-color-hover transition-colors duration-200"
-              }
-            >
-              <Link href={"/about"}>About Us</Link>
-            </li>{" "}
-            <li
-              className={
-                "hover:text-link-color-hover transition-colors duration-200"
-              }
-            >
-              <Link href={"/contact"}>Contact</Link>
-            </li>
+            {headerLinks.map((links) => (
+              <li
+                key={links.link}
+                className={`hover:text-link-color-hover transition-colors duration-200 ${pathname.split("/").includes(links.link) ? "text-link-color-hover" : ""}`}
+              >
+                <Link href={links.link === "/" ? "/" : `/${links.link}`}>
+                  {links.title}
+                </Link>
+              </li>
+            ))}
           </ul>
         </nav>
       </div>

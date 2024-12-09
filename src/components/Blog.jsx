@@ -1,10 +1,27 @@
+"use client";
 import NewsItem from "@/components/NewsItem";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { getManyBlog } from "@/data/blogs";
 
-export const Blog = async () => {
-  const blogs = await getManyBlog();
-  const posts = blogs.blogs;
+export const Blog = () => {
+  const [blogs, setBlogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    async function getBlogs() {
+      try {
+        const data = await getManyBlog();
+        setBlogs(data.blogs);
+      } catch (e) {
+        console.log(e.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    getBlogs();
+  }, []);
+
   return (
     <section
       className={
@@ -12,7 +29,7 @@ export const Blog = async () => {
       }
     >
       {" "}
-      {posts.map((post) => (
+      {blogs.map((post) => (
         <NewsItem
           flex={false}
           key={post.id}

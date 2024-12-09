@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BsArrowUpRight } from "react-icons/bs";
-
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { Suspense } from "react";
 export default function NewsItem({
   flex = true,
   title,
@@ -16,15 +18,17 @@ export default function NewsItem({
       className={`${flex ? "flex" : "flex-col"} max-lg:flex-col gap-4 items-center justify-center`}
     >
       <div className={"relative flex-1  group"}>
-        <Image
-          src={image}
-          alt={title}
-          width={500}
-          className={
-            "rounded-3xl h-[300px] object-fit w-[500px] transition-transform duration-700 ease-in-out group-hover:scale-[1.0101]"
-          }
-          height={500}
-        />
+        <Suspense fallback={<Skeleton />}>
+          <Image
+            src={image}
+            alt={title}
+            width={500}
+            className={
+              "rounded-3xl h-[300px] object-fit w-[500px] transition-transform duration-700 ease-in-out group-hover:scale-[1.0101]"
+            }
+            height={500}
+          />
+        </Suspense>
         <span
           className={
             "absolute group-hover:bg-blackish-color group-hover:text-white  top-0 px-4 py-1 mt-4 ml-2 bg-white transition-colors duration-700 ease-in-out rounded-full text-link-color-hover text-sm"

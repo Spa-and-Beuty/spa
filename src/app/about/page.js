@@ -5,6 +5,13 @@ import { OurExperts } from "@/components/OurExperts";
 import { PagesHero } from "@/components/PagesHero";
 import { Portfolio } from "@/components/Portfolio";
 import { Status } from "@/components/Status";
+import Head from "next/head";
+
+export async function generateMetadata({ params, searchParams }) {
+  return {
+    title: "About Us",
+  };
+}
 
 export default function Home() {
   return (

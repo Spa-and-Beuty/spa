@@ -3,7 +3,25 @@ import React, { useEffect, useState } from "react";
 import ServiceCard from "./ServiceCard";
 import { getManyServices } from "@/data/services";
 
-export default function Service({ data }) {
+export default function Service() {
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    async function getService() {
+      try {
+        const data = await getManyServices();
+        setData(data);
+      } catch (e) {
+        console.log(e.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    getService();
+  }, []);
+
   return (
     <section
       className={

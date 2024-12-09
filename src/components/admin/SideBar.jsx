@@ -19,7 +19,7 @@ import {
   RiSettings2Fill,
 } from "react-icons/ri";
 // import Logo from "../Logo";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FaBlog, FaBook, FaServicestack } from "react-icons/fa";
 import { Logo } from "@/components/Logo";
 import { FaMessage, FaPerson } from "react-icons/fa6";
@@ -37,12 +37,24 @@ import {
   IconSettings,
 } from "@tabler/icons-react";
 import Image from "next/image";
+import { logout } from "@/data/logout";
 
 export default function SideBar({ show, setShow }) {
   const [shrink, setShrink] = useState(false);
   const [open, setOpen] = useState(false);
+  const router = useRouter();
   // New state for hover
   const pathname = usePathname();
+  async function handleLogout() {
+    try {
+      const res = await logout();
+      if (!res.error) {
+        router.push("/");
+      }
+    } catch (e) {
+      return { error: e };
+    }
+  }
 
   const sideBarLinks = [
     {
@@ -107,17 +119,19 @@ export default function SideBar({ show, setShow }) {
                 link={link}
               />
             ))}
-            <button>
-              <SidebarLink
-                link={{
-                  label: "Logout",
-                  href: "#",
-                  icon: (
-                    <IconLogout className="text-neutral-200 h-7 w-7 flex-shrink-0" />
-                  ),
-                }}
-              />
-            </button>
+            <form onSubmit={handleLogout}>
+              <button type={"submit"}>
+                <SidebarLink
+                  link={{
+                    label: "Logout",
+                    href: "#",
+                    icon: (
+                      <IconLogout className="text-neutral-200 h-7 w-7 flex-shrink-0" />
+                    ),
+                  }}
+                />
+              </button>
+            </form>
           </div>
         </div>
         <div>

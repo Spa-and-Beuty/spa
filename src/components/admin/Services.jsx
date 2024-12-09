@@ -2,7 +2,7 @@
 import { ChevronDown, DeleteIcon, Edit, EyeIcon, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Pagination from "./Pagination";
 import {
   Dialog,
@@ -97,17 +97,20 @@ export default function Services() {
                     className="border-b bg-white dark:bg-inherit dark:bg-opacity-5"
                   >
                     <td className="flex items-center gap-2 p-4">
-                      <Image
-                        src={service?.imageUrl}
-                        width={50}
-                        height={50}
-                        className="w-10 h-10 object-cover rounded shadow"
-                        alt={service?.title}
-                      />
-                      <Skeleton className={"w-200 h-30 bg-red"} />
-                      <span>
-                        <h1 className="font-medium">{service?.title}</h1>
-                      </span>
+                      <Suspense>
+                        {" "}
+                        <Image
+                          src={service?.imageUrl}
+                          width={50}
+                          height={50}
+                          className="w-10 h-10 object-cover rounded shadow"
+                          alt={service?.title}
+                        />
+                        <Skeleton className={"w-200 h-30 bg-red"} />
+                        <span>
+                          <h1 className="font-medium">{service?.title}</h1>
+                        </span>
+                      </Suspense>
                     </td>
 
                     <td className="text-[#8686a7] p-4">{service?.tag}</td>

@@ -10,7 +10,12 @@ import {
 import { bitter } from "../../../constants";
 import { PagesHero } from "@/components/PagesHero";
 import ContactGrid from "@/components/ContactGrid";
-
+export const metadata = {
+  title: "Contact Us",
+  openGraph: {
+    title: "Contact Us",
+  },
+};
 export default function page() {
   const contact = {
     id: "1",

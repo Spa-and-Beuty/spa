@@ -4,8 +4,20 @@ import { posts, services } from "../../../../constants";
 import { BsQuote } from "react-icons/bs";
 import { getOneService } from "@/data/services";
 
+export async function generateMetadata({ params, searchParams }, parent) {
+  const id = (await params).serviceId;
+  const service = await getOneService(id);
+  const previousImages = (await parent).openGraph?.images || [];
+  return {
+    title: service.title,
+    description: service.description,
+    images: [service.image, ...previousImages],
+  };
+}
+
 export default async function page({ params }) {
-  const service = await getOneService(await params.serviceId);
+  const id = (await params).serviceId;
+  const service = await getOneService(id);
   return (
     <div className="w-2/3 max-lg:w-full  max-lg:-order-1  flex flex-col">
       <div className="h-auto w-full">

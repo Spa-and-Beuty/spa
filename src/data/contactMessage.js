@@ -28,8 +28,8 @@ export async function getManyMessages(query = "") {
   }
 }
 
-export async function getOneService(id) {
-  const res = await fetcher.get(`/api/v1/services/${id}`);
+export async function getOneMessage(id) {
+  const res = await fetcher.get(`/api/v1/contact-message/get-message/${id}`);
   return res.data;
 }
 
