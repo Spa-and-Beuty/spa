@@ -10,8 +10,12 @@ export default async function Categories({ searchParam }) {
   console.log("tag", searchParam);
   const data = await getManyBlog();
   const posts = data.blogs;
-  const filteredCategories = posts.map((post) => post.tag);
-  const categories = new Set(filteredCategories);
+
+  function howManyPosts(tag) {
+    return posts.filter((post) => post.tag === tag).length;
+  }
+
+  const categories = Array.from(new Set(posts.map((post) => post.tag)));
   console.log("categories", categories);
 
   // const categories = [
@@ -75,18 +79,18 @@ export default async function Categories({ searchParam }) {
           Categories
         </h1>
         <ul className="flex list-disc flex-col">
-          {posts.map((category) => (
+          {categories.map((category, index) => (
             <li
-              key={category.id}
+              key={index}
               className="flex uppercase text-blackish-color text-sm py-4 border-b border-gray-200 items-center justify-between"
             >
               <Link
                 className="hover:text-link-color-hover hover:scale-[1.01] transition-all duration-300"
-                href={`?tag=${category.tag}`}
+                href={`?tag=${category}`}
               >
-                {category.tag}
+                {category}
               </Link>
-              <span className="text-sm text-darkish-color">{`(${posts.length})`}</span>
+              <span className="text-sm text-darkish-color">{`(${howManyPosts(category)})`}</span>
             </li>
           ))}
         </ul>

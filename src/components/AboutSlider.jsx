@@ -82,7 +82,8 @@ export const AboutSlider = () => {
                 src={slide.image}
                 alt={slide.title}
                 width={600}
-                height={400}
+                height={600}
+                priority
                 className={
                   "max-sm:w-full max-sm:h-1/2 max-lg:w-full max-md:h-1/2 w-1/2  h-full rounded-3xl"
                 }

@@ -17,6 +17,10 @@ import JoditEditor from "jodit-react";
 import { createBlog } from "@/data/blogs";
 import axios from "axios";
 import { joditConfig } from "../../../constants/joditConfig";
+import { CheckCircle } from "phosphor-react";
+import { bitter } from "../../../constants";
+import { MdClose } from "react-icons/md";
+import { X } from "lucide-react";
 // import Quill from "quill";
 // import "quill/";
 
@@ -32,38 +36,22 @@ export default function AddBlog() {
   const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-
-  const options = [
-    "bold",
-    "italic",
-    "|",
-    "ul",
-    "ol",
-    "|",
-    "font",
-    "fontsize",
-    "|",
-    "outdent",
-    "indent",
-    "align",
-    "|",
-    "hr",
-    "|",
-    "fullsize",
-    "brush",
-    "|",
-    "table",
-    "link",
-    "|",
-    "undo",
-    "redo",
-  ];
+  const [showModal, setShowModal] = useState(false);
+  const configs = {
+    readonly: false,
+    height: 400,
+    toolbarButtonSize: "middle",
+    buttons: ["bold", "italic", "underline", "link", "unlink", "source"],
+    uploader: {
+      insertImageAsBase64URI: true,
+    },
+  };
   const editor = useRef(null);
   const config = useMemo(
     () => ({
       ...joditConfig,
     }),
-    [],
+    []
   );
 
   const handleImageUpload = (e) => {
@@ -92,11 +80,15 @@ export default function AddBlog() {
     try {
       const res = await axios.post(`${HOST}/api/v1/blog`, formData);
       console.log(res);
+      if (res.data) {
+        setShowModal(true);
+      }
     } catch (error) {
-      // setError("An error occurred while creating the product.");
+      setError(error.message);
       console.log("error", error);
     } finally {
       setIsLoading(false);
+      // setShowModal(true);
     }
   }
   // const isSubmitDisabled = images.length > 2;
@@ -140,11 +132,11 @@ export default function AddBlog() {
             className="w-full opacity-0 absolute inset-0 text-sm py-3 mb-9 px-7 h-full border-color-light text-color-body rounded-md border"
           />
         </div>
-        <div className="mt-4 rounded shadow-md">
+        <div className="mt-4 rounded ">
           <div className="bg-white dark:bg-[#3C3C3C]  border-b mt-4 p-4">
             Blog Detail
           </div>
-          <form onSubmit={onSubmit} className="w-full text-gray-200">
+          <form onSubmit={onSubmit} className="w-full text-black">
             <div className="bg-white dark:bg-[#3C3C3C]  p-4">
               <div className="flex gap-10 items-center justify-between">
                 <div className="flex flex-col w-1/2">
@@ -199,7 +191,7 @@ export default function AddBlog() {
                 />
               </div>
             </div>
-            <div>{description}</div>
+            {error && <p className="text-red-500">{error}</p>}
             <div className="flex gap-10 p-4 items-center">
               <div className="my-8">
                 <input
@@ -218,6 +210,20 @@ export default function AddBlog() {
           </form>
         </div>
       </div>
+      {showModal && (
+        <div className="fixed z-40 flex items-center justify-center flex-col bg-white shadow-md p-10 rounded-sm border border-gray-300 text-black top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <CheckCircle color="green" fill="green" size={200} />
+          <p className={`text-2xl font-bold ${bitter.className}`}>
+            Blog successfully added!
+          </p>
+          <button
+            onClick={() => setShowModal(!showModal)}
+            className="absolute  z-50 top-4 right-4"
+          >
+            <X size={50} />
+          </button>
+        </div>
+      )}
     </section>
   );
 }
