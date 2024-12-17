@@ -58,9 +58,8 @@ export const Status = () => {
             className={`text-7xl mb-2 text-link-color-hover font-bold ${bitter.className}`}
           >
             {startCounting && (
-              <CountUp className={"text-red"} start={0} end={13} />
+              <CountUp className={"text-red"} start={0} end={6} />
             )}
-            {startCounting && "K"}
           </h1>
           <p className={"text-sm uppercase"}>years of experience</p>
         </div>{" "}
@@ -69,9 +68,8 @@ export const Status = () => {
             className={`text-7xl mb-2 text-link-color-hover font-bold ${bitter.className}`}
           >
             {startCounting && (
-              <CountUp className={"text-red"} start={0} end={37} />
+              <CountUp className={"text-red"} start={0} end={2} />
             )}
-            {startCounting && "+"}
           </h1>
           <p className={"text-sm uppercase"}>number of centers</p>
         </div>

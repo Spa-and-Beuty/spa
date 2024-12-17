@@ -36,9 +36,9 @@ export async function getOneBlog(id) {
   }
 }
 
-export async function updateBlog(id, data) {
+export async function updateEmployee(id, data) {
   try {
-    const res = await fetcher.put(`/blogs/${id}`, data);
+    const res = await fetcher.put(`/api/v1/employees/update-employee/${id}`, data);
     return res.data;
   } catch (error) {
     console.error("Error updating blog:", error);

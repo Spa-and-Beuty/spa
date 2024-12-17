@@ -25,8 +25,8 @@ export async function getManyPriceing(query = "") {
   }
 }
 
-export async function getOneService(id) {
-  const res = await fetcher.get(`/api/v1/services/${id}`);
+export async function getOnePlan(id) {
+  const res = await fetcher.get(`/api/v1/price/get-price/${id}`);
   return res.data;
 }
 
@@ -35,7 +35,8 @@ export async function updateService(id, data) {
   return res.data;
 }
 
-export async function deleteService(id) {
-  const res = await fetcher.get(`/categories/${id}`);
+export async function deletePrice(id) {
+  const res = await fetcher.delete(`/api/v1/price/delete-price/${id}`);
+
   return res.data;
 }

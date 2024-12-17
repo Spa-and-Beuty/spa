@@ -52,11 +52,14 @@ export default function ServiceTypes() {
                   >
                     {service.title}
                   </Link>
-                  <span className="text-sm hover:rotate-45 text-darkish-color">
+                  <Link
+                    href={`/service/${service.id}`}
+                    className="text-sm hover:rotate-45 transition-all duration-200 hover:text-link-color-hover text-darkish-color"
+                  >
                     <BsArrowUpRight />
-                  </span>
+                  </Link>
                 </li>
-              ) || <Skeleton key={service.id} width={700} height={40} />,
+              ) || <Skeleton key={service.id} width={700} height={40} />
           )}
         </ul>
       </div>

@@ -70,7 +70,9 @@
     -webkit-text-stroke: 1px #0a132e; /* Outline color */
     color: transparent;
     display: inline-block;
-    transition: color 0.5s, -webkit-text-stroke 0.5s;
+    transition:
+      color 0.5s,
+      -webkit-text-stroke 0.5s;
   }
 
   /* Apply Fill Color on Hover */
@@ -80,25 +82,53 @@
   }
 
   /* Delay for Each Letter on Hover */
-  .letter:nth-child(1) { transition-delay: 0s; }
-  .letter:nth-child(2) { transition-delay: 0.1s; }
-  .letter:nth-child(3) { transition-delay: 0.2s; }
-  .letter:nth-child(4) { transition-delay: 0.3s; }
-  .letter:nth-child(5) { transition-delay: 0.4s; }
-  .letter:nth-child(6) { transition-delay: 0.5s; }
-  .letter:nth-child(7) { transition-delay: 0.6s; }
+  .letter:nth-child(1) {
+    transition-delay: 0s;
+  }
+  .letter:nth-child(2) {
+    transition-delay: 0.1s;
+  }
+  .letter:nth-child(3) {
+    transition-delay: 0.2s;
+  }
+  .letter:nth-child(4) {
+    transition-delay: 0.3s;
+  }
+  .letter:nth-child(5) {
+    transition-delay: 0.4s;
+  }
+  .letter:nth-child(6) {
+    transition-delay: 0.5s;
+  }
+  .letter:nth-child(7) {
+    transition-delay: 0.6s;
+  }
 
   /* Reverse the Effect When Hover Out */
   .marquee-text:hover .letter {
     transition-delay: 0s;
   }
-  .marquee-text:hover .letter:nth-child(1) { transition-delay: 0.6s; }
-  .marquee-text:hover .letter:nth-child(2) { transition-delay: 0.5s; }
-  .marquee-text:hover .letter:nth-child(3) { transition-delay: 0.4s; }
-  .marquee-text:hover .letter:nth-child(4) { transition-delay: 0.3s; }
-  .marquee-text:hover .letter:nth-child(5) { transition-delay: 0.2s; }
-  .marquee-text:hover .letter:nth-child(6) { transition-delay: 0.1s; }
-  .marquee-text:hover .letter:nth-child(7) { transition-delay: 0s; }
+  .marquee-text:hover .letter:nth-child(1) {
+    transition-delay: 0.6s;
+  }
+  .marquee-text:hover .letter:nth-child(2) {
+    transition-delay: 0.5s;
+  }
+  .marquee-text:hover .letter:nth-child(3) {
+    transition-delay: 0.4s;
+  }
+  .marquee-text:hover .letter:nth-child(4) {
+    transition-delay: 0.3s;
+  }
+  .marquee-text:hover .letter:nth-child(5) {
+    transition-delay: 0.2s;
+  }
+  .marquee-text:hover .letter:nth-child(6) {
+    transition-delay: 0.1s;
+  }
+  .marquee-text:hover .letter:nth-child(7) {
+    transition-delay: 0s;
+  }
 }
 
 /* Base Body Style */
@@ -168,4 +198,11 @@ body {
     @apply bg-background text-foreground;
   }
 }
-html{scroll-behavior: smooth}
+html {
+  scroll-behavior: smooth;
+}
+
+.list-image-url {
+  list-style-image: url("/public/assets/images/team-01.jpg");
+  list-style-type: disc;
+}

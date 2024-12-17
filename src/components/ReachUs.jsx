@@ -15,6 +15,7 @@ export const ReachUs = ({
   title,
   number,
   buttonText,
+  header = false,
 }) => {
   return (
     <div
@@ -40,7 +41,7 @@ export const ReachUs = ({
       </div>
       {showSearch && <GlobalSearch />}
       <Link
-        href={"#"}
+        href={header ? "/#appointment" : "/about"}
         className={`flex  hover:bg-blackish-color hover:text-white-color-rgb transition-colors duration-200 items-center gap-4 px-8 py-4 font-bold rounded-full ${!smallHidden ? "bg-white border text-link-color-hover  border-link-color-hover " : "bg-link-color-hover text-white"}  font-semibold`}
       >
         {buttonText}

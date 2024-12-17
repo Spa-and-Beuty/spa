@@ -80,7 +80,7 @@ export const Appointment = () => {
   }
 
   return (
-    <section className={"px-16 max-lg:px-4 mt-10"}>
+    <section id={"appointment"} className={"px-16 max-lg:px-4 mt-10"}>
       <div className={"flex max-lg:flex-col pt-20 gap-10"}>
         <Image
           src={"/assets/images/contact-col-bg.jpg"}

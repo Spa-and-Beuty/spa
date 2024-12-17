@@ -7,7 +7,7 @@ import { getManyBlog } from "@/data/blogs";
 
 export default async function Categories({ searchParam }) {
   const tag = await searchParam;
-  console.log("tag", searchParam);
+
   const data = await getManyBlog();
   const posts = data.blogs;
 
@@ -16,7 +16,6 @@ export default async function Categories({ searchParam }) {
   }
 
   const categories = Array.from(new Set(posts.map((post) => post.tag)));
-  console.log("categories", categories);
 
   // const categories = [
   //   {
@@ -71,7 +70,7 @@ export default async function Categories({ searchParam }) {
   // ];
 
   return (
-    <section className="w-1/4 ">
+    <section className="w-1/3 ">
       <Search />
       <div className={`${bitter.className} p-6 mt-4  rounded-xl border`}>
         <h1 className={`font-semibold mb-4 text-3xl flex items-center gap-4`}>

@@ -8,6 +8,8 @@ export const joditConfig = {
   spellcheck: true,
   editorCssClass: false,
   triggerChangeEvent: true,
+  askBeforePasteFromWord: false,
+  askBeforePasteHTML: false,
   width: "auto",
   height: "auto",
   minHeight: 100,

@@ -2,8 +2,13 @@ import NewsItem from "@/components/NewsItem";
 import React from "react";
 import { getManyBlog } from "@/data/blogs";
 
-export const Blog = async () => {
-  const blogs = (await getManyBlog()).blogs;
+export const Blog = async ({ searchParams }) => {
+  const allblogs = (await getManyBlog()).blogs;
+  const blogs = searchParams
+    ? allblogs.filter((blog) => blog.tag === searchParams)
+    : allblogs;
+
+  console.log(searchParams);
 
   return (
     <section

@@ -6,7 +6,9 @@ import Link from "next/link";
 // import Image from "next/image";
 import TestimonialCard from "@/components/TestimonialCard";
 import { createEmployee } from "@/data/employee";
-
+import { X } from "lucide-react";
+import { bitter } from "../../../constants";
+import { CheckCircle } from "phosphor-react";
 export default function AddEmployeeDetail() {
   const [imagePreview, setImagePreview] = useState("");
   const [image, setImage] = useState("");
@@ -21,34 +23,31 @@ export default function AddEmployeeDetail() {
   const [role, setRole] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-
+  const [showModal, setShowModal] = useState(false);
   const [status, setStatus] = useState("");
 
   const employmentStatuses = ["Active", "OnLeave", "Terminated"];
   const roles = ["Admin", "Stylist", "Manager", "Receptionist", "ordinary"];
 
   const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (!file) {
-      setError("No file selected.");
+  setError("");
+  const file = e.target.files[0];
+  if (file) {
+    if (!["image/png", "image/jpg", "image/jpeg", "image/gif"].includes(file.type)) {
+      setError("Only PNG, JPG, and GIF files are allowed.");
       return;
     }
-
-    if (
-      !["image/jpeg", "image/png", "image/gif", "image/avif"].includes(
-        file.type,
-      )
-    ) {
-      setError("Only JPG, PNG, GIF, and AVIF formats are allowed.");
-      setStatus("Only JPG, PNG, GIF, and AVIF formats are allowed.");
+    if (file.size > 5 * 1024 * 1024) { // 5MB limit
+      setError("File size exceeds 5MB.");
       return;
     }
-
     setImage(file);
     setImagePreview(URL.createObjectURL(file));
-    setError(""); // Clear error on valid input
-    setStatus("");
-  };
+  } else {
+    setError("Please upload a valid image file.");
+  }
+};
+
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -88,6 +87,7 @@ export default function AddEmployeeDetail() {
       }
       if (!employee.error) {
         setStatus("Employee successfully created!");
+        setShowModal(true);
       }
     } catch (err) {
       setError("An error occurred while saving employee details.");
@@ -114,11 +114,7 @@ export default function AddEmployeeDetail() {
   const isSubmitDisabled =
     !image || !fullName || !email || !employmentStatus || !role || isLoading;
 
-  useEffect(() => {
-    return () => {
-      if (imagePreview) URL.revokeObjectURL(imagePreview);
-    };
-  }, [imagePreview]);
+
 
   return (
     <section className="flex lg:flex-row flex-col items-start p-10 w-full gap-10">
@@ -308,6 +304,20 @@ export default function AddEmployeeDetail() {
           </div>
         </form>
       </div>
+      {showModal && (
+        <div className="fixed z-40 flex items-center justify-center flex-col bg-white shadow-md p-10 rounded-sm border border-gray-300 text-black top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <CheckCircle color="green" fill="green" size={200} />
+          <p className={`text-2xl font-bold ${bitter.className}`}>
+            Employee successfully added!
+          </p>
+          <button
+            onClick={() => setShowModal(!showModal)}
+            className="absolute  z-50 top-4 right-4"
+          >
+            <X size={50} />
+          </button>
+        </div>
+      )}
     </section>
   );
 }

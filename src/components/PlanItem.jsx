@@ -1,11 +1,18 @@
 import Image from "next/image";
+import Link from "next/link";
+import { BsArrowUpRight } from "react-icons/bs";
 
-export const PlanItem = ({ title, description, image_url, price }) => {
+export const PlanItem = ({
+  title,
+  id,
+  hideDot = false,
+  description,
+  image_url,
+  price,
+}) => {
   return (
     <div
-      className={
-        "flex max-sm:flex-col max-sm:text-center gap-4 items-center justify-center"
-      }
+      className={`flex max-sm:flex-col max-sm:text-center gap-4 ${!hideDot && "justify-center"} items-center`}
     >
       <Image
         src={image_url}
@@ -16,17 +23,25 @@ export const PlanItem = ({ title, description, image_url, price }) => {
       />
       <div className={"p-5"}>
         <div
-          className={
-            "flex max-sm:flex-col max-sm:order-1 items-center justify-between "
-          }
+          className={`flex max-sm:flex-col ${hideDot && "flex-col"}  max-sm:order-1  justify-between `}
         >
           <h1 className={`text-2xl mb-3 font-bold`}>{title}</h1>
-          <span className={"max-sm:hidden text-2xl"}>
-            ...............................
-          </span>
+          {!hideDot && (
+            <span className={"max-sm:hidden text-2xl"}>
+              ...............................
+            </span>
+          )}
           <p className={"text-link-color-hover text-3xl"}>${price}</p>
         </div>
-        <p className={"w-2/3 max-sm:w-full"}>{description}</p>
+        <Link
+          href={`/pricing/${id}`}
+          className={
+            "flex justify-start mt-4  text-black group hover:text-link-color-hover transition-colors duration-200 items-center gap-4 underline "
+          }
+        >
+          Read More{" "}
+          <BsArrowUpRight className="group-hover:rotate-45  group-hover:-translate-x-2 transition-transform duration-200" />
+        </Link>
       </div>
     </div>
   );

@@ -24,7 +24,8 @@ export const metadata = {
 // });
 
 export const dynamic = "force-dynamic";
-export default function Page() {
+export default async function Page({ searchParams }) {
+  const { tag } = await searchParams;
   return (
     <main>
       <PagesHero title={"Blogs"} />
@@ -33,7 +34,7 @@ export default function Page() {
           <Categories />
         </Suspense>
         <Suspense fallback={<p>Loading...</p>}>
-          <Blog />
+          <Blog searchParams={tag} />
         </Suspense>
       </div>
     </main>

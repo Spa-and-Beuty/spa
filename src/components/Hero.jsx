@@ -19,87 +19,70 @@ import {
   Autoplay,
 } from "swiper/modules";
 import { bitter } from "../../constants";
-import { useEffect, useRef } from "react";
-import { useGSAP } from "@gsap/react";
+import { useRef } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import TopBar from "@/components/TopBar";
 
 export const Hero = () => {
   const heroRef = useRef();
-  //
-  // useEffect(() => {
-  useGSAP(() => {
-    const heroHeadings = gsap.utils.toArray(".hero");
-    gsap.from(heroHeadings[0], {
-      opacity: 0,
-      y: 50,
-      duration: 2,
-      stagger: 0.3,
-      ease: "power1.out",
-    });
-  });
-  //   if (heroHeadings.length) {
-  //     gsap.from(heroHeadings, {
-  //       opacity: 0,
-  //       y: 50,
-  //       duration: 1.5,
-  //       stagger: 0.3,
-  //       ease: "power1.out",
-  //     });
-  //   }
-  // }, []);
 
   const slides = [
     {
       id: 1,
       idea: "practice positive energy",
-      title: "Relaxation, made simple",
-      image: "/assets/images/demo1-slide01.png",
+      title: "Beautiful, skin starts here",
+      image: "/assets/images/slide3.png",
     },
     {
       id: 2,
       idea: "rejuvenate you today",
       title: "Revilalize, inner serenity",
-      image: "/assets/images/demo1-slide02.png",
+      image: "/assets/images/slide2.png",
     },
     {
       id: 3,
       idea: "shine with perfection",
       title: "Rejuvenation, beautiful cover",
-      image: "/assets/images/demo1-slide03.png",
+      image: "/assets/images/slide1.png",
     },
   ];
 
   return (
-    <div ref={heroRef} className={"lg:px-16 lg:rounded-3xl sm:h-[800px]"}>
+    <div ref={heroRef} className={"lg:px-6  lg:rounded-3xl sm:h-[800px]"}>
       <Swiper
         virtual={true}
         modules={[Navigation, EffectFade, Autoplay, Virtual, Pagination, A11y]}
-        pagination
+        pagination={{ clickable: true }}
         loop={true}
         autoplay={{
           delay: 4000,
           disableOnInteraction: false,
         }}
         effect={"fade"}
-        onSlideChange={() => {
-          const newHeroHeadings = document.querySelectorAll(".hero"); // Update selector for current slide
-          const ideas = document.querySelectorAll(".idea"); // Update selector for current slide
-          const details = document.querySelectorAll(".detail"); // Update selector for current slide
-          gsap.from(newHeroHeadings, {
+        onSlideChange={(swiper) => {
+          const currentSlide = swiper.slides[swiper.activeIndex];
+          if (!currentSlide) return;
+
+          const heroHeadings = currentSlide.querySelectorAll(".hero");
+          const ideas = currentSlide.querySelectorAll(".idea");
+          const details = currentSlide.querySelectorAll(".detail");
+
+          gsap.from(heroHeadings, {
             opacity: 0,
             y: 50,
             duration: 1.5,
             stagger: 0.3,
             ease: "power1.out",
           });
+
           gsap.from(ideas, {
             opacity: 0,
-
             duration: 1.5,
             stagger: 0.6,
             ease: "power1.out",
           });
+
           gsap.from(details, {
             opacity: 0,
             y: 50,
@@ -108,7 +91,7 @@ export const Hero = () => {
             ease: "power1.out",
           });
         }}
-        spaceBetween={50}
+        spaceBetween={0}
         slidesPerView={1}
       >
         {slides.map((slide) => (

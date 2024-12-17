@@ -10,6 +10,7 @@ import {
 } from "react-icons/bs";
 import { bitter } from "../../constants";
 import { usePathname } from "next/navigation";
+import { SocialLinks } from "@/components/SocialLinks";
 
 export const Footer = () => {
   const pathname = usePathname();
@@ -31,36 +32,36 @@ export const Footer = () => {
                   <Link href="#">Homepage</Link>
                 </li>
                 <li className="pb-4">
-                  <Link href="#">Shop</Link>
+                  <Link href="/shop">Shop</Link>
                 </li>
                 <li className="pb-4">
-                  <Link href="#">Massage</Link>
+                  <Link href="/services">Massage</Link>
                 </li>
                 <li className="pb-4">
-                  <Link href="#">Oil Therapy</Link>
+                  <Link href="/services">Oil Therapy</Link>
                 </li>
               </ul>
               <ul>
                 <li className="pb-4">
-                  <Link href="#">Treatments</Link>
+                  <Link href="/services">Treatments</Link>
                 </li>
                 <li className="pb-4">
-                  <Link href="#">Blogs</Link>
+                  <Link href="/blog">Blogs</Link>
                 </li>
                 <li className="pb-4">
-                  <Link href="#">Body Treatments</Link>
+                  <Link href="/faq">FAQ</Link>
                 </li>
                 <li className="pb-4">
-                  <Link href="#">Stone Spa</Link>
+                  <Link href="/services">Stone Spa</Link>
                 </li>
               </ul>
             </div>
           </div>
 
           {/* Logo and About Section */}
-          <div className="flex flex-col gap-5 items-center max-lg:items-start pt-16  text-center">
+          <div className="flex flex-col gap-5 items-center max-lg:items-start pt-10   text-center">
             <Image
-              src="/assets/images/logo.svg"
+              src="/assets/images/butt_log.png"
               alt="logo"
               width={200}
               height={100}
@@ -69,36 +70,7 @@ export const Footer = () => {
               Peerly is the best Spa therapy for achieving relaxation and
               balance.
             </p>
-            <div className="flex gap-4 mt-4">
-              <Link
-                href="#"
-                aria-label="Facebook"
-                className="p-4 rounded-full text-black hover:bg-link-color-hover hover:text-white transition-colors duration-200 bg-white"
-              >
-                <BsFacebook size={20} />
-              </Link>
-              <Link
-                href="#"
-                aria-label="Twitter"
-                className="p-4 rounded-full text-black hover:bg-link-color-hover hover:text-white transition-colors duration-200 bg-white"
-              >
-                <BsTwitterX size={20} />
-              </Link>
-              <Link
-                href="#"
-                aria-label="LinkedIn"
-                className="p-4 rounded-full text-black hover:bg-link-color-hover hover:text-white transition-colors duration-200 bg-white"
-              >
-                <BsLinkedin size={20} />
-              </Link>
-              <Link
-                href="#"
-                aria-label="Instagram"
-                className="p-4 rounded-full text-black hover:bg-link-color-hover hover:text-white transition-colors duration-200 bg-white"
-              >
-                <BsInstagram size={20} />
-              </Link>
-            </div>
+            <SocialLinks />
           </div>
 
           {/* Working Hours Section */}
@@ -106,29 +78,16 @@ export const Footer = () => {
             <h1 className={`font-bold mb-5 text-lg ${bitter.className}`}>
               Working Hours
             </h1>
-            <div className="flex gap-10">
-              <ul>
-                <li className="pb-4">
-                  <Link href="#">Monday to Friday</Link>
-                </li>
-                <li className="pb-4">
-                  <Link href="#">Saturday</Link>
-                </li>
-                <li className="pb-4">
-                  <Link href="#">Sunday</Link>
-                </li>
-              </ul>
-              <ul>
-                <li className="pb-4">
-                  <Link href="#">9:00 - 20:00 hrs</Link>
-                </li>
-                <li className="pb-4">
-                  <Link href="#">9:00 - 18:00 hrs</Link>
-                </li>
-                <li className="pb-4">
-                  <Link href="#">9:00 - 18:00 hrs</Link>
-                </li>
-              </ul>
+            <div className="flex flex-col gap-10">
+              <h1>Monday to Sunday by schedule</h1>
+              <div>
+                <Image
+                  src={"https://placeholder.co/400x200"}
+                  width={400}
+                  height={400}
+                  alt={"expert"}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -141,9 +100,9 @@ export const Footer = () => {
             &copy;Copyright 2024 Lorem Ipsum All Rights Reserved
           </p>
           <Link
-            href={"/#"}
+            href={"#"}
             className={
-              "bg-link-color-hover max-sm:order-1 text-white p-4 rounded-full hover:bg-blackish-color transition-colors duration-200"
+              "bg-link-color-hover  max-sm:order-1 text-white p-4 rounded-full hover:bg-blackish-color transition-all duration-200"
             }
           >
             <BsArrowUp size={30} />

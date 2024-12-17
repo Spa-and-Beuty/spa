@@ -26,6 +26,7 @@ import { Facebook } from "lucide-react";
 import TestimonialCard from "./TestimonialCard";
 import { useEffect, useState } from "react";
 import { getManyEmployees } from "@/data/employee";
+import AbouUsGrid from "@/components/AbouUsGrid";
 export const OurExperts = () => {
   const [experts, setExperts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -56,73 +57,74 @@ export const OurExperts = () => {
         }
       >
         <span className={"px-4 py-2 uppercase text-sm rounded-full bg-white"}>
-          our team
+          our expert
         </span>
         <div className={"flex items-center justify-between"}>
           <h1
             className={`${bitter.className} max-lg:text-4xl max-sm:text-4xl text-5xl font-semibold mb-7 my-5 `}
           >
-            Meet Our Experts
+            Meet Our Expert
           </h1>
-          <div className={"flex max-sm:hidden gap-4 items-center"}>
-            <button
-              className={
-                "bg-link-color-hover prev-btn  font-bold text-white p-4 rounded"
-              }
-            >
-              <BiChevronLeft size={25} />
-            </button>
-            <button
-              className={
-                "bg-blackish-color next-btn font-bold text-white p-4 rounded"
-              }
-            >
-              <BiChevronRight size={25} />
-            </button>
-          </div>
+          {/*<div className={"flex max-sm:hidden gap-4 items-center"}>*/}
+          {/*  <button*/}
+          {/*    className={*/}
+          {/*      "bg-link-color-hover prev-btn  font-bold text-white p-4 rounded"*/}
+          {/*    }*/}
+          {/*  >*/}
+          {/*    <BiChevronLeft size={25} />*/}
+          {/*  </button>*/}
+          {/*  <button*/}
+          {/*    className={*/}
+          {/*      "bg-blackish-color next-btn font-bold text-white p-4 rounded"*/}
+          {/*    }*/}
+          {/*  >*/}
+          {/*    <BiChevronRight size={25} />*/}
+          {/*  </button>*/}
+          {/*</div>*/}
         </div>
-        <Swiper
-          autoplay={{ delay: 3000, disableOnInteraction: true }}
-          modules={[Navigation, Autoplay, A11y]}
-          navigation={{
-            nextEl: ".next-btn",
-            prevEl: ".prev-btn",
-          }}
-          spaceBetween={50}
-          breakpoints={{
-            430: {
-              slidesPerView: 1,
-            },
-            393: {
-              slidesPerView: 1,
-            },
-            400: {
-              slidesPerView: 1,
-            },
-            640: {
-              slidesPerView: 1,
-            },
-            768: {
-              slidesPerView: 2,
-            },
-            1300: {
-              slidesPerView: 4,
-            },
-          }}
-          slidesPerView={4}
-        >
-          {experts.map((expert) => (
-            <SwiperSlide key={expert.id}>
-              <TestimonialCard
-                key={expert.id}
-                socialMedia={expert.socialMedia}
-                role={expert.role}
-                full_name={expert.full_name}
-                image_url={expert.image_url}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        {/*<Swiper*/}
+        {/*  autoplay={{ delay: 3000, disableOnInteraction: true }}*/}
+        {/*  modules={[Navigation, Autoplay, A11y]}*/}
+        {/*  navigation={{*/}
+        {/*    nextEl: ".next-btn",*/}
+        {/*    prevEl: ".prev-btn",*/}
+        {/*  }}*/}
+        {/*  spaceBetween={50}*/}
+        {/*  breakpoints={{*/}
+        {/*    430: {*/}
+        {/*      slidesPerView: 1,*/}
+        {/*    },*/}
+        {/*    393: {*/}
+        {/*      slidesPerView: 1,*/}
+        {/*    },*/}
+        {/*    400: {*/}
+        {/*      slidesPerView: 1,*/}
+        {/*    },*/}
+        {/*    640: {*/}
+        {/*      slidesPerView: 1,*/}
+        {/*    },*/}
+        {/*    768: {*/}
+        {/*      slidesPerView: 2,*/}
+        {/*    },*/}
+        {/*    1300: {*/}
+        {/*      slidesPerView: 4,*/}
+        {/*    },*/}
+        {/*  }}*/}
+        {/*  slidesPerView={4}*/}
+        {/*>*/}
+        {/*  {experts.map((expert) => (*/}
+        {/*    <SwiperSlide key={expert.id}>*/}
+        {/*      <TestimonialCard*/}
+        {/*        key={expert.id}*/}
+        {/*        socialMedia={expert.socialMedia}*/}
+        {/*        role={expert.role}*/}
+        {/*        full_name={expert.full_name}*/}
+        {/*        image_url={expert.image_url}*/}
+        {/*      />*/}
+        {/*    </SwiperSlide>*/}
+        {/*  ))}*/}
+        {/*</Swiper>*/}
+        <AbouUsGrid spanWhite={true} className={"order-2"} />
       </div>
     </section>
   );

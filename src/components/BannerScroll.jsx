@@ -10,28 +10,21 @@ export const BannerScroll = () => {
         <BsAsterisk className="text-link-color-hover text-8xl max-lg:text-6xl max-sm:text-4xl font-extrabold" />
       ),
     },
-    { type: "text", content: "Scrub" },
+    { type: "text", content: "relax" },
     {
       type: "icon",
       content: (
         <BsAsterisk className="text-link-color-hover text-8xl max-lg:text-6xl max-sm:text-4xl font-extrabold" />
       ),
     },
-    { type: "text", content: "Sauna" },
+    { type: "text", content: "renew" },
     {
       type: "icon",
       content: (
         <BsAsterisk className="text-link-color-hover text-8xl  max-lg:text-6xl max-sm:text-4xl font-extrabold" />
       ),
     },
-    { type: "text", content: "Finish" },
-    {
-      type: "icon",
-      content: (
-        <BsAsterisk className="text-link-color-hover text-8xl max-lg:text-6xl max-sm:text-4xl font-extrabold" />
-      ),
-    },
-    { type: "text", content: "Message" },
+    { type: "text", content: "refresh" },
   ];
 
   return (

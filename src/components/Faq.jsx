@@ -40,7 +40,7 @@ export default function Faq({
             className={`${!grid && "mb-4"} self-start`}
             draggable
             type="multiple"
-            collapsible
+            collapsible={true}
           >
             <AccordionItem value={question.id}>
               <AccordionTrigger>{question.question}</AccordionTrigger>

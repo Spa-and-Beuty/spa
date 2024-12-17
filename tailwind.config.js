@@ -49,7 +49,7 @@ module.exports = {
         tryOurOil: `url('/assets/images/CTA-bg-image.jpg')`,
         footer: `url('/assets/images/footer-bg.png')`,
         testimonial: `url('/assets/images/contact-bg-flower.png')`,
-        title: `url('/assets/images/titlebar-bg.jpg')`,
+        title: `url('/assets/images/banner2.png')`,
         expert: `url('/assets/images/masking-bg.png')`,
         fullScreenTestimonial: "url('/assets/images/testimonial-bg.png')",
         serviceAd: "url('/assets/images/service-ads-bg.png')",

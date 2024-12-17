@@ -7,12 +7,12 @@ export const PagesHero = ({ title = "" }) => {
   return (
     <main
       className={
-        "bg-title bg-cover overflow-x-hidden flex items-center flex-col justify-center max-sm:min-h-[400px] min-h-[500px] bg-center lg:mx-16 max-sm:mx-0 rounded-3xl max-lg:rounded-none  px-8 max-lg:px-6"
+        "bg-title bg-cover overflow-x-hidden flex justify-center flex-col  max-sm:min-h-[400px] min-h-[500px] bg-center lg:mx-6 max-sm:mx-0 rounded-3xl max-lg:rounded-none  px-10 max-lg:px-6"
       }
     >
       <div
         className={
-          "z-10 w-2/3 max-lg:w-11/12 flex gap-6 flex-col  m-auto  text-white  h-full"
+          "z-10 w-2/3  max-lg:w-11/12 flex gap-6 flex-col  text-white  h-full"
         }
       >
         {" "}

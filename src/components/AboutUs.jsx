@@ -40,7 +40,7 @@ export const AboutUs = () => {
                 showSearch={false}
                 title={"chat is anytime"}
                 buttonText={"Learn More"}
-                number={"+251 912345678"}
+                number={"+240-380-4294"}
                 smallHidden={false}
               />
             </div>

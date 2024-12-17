@@ -4,19 +4,15 @@ import StatusCard from "@/components/admin/StatusCard";
 import React, { Suspense, useEffect, useState } from "react";
 
 import Loading from "@/app/loading";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { getManyAppointments } from "@/data/appointment";
 import { getManyMessages } from "@/data/contactMessage";
 import { getManyServices } from "@/data/services";
 import { getManyEmployees } from "@/data/employee";
 
-const Services = dynamic(() => import("@/components/admin/Services"), {
-  ssr: false,
-});
-const Appointments = dynamic(() => import("@/components/admin/Appointments"), {
-  ssr: false,
-});
+import Services from "@/components/admin/Services";
+import Appointments from "@/components/admin/Appointments";
+export const dynamic = "force-dynamic";
 export default function Page() {
   // const router = useRouter();
 

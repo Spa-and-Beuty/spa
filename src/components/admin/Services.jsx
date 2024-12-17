@@ -21,29 +21,47 @@ export const dynamic = "force-dynamic";
 export default function Services() {
   // const services = await getManyServices();
   const [services, setServices] = useState([]);
+  const [deleting, setDeleting] = useState(false);
   const router = useRouter();
-  // const [products, setProductList] = useState([]);
-  useEffect(() => {
-    async function getServices() {
+  const [refresh, setRefresh] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const fetchServices = async () => {
+    try {
       const data = await getManyServices();
       setServices(data);
+    } catch (err) {
+      console.error("Failed to fetch services:", err);
     }
-    getServices();
+  };
+  // const [products, setProductList] = useState([]);
+  useEffect(() => {
+    fetchServices();
   }, []);
 
-  async function handleDeleteService(id) {
+  const handleDeleteService = async (id) => {
+    setDeleting(true);
+    setMessage("Deleting...");
     const confirm = window.confirm(
-      "Are you sure you want to delete this service?",
+      "Are you sure you want to delete this service?"
     );
     if (confirm) {
       try {
         const data = await deleteService(id);
+        if (!data.error) {
+          // Refresh the service list after deletion
+          await fetchServices();
+          setMessage("Service deleted successfully.");
+        }
       } catch (err) {
-        console.log(err);
+        console.error("Failed to delete service:", err);
+      } finally {
+        setDeleting(false);
       }
+    } else {
+      setDeleting(false);
     }
-    router.push("/admin/services");
-  }
+  };
 
   return (
     <div className="p-4 lg:p-6 mb-3 w-full rounded bg-white dark:bg-[#1E1E1E]">
@@ -132,6 +150,7 @@ export default function Services() {
                           bg-[#ff3d5430]"
                         >
                           <DeleteIcon
+                            display={deleting}
                             onClick={() => handleDeleteService(service.id)}
                             className="text-hero group-hover:text-white"
                           />

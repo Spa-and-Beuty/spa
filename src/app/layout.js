@@ -3,6 +3,7 @@ import "./globals.css";
 import { Mulish } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import TopBar from "@/components/TopBar";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -26,6 +27,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={"scroll-smooth"}>
       <body className={`${mulish.className}`}>
+        <TopBar />
+
         <Header />
         {children}
         <Footer />

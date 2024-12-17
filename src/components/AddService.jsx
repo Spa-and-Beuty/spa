@@ -3,6 +3,7 @@
 import { CloudUpload } from "lucide-react";
 import Link from "next/link";
 import React, { useMemo, useRef, useState } from "react";
+import { CheckCircle } from "phosphor-react";
 import {
   Select,
   SelectContent,
@@ -15,6 +16,8 @@ import Image from "next/image";
 import { createService } from "@/data/services";
 import JoditEditor from "jodit-react";
 import { joditConfig } from "../../constants/joditConfig";
+import { X } from "lucide-react";
+import { bitter } from "../../constants";
 
 export default function AddService() {
   const [imagePreview, setImagePreview] = useState("");
@@ -25,6 +28,7 @@ export default function AddService() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [forWhat, setForWhat] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const options = [
     "bold",
@@ -56,19 +60,28 @@ export default function AddService() {
     () => ({
       ...joditConfig,
     }),
-    [],
+    []
   );
 
-  const handleImageUpload = (e) => {
-    setError("");
-    const file = e.target.files[0];
-    if (file) {
-      setImage(file);
-      setImagePreview(URL.createObjectURL(file));
-    } else {
-      setError("Please upload a valid image file.");
+const handleImageUpload = (e) => {
+  setError("");
+  const file = e.target.files[0];
+  if (file) {
+    if (!["image/png", "image/jpg", "image/jpeg", "image/gif"].includes(file.type)) {
+      setError("Only PNG, JPG, and GIF files are allowed.");
+      return;
     }
-  };
+    if (file.size > 5 * 1024 * 1024) { // 5MB limit
+      setError("File size exceeds 5MB.");
+      return;
+    }
+    setImage(file);
+    setImagePreview(URL.createObjectURL(file));
+  } else {
+    setError("Please upload a valid image file.");
+  }
+};
+
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -91,10 +104,11 @@ export default function AddService() {
 
       if (res.error) {
         setError(
-          res.message || "An error occurred while creating the category.",
+          res.message || "An error occurred while creating the category."
         );
         console.log("response", res);
       }
+      !res.error && setShowModal(true);
     } catch (error) {
       setError("Failed to create category. Please try again.");
     } finally {
@@ -103,7 +117,7 @@ export default function AddService() {
   }
 
   return (
-    <div className="flex lg:flex-row flex-col items-start p-10 w-full gap-10">
+    <section className="flex lg:flex-row flex-col items-start p-10 w-full gap-10">
       <div className="w-1/2 bg-white lg:sticky top-20 p-10 rounded">
         {imagePreview && (
           <div className="h-1/2">
@@ -209,6 +223,20 @@ export default function AddService() {
           </form>
         </div>
       </div>
-    </div>
+      {showModal && (
+        <div className="fixed z-40 flex items-center justify-center flex-col bg-white shadow-md p-10 rounded-sm border border-gray-300 text-black top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <CheckCircle color="green" fill="green" size={200} />
+          <p className={`text-2xl font-bold ${bitter.className}`}>
+            Service successfully added!
+          </p>
+          <button
+            onClick={()=>setShowModal(!showModal)}
+            className="absolute  z-50 top-4 right-4"
+          >
+            <X size={50} />
+          </button>
+        </div>
+      )}
+    </section>
   );
 }

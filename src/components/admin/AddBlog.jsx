@@ -88,6 +88,11 @@ export default function AddBlog() {
       console.log("error", error);
     } finally {
       setIsLoading(false);
+      setImage("")
+      setImagePreview("")
+      setBlogTitle("")
+      setBlogContent("")
+      setCategorySlug("")
       // setShowModal(true);
     }
   }

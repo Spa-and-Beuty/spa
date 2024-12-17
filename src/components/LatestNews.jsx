@@ -14,7 +14,7 @@ export const LatestNews = async () => {
   return (
     <section
       className={
-        "flex  max-lg:px-10 mt-20 flex-col items-center  container mx-auto xl:max-w-[1428px] lg:max-w-[1200px] md:max-w-[850px] sm:max-w-[500px]"
+        "flex lg:mx-20  max-lg:px-10 mt-20 flex-col items-center  container mx-auto xl:max-w-[1428px] lg:max-w-[1200px] md:max-w-[850px] sm:max-w-[500px]"
       }
     >
       <span

@@ -5,7 +5,7 @@ import { PlanItem } from "@/components/PlanItem";
 import { getManyPriceing } from "@/data/pricing";
 import { useEffect, useState } from "react";
 
-export const OurPlan = () => {
+export const OurPlan = ({ hideDot }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -15,6 +15,7 @@ export const OurPlan = () => {
     }
     getPlan();
   }, []);
+  data.length = 4;
 
   return (
     <div className={"flex max-lg:px-10  mt-20 flex-col items-center"}>
@@ -33,13 +34,15 @@ export const OurPlan = () => {
       </h1>
       <div
         className={
-          "grid grid-cols-2 max-lg:grid-cols-1 max-lg:grid-rows-1 grid-rows-3 gap-x-20 gap-y-10"
+          "grid grid-cols-2 max-lg:grid-cols-1 max-lg:grid-rows-1  gap-x-20 gap-y-10"
         }
       >
         {" "}
         {data.map((plan) => (
           <PlanItem
+            hideDot={hideDot}
             key={plan.id}
+            id={plan.id}
             image_url={plan.image}
             title={plan.title}
             price={plan.price}

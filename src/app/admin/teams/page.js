@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import AddService from "@/components/AddService";
 import AddEmployeeDetail from "@/components/admin/AddEmployeeDetail";
+import { TeamsAdmin } from "@/components/admin/TeamsAdmin";
 
 export default function page() {
   return (
@@ -43,7 +44,7 @@ export default function page() {
           </div>
         </div>
       </div>
-      <Team mt={false} />
+      <TeamsAdmin mt={false} />
     </div>
   );
 }

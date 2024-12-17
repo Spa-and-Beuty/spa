@@ -1,11 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { CloudUpload, Delete } from "lucide-react";
 import Link from "next/link";
 // import Image from "next/image";
 import { PlanItem } from "@/components/PlanItem";
 import { createPricing } from "@/data/pricing";
+import { X } from "lucide-react";
+import { bitter } from "../../../constants";
+import { CheckCircle } from "phosphor-react";
+import { joditConfig } from "../../../constants/joditConfig";
+import JoditEditor from "jodit-react";
 
 export default function AddPricing() {
   const [imagePreview, setImagePreview] = useState("");
@@ -15,14 +20,14 @@ export default function AddPricing() {
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-
+  const [showModal, setShowModal] = useState(false);
   const handleImageUpload = (e) => {
     setError("");
     const file = e.target.files[0];
 
     if (
       !["image/jpeg", "image/png", "image/gif", "image/avif"].includes(
-        file.type,
+        file.type
       )
     ) {
       setError("Only JPG, PNG, and GIF formats are allowed.");
@@ -55,6 +60,9 @@ export default function AddPricing() {
     try {
       // Replace with your API call
       const response = await createPricing(formData);
+      if (!response.error) {
+        setShowModal(true);
+      }
       console.log(response);
       console.log("Form submitted:", Object.fromEntries(formData.entries()));
     } catch (err) {
@@ -65,6 +73,14 @@ export default function AddPricing() {
   }
 
   const isSubmitDisabled = !image || !title || !price || !description;
+
+  const editor = useRef(null);
+  const config = useMemo(
+    () => ({
+      ...joditConfig,
+    }),
+    []
+  );
 
   return (
     <section className="flex lg:flex-row flex-col items-start p-10 w-full gap-10">
@@ -121,7 +137,17 @@ export default function AddPricing() {
           className="w-full text-[#5d7186] dark:text-white"
         >
           <div className="bg-white dark:bg-[#1e1e1e] p-4 mt-4 rounded">
-            <div className="flex gap-10 items-center">
+            <div className="flex  gap-10 items-center mb-4">
+              <div className="flex order-1 flex-col w-1/2">
+                <label>Price</label>
+                <input
+                  required
+                  type="number"
+                  onChange={(e) => setPrice(e.target.value)}
+                  className="px-4 py-2 border"
+                  placeholder="Price"
+                />
+              </div>
               <div className="flex flex-col w-1/2">
                 <label>Title</label>
                 <input
@@ -132,29 +158,21 @@ export default function AddPricing() {
                   placeholder="Title"
                 />
               </div>
-              <div className="flex flex-col w-1/2">
-                <label>Description</label>
-                <input
-                  required
-                  type="text"
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="px-4 py-2 border"
-                  placeholder="Description"
-                />
-              </div>
             </div>
-
-            <div className="flex gap-10 items-center mt-4">
-              <div className="flex flex-col w-1/2">
-                <label>Price</label>
-                <input
-                  required
-                  type="number"
-                  onChange={(e) => setPrice(e.target.value)}
-                  className="px-4 py-2 border"
-                  placeholder="Price"
-                />
-              </div>
+            <div className="flex flex-col w-full">
+              <label>Description</label>
+              <JoditEditor
+                className="dark:bg-[#1e1e1e] text-black"
+                theme="dark"
+                ref={editor}
+                value={description}
+                config={config}
+                tabIndex={1} // tabIndex of textarea
+                onBlur={(newContent) => setDescription(newContent)}
+                onChange={(newContent) => {
+                  setDescription(newContent);
+                }}
+              />
             </div>
 
             {error && <div className="text-hero text-sm">{error}</div>}
@@ -177,6 +195,20 @@ export default function AddPricing() {
           </div>
         </form>
       </div>
+      {showModal && (
+        <div className="fixed z-40 flex items-center justify-center flex-col bg-white shadow-md p-10 rounded-sm border border-gray-300 text-black top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <CheckCircle color="green" fill="green" size={200} />
+          <p className={`text-2xl font-bold ${bitter.className}`}>
+            Priceing plan successfully added!
+          </p>
+          <button
+            onClick={setShowModal(!showModal)}
+            className="absolute  z-50 top-4 right-4"
+          >
+            <X size={50} />
+          </button>
+        </div>
+      )}
     </section>
   );
 }

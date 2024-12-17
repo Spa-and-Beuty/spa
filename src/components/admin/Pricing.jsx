@@ -13,7 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import AddPricing from "@/components/admin/AddPricing";
-import { getManyPriceing } from "@/data/pricing";
+import { deletePrice, getManyPriceing } from "@/data/pricing";
 
 export default function Pricing() {
   const [pricing, setPricing] = useState([]);
@@ -26,6 +26,18 @@ export default function Pricing() {
     }
     fetchPricing();
   }, []);
+
+  async function deletePriceing(id) {
+    try {
+      const res = await deletePrice(id);
+      if (res.data) {
+        const res = await getManyPriceing();
+        setPricing(res);
+      }
+    } catch (e) {
+      return e;
+    }
+  }
 
   return (
     <div className="p-4 lg:p-6 mb-3 w-full rounded bg-white dark:bg-[#1E1E1E]">
@@ -91,21 +103,18 @@ export default function Pricing() {
                 <td className="p-4">{plan.description}</td>
                 <td className="p-4">
                   <div className="flex items-center gap-3">
-                    <Link href={"#"} className="p-1 bg-[#8686a7] rounded">
+                    <botton className="p-1 bg-[#8686a7] rounded">
                       <EyeIcon color="white" />
-                    </Link>
-                    <Link
-                      href={"#"}
-                      className="p-1 rounded group hover:bg-[#ff6c2f] transition-colors duration-200 bg-[#ff3d5430]"
-                    >
+                    </botton>
+                    <button className="p-1 rounded group hover:bg-[#ff6c2f] transition-colors duration-200 bg-[#ff3d5430]">
                       <Edit className="text-[#ff6c2f] group-hover:text-white" />
-                    </Link>
-                    <Link
-                      href={"#"}
+                    </button>
+                    <button
+                      onClick={() => deletePriceing(plan.id)}
                       className="p-1 rounded group hover:bg-hero transition-colors duration-200 bg-[#ff3d5430]"
                     >
                       <DeleteIcon className="text-hero group-hover:text-white" />
-                    </Link>
+                    </button>
                   </div>
                 </td>
               </tr>
