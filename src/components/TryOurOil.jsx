@@ -1,6 +1,13 @@
 import { bitter } from "../../constants";
 import { BsPlay, BsPlayBtn } from "react-icons/bs";
 import Link from "next/link";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTrigger,
+} from "./ui/dialog";
 
 export const TryOurOil = () => {
   return (
@@ -23,10 +30,26 @@ export const TryOurOil = () => {
           >
             <BsPlayBtn size={40} />
           </div>
-          <Link href={"#"} className={"text-lg font-bold text-white"}>
-            {" "}
-            Watch our video
-          </Link>
+
+          <Dialog>
+            <DialogTrigger>
+              <Link href={"#"} className={"text-lg font-bold text-white"}>
+                {" "}
+                Watch our video
+              </Link>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogDescription className={"w-full"}>
+                  <video width="320" height="240" controls>
+                    <source src="movie.mp4" type="video/mp4" />
+                    <source src="movie.ogg" type="video/ogg" />
+                    Your browser does not support the video tag.
+                  </video>
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
         </div>
       </section>
     </section>

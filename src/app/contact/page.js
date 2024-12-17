@@ -20,12 +20,11 @@ export default function page() {
   const contact = {
     id: "1",
     emails: ["pbminfouser@infotech.com", "noreply@pbminfotech.com"],
-    workingDays: "Mon to Fri - 09:00am To 06:00pm Saturday to Sunday - Closed",
-    location:
-      "8502 Preston Rd. Inglewood, Maine 9838086, Hoofddorp Noord- 2132",
+    workingDays: "Monday to sunday by schedule",
+    location: "6900 Wisconsin Ave, Bethesda MD 2081.5",
     phoneNumber: {
-      phone: "+001 236-895-4732",
-      mobile: "+9123 895-4732-236",
+      phone: "+240-380-4294",
+      mobile: "+240-380-4294",
     },
   };
 
@@ -106,7 +105,7 @@ export default function page() {
       <ContactGrid />
       <div className="max-lg:mx-10 mx-40 my-40 max-lg:my-20">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63054.73327321747!2d38.79084490907616!3d8.979432716335829!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b9b33a3569139%3A0xb505349b8c87fdd2!2sBole%2C%20Addis%20Ababa!5e0!3m2!1sen!2set!4v1730810058454!5m2!1sen!2set"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3101.5846535851647!2d-77.09462032459041!3d38.97915104187702!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b7c9d6dd87047f%3A0xd11c1502173dc62d!2sLocalWorks%20Bethesda%20-%20Wisconsin%20Avenue!5e0!3m2!1sen!2set!4v1734478869827!5m2!1sen!2set"
           height="450"
           className="border-0 w-full  rounded-3xl "
           allowFullScreen=""

@@ -18,6 +18,7 @@ import JoditEditor from "jodit-react";
 import { joditConfig } from "../../../constants/joditConfig";
 import { bitter } from "../../../constants";
 import { createProduct } from "@/data/products";
+import { MdNumbers } from "react-icons/md";
 
 export default function AddProductDetail({ categories }) {
   // console.log(categories)
@@ -106,6 +107,7 @@ export default function AddProductDetail({ categories }) {
       }
     } catch (error) {
       setError("An error occurred while creating the product.");
+      setIsLoading(false);
     } finally {
       setIsLoading(false);
     }
@@ -286,6 +288,20 @@ export default function AddProductDetail({ categories }) {
                     />
                   </div>
                 </div>
+                <div className="flex w-1/4 flex-col relative">
+                  <label>Quantity</label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      className="border outline-none px-4 pl-10 py-2"
+                      onChange={(e) => setQuantity(e.target.value)}
+                    />
+                    <MdNumbers
+                      size={30}
+                      className="absolute top-1/2 -translate-y-1/2 left-2"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
             {error && <div className="text-red-400 text-sm">{error}</div>}
@@ -301,6 +317,7 @@ export default function AddProductDetail({ categories }) {
                 />
               </div>
               <Link
+                onClick={() => setIsLoading(false)}
                 className="px-4 py-2 border-hero border text-hero rounded"
                 href={"/admin/products"}
               >

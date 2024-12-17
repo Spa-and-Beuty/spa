@@ -36,7 +36,7 @@ export default function ProductCard({ loading, product, children }) {
               style={{ borderRadius: "10px" }}
             />
           ) : (
-            <Link className="w-full" href={`shop/${product.id}`}>
+            <Link className="w-full" href={`products/${product.id}`}>
               <Image
                 width={400}
                 height={400}

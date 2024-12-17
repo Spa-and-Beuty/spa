@@ -24,15 +24,15 @@ export default async function page({ params }) {
         <Image
           quality={100}
           src={service.imageUrl}
-          width={600}
+          width={700}
           height={200}
           alt={service.title}
-          className="w-full h-[600px] object-center object-cover  rounded-xl"
+          className="h-[400px] w-full object-cover  rounded-xl"
         />
       </div>
 
       <div
-        className="text-lg  prose py-2 mt-10 text-darkish-color "
+        className="text-lg object-contain prose py-2 mt-10 text-darkish-color "
         dangerouslySetInnerHTML={{ __html: service.description }}
       />
     </div>

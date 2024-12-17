@@ -26,9 +26,9 @@ export default function ServiceCard({
         <Image
           src={image_url}
           alt={title}
-          width={500}
-          height={500}
-          className={"w-full rounded-3xl "}
+          width={400}
+          height={400}
+          className={"w-full  rounded-3xl "}
         />
       )}
       <div className={"flex px-5 py-4 items-center justify-between"}>

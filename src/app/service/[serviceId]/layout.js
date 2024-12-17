@@ -7,12 +7,12 @@ import { bitter, posts } from "../../../../constants";
 import { FlowerIcon } from "lucide-react";
 import ServiceTypes from "@/components/ServiceTypes";
 import { DownloadIcon } from "lucide-react";
+import { getOneService } from "@/data/services";
 
-export default function RootLayout({ children }) {
-  const singleBlog = posts[0];
+export default async function RootLayout({ children, params }) {
   return (
     <main>
-      <PagesHero title={"Thai Massage"} />
+      <PagesHero title={"Service Detail"} />
       <section className="container gap-20 flex max-lg:flex-col justify-between mt-10 mx-auto xl:max-w-[1428px] lg:max-w-[1200px] md:max-w-[850px] sm:max-w-[500px]">
         <div className="w-1/3 max-lg:w-full mb-10">
           <ServiceTypes />
