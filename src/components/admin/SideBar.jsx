@@ -67,7 +67,7 @@ export default function SideBar({ show, setShow }) {
     {
       icon: <IconCategory className="text-neutral-200 h-7 w-7 flex-shrink-0" />,
       label: "Products",
-      href: "/products",
+      href: "/admin/products",
     },
     {
       icon: <IconNews className="text-neutral-200 h-7 w-7 flex-shrink-0" />,

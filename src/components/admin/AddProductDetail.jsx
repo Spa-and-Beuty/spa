@@ -46,7 +46,7 @@ export default function AddProductDetail({ categories }) {
     files.forEach((file) => {
       if (
         !["image/jpeg", "image/png", "image/gif", "image/avif"].includes(
-          file.type
+          file.type,
         )
       ) {
         setError("Only JPG, PNG, and GIF formats are allowed.");
@@ -61,7 +61,7 @@ export default function AddProductDetail({ categories }) {
   const handleRemoveImage = (index) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
     setImagePreviews((prevPreviews) =>
-      prevPreviews.filter((_, i) => i !== index)
+      prevPreviews.filter((_, i) => i !== index),
     );
   };
 
@@ -102,7 +102,7 @@ export default function AddProductDetail({ categories }) {
       if (res.error) {
         setError(res.error);
       }
-      if (res.data) {
+      if (res.name) {
         setShowModal(true);
       }
     } catch (error) {
@@ -121,7 +121,7 @@ export default function AddProductDetail({ categories }) {
     () => ({
       ...joditConfig,
     }),
-    []
+    [],
   );
 
   return (

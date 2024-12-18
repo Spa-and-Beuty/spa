@@ -43,7 +43,7 @@ export default function Services() {
     setDeleting(true);
     setMessage("Deleting...");
     const confirm = window.confirm(
-      "Are you sure you want to delete this service?"
+      "Are you sure you want to delete this service?",
     );
     if (confirm) {
       try {
@@ -138,19 +138,27 @@ export default function Services() {
                         <Link href={"#"} className="p-1 bg-[#8686a7] rounded">
                           <EyeIcon color="white" />
                         </Link>
-                        <Link
-                          href={"#"}
-                          className="p-1 rounded group hover:bg-[#ff6c2f] transition-colors duration-200 bg-[#ff3d5430]"
-                        >
-                          <Edit className="text-[#ff6c2f] group-hover:text-white" />
-                        </Link>
+
+                        <Dialog>
+                          <DialogTrigger className="p-1 rounded group hover:bg-[#ff6c2f] transition-colors duration-200 bg-[#ff3d5430]">
+                            <Edit className="text-[#ff6c2f] group-hover:text-white" />
+                          </DialogTrigger>
+                          <DialogContent>
+                            <DialogHeader>
+                              <DialogTitle>Edit Service</DialogTitle>
+                              <DialogDescription className={"w-full"}>
+                                <AddService service={service} />
+                              </DialogDescription>
+                            </DialogHeader>
+                          </DialogContent>
+                        </Dialog>
+
                         <Link
                           href={"#"}
                           className="p-1 rounded group hover:bg-hero transition-colors duration-200
                           bg-[#ff3d5430]"
                         >
                           <DeleteIcon
-                            display={deleting}
                             onClick={() => handleDeleteService(service.id)}
                             className="text-hero group-hover:text-white"
                           />

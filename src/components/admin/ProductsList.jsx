@@ -1,8 +1,8 @@
-// "use client";
+"use client";
 import { ChevronDown, DeleteIcon, Edit, EyeIcon, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState, useTransition } from "react";
 import Pagination from "./Pagination";
 import {
   Dialog,
@@ -15,6 +15,7 @@ import {
 import AddPricing from "@/components/admin/AddPricing";
 import AddProducts from "@/components/admin/AddProducts";
 import { deleteProduct } from "@/data/products";
+import { useRouter } from "next/navigation";
 // import { deleteProduct, getManyProducts } from "@/data/products";
 // import { getManyProducts } from "@/data/products";
 
@@ -33,6 +34,25 @@ export default function ProductsList({ products }) {
   // }, []);
 
   // if(products)
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [isFetching, setIsFetching] = useState(false);
+
+  // Create inline loading UI
+  const isMutating = isFetching || isPending;
+
+  async function handleDelete(id) {
+    setIsFetching(true);
+    // Mutate external data source
+    await deleteProduct(id);
+    setIsFetching(false);
+
+    startTransition(() => {
+      // Refresh the current route and fetch new data from the server without
+      // losing client-side browser or React state.
+      router.refresh();
+    });
+  }
 
   return (
     <div>
@@ -121,21 +141,14 @@ export default function ProductsList({ products }) {
                     >
                       <Edit className="text-[#ff6c2f] group-hover:text-white" />
                     </Link>
-                    <form
-                      action={async () => {
-                        "use server";
-                        await deleteProduct(product.id);
-                      }}
+
+                    <button
+                      type="submit"
+                      onClick={() => handleDelete(product.id)}
+                      className="p-1 rounded group hover:bg-hero transition-colors duration-200 bg-[#ff3d5430]"
                     >
-                      <button
-                        type="submit"
-                        // onClick={() => handleDelete(product.id)}
-                        href={"#"}
-                        className="p-1 rounded group hover:bg-hero transition-colors duration-200 bg-[#ff3d5430]"
-                      >
-                        <DeleteIcon className="text-hero group-hover:text-white" />
-                      </button>
-                    </form>
+                      <DeleteIcon className="text-hero group-hover:text-white" />
+                    </button>
                   </div>
                 </td>
               </tr>

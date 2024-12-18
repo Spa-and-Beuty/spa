@@ -37,21 +37,13 @@ export default function AddBlog() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const configs = {
-    readonly: false,
-    height: 400,
-    toolbarButtonSize: "middle",
-    buttons: ["bold", "italic", "underline", "link", "unlink", "source"],
-    uploader: {
-      insertImageAsBase64URI: true,
-    },
-  };
+
   const editor = useRef(null);
   const config = useMemo(
     () => ({
       ...joditConfig,
     }),
-    []
+    [],
   );
 
   const handleImageUpload = (e) => {
@@ -83,16 +75,18 @@ export default function AddBlog() {
       if (res.data) {
         setShowModal(true);
       }
+      if (!error) {
+        setShowModal(true);
+      }
     } catch (error) {
-      setError(error.message);
       console.log("error", error);
     } finally {
       setIsLoading(false);
-      setImage("")
-      setImagePreview("")
-      setBlogTitle("")
-      setBlogContent("")
-      setCategorySlug("")
+      setImage("");
+      setImagePreview("");
+      setBlogTitle("");
+      setBlogContent("");
+      setCategorySlug("");
       // setShowModal(true);
     }
   }

@@ -1,9 +1,8 @@
 "use client";
 import Pagination from "@/components/admin/Pagination";
-import { blogs } from "../../../constants";
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
-import React, { Suspense, useEffect, useState } from "react";
+import { ChevronDown, DeleteIcon, Edit, EyeIcon } from "lucide-react";
+import React, { Suspense, useEffect, useState, useTransition } from "react";
 import {
   Dialog,
   DialogContent,
@@ -13,30 +12,52 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { getManyBlog } from "@/data/blogs";
+import { deleteBlog, getManyBlog } from "@/data/blogs";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-const AddBlog = dynamic(() => import("@/components/admin/AddBlog"), {
-  ssr: false,
-});
-export const Blogs = () => {
-  const [blogs, setBlogs] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+import AddBlog from "@/components/admin/AddBlog";
+import { useRouter } from "next/navigation";
+import { deleteProduct } from "@/data/products";
+// const AddBlog = dynamic(() => import("@/components/admin/AddBlog"), {
+//   ssr: false,
+// });
+export default function Blogs({ blogs }) {
+  // const [blogs, setBlogs] = useState([]);
+  // const [isLoading, setIsLoading] = useState(false);
+  //
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   async function getBlogs() {
+  //     try {
+  //       const alldata = await getManyBlog();
+  //       setBlogs(alldata.blogs);
+  //     } catch (e) {
+  //       console.log(e.message);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   }
+  //   getBlogs();
+  // }, []);
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [isFetching, setIsFetching] = useState(false);
 
-  useEffect(() => {
-    setIsLoading(true);
-    async function getBlogs() {
-      try {
-        const alldata = await getManyBlog();
-        setBlogs(alldata.blogs);
-      } catch (e) {
-        console.log(e.message);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    getBlogs();
-  }, []);
+  // Create inline loading UI
+  const isMutating = isFetching || isPending;
+
+  async function handleDelete(id) {
+    setIsFetching(true);
+    // Mutate external data source
+    await deleteBlog(id);
+    setIsFetching(false);
+
+    startTransition(() => {
+      // Refresh the current route and fetch new data from the server without
+      // losing client-side browser or React state.
+      router.refresh();
+    });
+  }
   return (
     <div className="col w-full my-8">
       <div className="card">
@@ -91,6 +112,7 @@ export const Blogs = () => {
                 <th className="p-2 text-left">Author</th>
                 <th className="p-2 text-left">Status</th>
                 <th className="p-2 text-left">Updated At</th>
+                <th className="p-2 text-left">Actions</th>
               </tr>
             </thead>
 
@@ -105,15 +127,17 @@ export const Blogs = () => {
                         <Link href={`/admin/blogs/${blog.id}`}>{blog.id}</Link>
                       </td>
                       <td className="px-2 py-3.5">
-                        <Image
-                          height={16}
-                          width={16}
-                          src={blog.image}
-                          alt={blog.title}
-                          quality={100}
-                          priority
-                          className="object-contain rounded-full"
-                        />
+                        <Suspense
+                          fallback={<div className={"w-16 h-16"}></div>}
+                        >
+                          <Image
+                            height={16}
+                            width={16}
+                            src={blog.image}
+                            alt={blog.title}
+                            className="w-16 h-16 object-cover"
+                          />
+                        </Suspense>
                       </td>
                       <td className="px-2 py-3.5">
                         <Suspense
@@ -153,6 +177,27 @@ export const Blogs = () => {
                           {new Date(blog.updated_at).toLocaleDateString()}
                         </Suspense>
                       </td>
+                      <td>
+                        <div className="flex items-center gap-3">
+                          <Link href={"#"} className="p-1 bg-[#8686a7] rounded">
+                            <EyeIcon color="white" />
+                          </Link>
+                          <Link
+                            href={"#"}
+                            className="p-1 rounded group hover:bg-[#ff6c2f] transition-colors duration-200 bg-[#ff3d5430]"
+                          >
+                            <Edit className="text-[#ff6c2f] group-hover:text-white" />
+                          </Link>
+
+                          <button
+                            type="submit"
+                            onClick={() => handleDelete(blog.id)}
+                            className="p-1 rounded group hover:bg-hero transition-colors duration-200 bg-[#ff3d5430]"
+                          >
+                            <DeleteIcon className="text-hero group-hover:text-white" />
+                          </button>
+                        </div>
+                      </td>
                     </tr>
                   ))
                 : "No Blogs"}
@@ -164,4 +209,4 @@ export const Blogs = () => {
       </div>
     </div>
   );
-};
+}

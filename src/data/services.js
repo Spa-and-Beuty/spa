@@ -31,7 +31,7 @@ export async function getOneService(id) {
 }
 
 export async function updateService(id, data) {
-  const res = await fetcher.put(`/categories/${id}`, data);
+  const res = await fetcher.put(`/api/v1/services/${id}`, data);
   return res.data;
 }
 

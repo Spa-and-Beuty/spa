@@ -45,7 +45,7 @@ export async function updateBlog(id, data) {
 
 export async function deleteBlog(id) {
   try {
-    const res = await fetcher.delete(`/blogs/${id}`);
+    const res = await fetcher.delete(`/api/v1/blog/${id}`);
     return res.data;
   } catch (error) {
     console.error("Error deleting blog:", error);
