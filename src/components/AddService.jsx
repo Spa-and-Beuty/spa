@@ -63,25 +63,29 @@ export default function AddService() {
     []
   );
 
-const handleImageUpload = (e) => {
-  setError("");
-  const file = e.target.files[0];
-  if (file) {
-    if (!["image/png", "image/jpg", "image/jpeg", "image/gif"].includes(file.type)) {
-      setError("Only PNG, JPG, and GIF files are allowed.");
-      return;
+  const handleImageUpload = (e) => {
+    setError("");
+    const file = e.target.files[0];
+    if (file) {
+      if (
+        !["image/png", "image/jpg", "image/jpeg", "image/gif"].includes(
+          file.type
+        )
+      ) {
+        setError("Only PNG, JPG, and GIF files are allowed.");
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        // 5MB limit
+        setError("File size exceeds 5MB.");
+        return;
+      }
+      setImage(file);
+      setImagePreview(URL.createObjectURL(file));
+    } else {
+      setError("Please upload a valid image file.");
     }
-    if (file.size > 5 * 1024 * 1024) { // 5MB limit
-      setError("File size exceeds 5MB.");
-      return;
-    }
-    setImage(file);
-    setImagePreview(URL.createObjectURL(file));
-  } else {
-    setError("Please upload a valid image file.");
-  }
-};
-
+  };
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -101,6 +105,7 @@ const handleImageUpload = (e) => {
 
     try {
       const res = await createService(formData);
+      if (res.data.title) setShowModal(true);
 
       if (res.error) {
         setError(
@@ -108,7 +113,6 @@ const handleImageUpload = (e) => {
         );
         console.log("response", res);
       }
-      !res.error && setShowModal(true);
     } catch (error) {
       setError("Failed to create category. Please try again.");
     } finally {
@@ -230,7 +234,7 @@ const handleImageUpload = (e) => {
             Service successfully added!
           </p>
           <button
-            onClick={()=>setShowModal(!showModal)}
+            onClick={() => setShowModal(!showModal)}
             className="absolute  z-50 top-4 right-4"
           >
             <X size={50} />

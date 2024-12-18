@@ -85,7 +85,7 @@ export default function Services() {
               <DialogHeader>
                 <DialogTitle>Add Service</DialogTitle>
                 <DialogDescription className={"w-full"}>
-                  <EditService service={services} />
+                  <AddService />
                 </DialogDescription>
               </DialogHeader>
             </DialogContent>

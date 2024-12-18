@@ -9,7 +9,7 @@ export const Logo = ({ open }) => {
       >
         {!open ? (
           <Image
-            src={"/assets/images/new_logo.jpg"}
+            src={"/assets/images/butt_log.png"}
             alt={"logo"}
             width={200}
             height={200}

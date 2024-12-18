@@ -63,6 +63,9 @@ export default function AddPricing() {
       if (!response.error) {
         setShowModal(true);
       }
+      if (response.error) {
+        setError(response.error);
+      }
       console.log(response);
       console.log("Form submitted:", Object.fromEntries(formData.entries()));
     } catch (err) {
@@ -202,7 +205,7 @@ export default function AddPricing() {
             Priceing plan successfully added!
           </p>
           <button
-            onClick={setShowModal(!showModal)}
+            onClick={() => setShowModal(!showModal)}
             className="absolute  z-50 top-4 right-4"
           >
             <X size={50} />

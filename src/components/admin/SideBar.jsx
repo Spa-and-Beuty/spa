@@ -5,7 +5,7 @@ import {
   Settings,
 } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import { BsBoxArrowLeft, BsBoxArrowRight } from "react-icons/bs";
 import {
   RiAlignItemVerticalCenterFill,
@@ -42,19 +42,30 @@ import { logout } from "@/data/logout";
 export default function SideBar({ show, setShow }) {
   const [shrink, setShrink] = useState(false);
   const [open, setOpen] = useState(false);
+
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [isFetching, setIsFetching] = useState(false);
+
+  // Create inline loading UI
+  const isMutating = isFetching || isPending;
+
+  async function handleLogout() {
+    setIsFetching(true);
+    // Mutate external data source
+    const res = await logout();
+    console.log(res);
+    setIsFetching(false);
+
+    startTransition(() => {
+      // Refresh the current route and fetch new data from the server without
+      // losing client-side browser or React state.
+      window.location.href = "/";
+    });
+  }
+
   // New state for hover
   const pathname = usePathname();
-  async function handleLogout() {
-    try {
-      const res = await logout();
-      if (!res.error) {
-        router.push("/");
-      }
-    } catch (e) {
-      return { error: e };
-    }
-  }
 
   const sideBarLinks = [
     {
@@ -119,19 +130,18 @@ export default function SideBar({ show, setShow }) {
                 link={link}
               />
             ))}
-            <form onSubmit={handleLogout}>
-              <button type={"submit"}>
-                <SidebarLink
-                  link={{
-                    label: "Logout",
-                    href: "#",
-                    icon: (
-                      <IconLogout className="text-neutral-200 h-7 w-7 flex-shrink-0" />
-                    ),
-                  }}
-                />
-              </button>
-            </form>
+
+            <button onClick={handleLogout}>
+              <SidebarLink
+                link={{
+                  label: "Logout",
+                  href: "#",
+                  icon: (
+                    <IconLogout className="text-neutral-200 h-7 w-7 flex-shrink-0" />
+                  ),
+                }}
+              />
+            </button>
           </div>
         </div>
         <div>
