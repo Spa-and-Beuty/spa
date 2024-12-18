@@ -98,7 +98,11 @@ export default async function page({ params }) {
                 </span>
               </div>
             </div>
-            <p>{singleBlog.description.split(".")[1]}</p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: singleBlog.description.split(".")[1],
+              }}
+            ></p>
           </div>
 
           <div className="w-1/3 max-lg:w-full">
@@ -109,7 +113,7 @@ export default async function page({ params }) {
               </span>
               <span className="flex items-center gap-2 text-lg text-white">
                 <BsTelephone className="text-link-color-hover" />
-                +251 912345678
+                +240-380-4294
               </span>
               <h1
                 className={`${bitter.className} text-6xl font-semibold text-white text-center`}

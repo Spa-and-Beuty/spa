@@ -19,7 +19,7 @@ export default function TopBar() {
           <span>
             <MdEmail className={"text-link-color-hover"} />{" "}
           </span>{" "}
-          info@gmail.com
+          jullian.murray0687@gmail.com
         </h1>
       </div>
       <SocialLinks className={"mt-0"} outline={false} size={15} />

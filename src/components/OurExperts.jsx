@@ -27,6 +27,7 @@ import TestimonialCard from "./TestimonialCard";
 import { useEffect, useState } from "react";
 import { getManyEmployees } from "@/data/employee";
 import AbouUsGrid from "@/components/AbouUsGrid";
+import AboutExpert from "./AboutExpert";
 export const OurExperts = () => {
   const [experts, setExperts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -124,7 +125,7 @@ export const OurExperts = () => {
         {/*    </SwiperSlide>*/}
         {/*  ))}*/}
         {/*</Swiper>*/}
-        <AbouUsGrid spanWhite={true} className={"order-2"} />
+        <AboutExpert />
       </div>
     </section>
   );

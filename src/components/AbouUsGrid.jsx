@@ -8,7 +8,7 @@ import {
 } from "react-icons/bs";
 import Link from "next/link";
 
-export default function AbouUsGrid({ spanWhite = false, className = "" }) {
+export default function AbouUsGrid({ className = "" }) {
   return (
     <div className={`flex  gap-10 mt-20 max-sm:flex-col max-lg:flex-col`}>
       <div className={`flex-1 ${className} max-lg:px-10 relative`}>
@@ -31,7 +31,7 @@ export default function AbouUsGrid({ spanWhite = false, className = "" }) {
       </div>
       <div className="flex h-full flex-1 max-lg:px-10 gap-4 w-full flex-col items-start">
         <span
-          className={`text-blackish-color ${spanWhite ? "bg-white" : "bg-secondary-color"} px-6 py-3 text-sm rounded-full uppercase`}
+          className={`text-blackish-color  bg-secondary-color px-6 py-3 text-sm rounded-full uppercase`}
         >
           about us
         </span>

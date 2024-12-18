@@ -1,3 +1,4 @@
+"use client";
 import { bitter } from "../../constants";
 import { BsPlay, BsPlayBtn } from "react-icons/bs";
 import Link from "next/link";
@@ -9,10 +10,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
+import { useState } from "react";
 
 export const TryOurOil = () => {
+  const [showVideo, setShowVideo] = useState(false);
   return (
-    <section className="px-16 max-lg:px-4 mb-20 h-full rounded-3xl">
+    <section className="px-16 relative max-lg:px-4 mb-20 h-full rounded-3xl">
       <section
         className={
           "bg-tryOurOil bg-center rounded-3xl max-sm:px-10 max-lg:px-20 px-60 py-40 h-full w-full bg-cover "
@@ -25,6 +28,7 @@ export const TryOurOil = () => {
         </h1>
         <div className={"flex items-center gap-10"}>
           <div
+            onClick={() => setShowVideo(!showVideo)}
             className={
               "text-white bg-link-color-hover p-6 border-4 border-white rounded-full"
             }
@@ -32,24 +36,23 @@ export const TryOurOil = () => {
             <BsPlayBtn size={40} />
           </div>
 
-          <Dialog>
-            <DialogTrigger className={"text-lg font-bold text-white"}>
-              Watch our video
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle></DialogTitle>
-                <DialogDescription className={"w-full w-[240px]"}>
-                  <video autoPlay width="320" height="240" controls>
-                    <source src="/public/assets/images/tryoil.mp4" />
-                    Your browser does not support the video tag
-                  </video>
-                </DialogDescription>
-              </DialogHeader>
-            </DialogContent>
-          </Dialog>
+          <span className={"text-lg font-bold text-white"}>
+            Watch our video
+          </span>
         </div>
       </section>
+      {showVideo && (
+        <div
+          onClick={() => setShowVideo(!showVideo)}
+          className="absolute w-full flex items-center justify-center p-10 top-1/2 left-1/2 -translate-x-1/2 backdrop-blur-lg -translate-y-1/2"
+        >
+          <div className="shadow rounded-xl">
+            <video autoPlay width="320" height="240" controls>
+              <source src="/assets/images/insta-spa-video.mp4" />
+            </video>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

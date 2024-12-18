@@ -29,7 +29,7 @@ export const Header = () => {
   ];
   return (
     <header
-      className={` justify-between sticky top-0   z-50 backdrop-blur-2xl items-center sm:px-8 md:px-10 px-6 lg:px-6 py-3 max-sm:py-6 ${hide ? "hidden" : "flex"}`}
+      className={` justify-between sticky top-0   z-50 backdrop-blur-2xl items-center sm:px-8 md:px-10 px-6 lg:px-6 py-3 max-sm:py-1 ${hide ? "hidden" : "flex"}`}
     >
       <div className={"flex items-center lg:gap-10"}>
         <Link href={"/"}>

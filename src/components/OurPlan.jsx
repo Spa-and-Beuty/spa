@@ -32,23 +32,25 @@ export const OurPlan = ({ hideDot }) => {
       >
         Our Flexible Pricing Plan
       </h1>
-      <div
-        className={
-          "grid grid-cols-2 max-lg:grid-cols-1 max-lg:grid-rows-1  gap-x-20 gap-y-10"
-        }
-      >
-        {" "}
-        {data.map((plan) => (
-          <PlanItem
-            hideDot={hideDot}
-            key={plan.id}
-            id={plan.id}
-            image_url={plan.image}
-            title={plan.title}
-            price={plan.price}
-            description={plan.description}
-          />
-        ))}
+      <div className="flex items-center justify-center">
+        <div
+          className={
+            "grid  grid-cols-2 max-lg:grid-cols-2 max-lg:gap-x-10 max-lg:grid-y-4 max-lg:grid-rows-1  gap-x-20 gap-y-10"
+          }
+        >
+          {" "}
+          {data.map((plan) => (
+            <PlanItem
+              hideDot={hideDot}
+              key={plan.id}
+              id={plan.id}
+              image_url={plan.image}
+              title={plan.title}
+              price={plan.price}
+              description={plan.description}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -124,7 +124,7 @@ export default function ContactGrid() {
                 />
               </Link>
               <Link
-                href={"#"}
+                href={"https://www.instagram.com/rejuvaglow_beauty"}
                 className="p-4 border border-link-color-hover rounded-full hover:bg-link-color-hover transition-colors duration-200 group"
               >
                 <BiLogoInstagram

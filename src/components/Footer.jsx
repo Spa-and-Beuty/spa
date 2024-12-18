@@ -59,7 +59,7 @@ export const Footer = () => {
           </div>
 
           {/* Logo and About Section */}
-          <div className="flex flex-col gap-5 items-center max-lg:items-start pt-10   text-center">
+          <div className="flex flex-col gap-5  items-center max-sm:items-center max-lg:items-start pt-10 justify-center  ">
             <Image
               src="/assets/images/butt_log.png"
               alt="logo"
@@ -74,18 +74,19 @@ export const Footer = () => {
           </div>
 
           {/* Working Hours Section */}
-          <div className="pt-16  place-self-end self-start text-left max-lg:text-left">
+          <div className="pt-16 max-sm:place-self-center  place-self-end self-start text-left max-lg:text-left">
             <h1 className={`font-bold mb-5 text-lg ${bitter.className}`}>
               Working Hours
             </h1>
-            <div className="flex flex-col gap-10">
+            <div className="flex  flex-col gap-10">
               <h1>Monday to Sunday by schedule</h1>
               <div>
                 <Image
-                  src={"https://placeholder.co/400x200"}
+                  src={"/assets/images/expert.jpg"}
                   width={400}
                   height={400}
                   alt={"expert"}
+                  className="w-[300px] h-[200px] object-cover"
                 />
               </div>
             </div>
@@ -97,7 +98,7 @@ export const Footer = () => {
           }
         >
           <p className={"text-center max-sm:order-1"}>
-            &copy;Copyright 2024 Lorem Ipsum All Rights Reserved
+            &copy;Copyright 2024 Rejuva Glow Beauty All Rights Reserved
           </p>
           <Link
             href={"#"}

@@ -92,7 +92,7 @@ export const Testimonials = () => {
           <h1
             className={`${bitter.className} max-lg:text-4xl max-sm:text-4xl text-6xl font-semibold mb-7 my-5 `}
           >
-            What Our Patients Say
+            What Our Clients Say
           </h1>
           <div className={"flex max-sm:hidden gap-4 items-center"}>
             <button

@@ -22,7 +22,7 @@ export default async function RootLayout({ children, params }) {
             </span>
             <span className="flex items-center gap-2 text-lg text-white">
               <BsTelephone className="text-link-color-hover" />
-              +251 912345678
+              +240-380-4294
             </span>
             <h1
               className={`${bitter.className} text-6xl font-semibold text-white text-center`}
@@ -44,7 +44,8 @@ export default async function RootLayout({ children, params }) {
               Company Profile
             </h1>
             <Link
-              href="#"
+              href={"#"}
+              download={"/assets/images/spa-and-beauty.pdf"}
               className="flex justify-between items-center rounded-full px-8 py-3 bg-secondary-color gap-2"
             >
               <span>
@@ -52,22 +53,6 @@ export default async function RootLayout({ children, params }) {
               </span>
               <span className="uppercase font-bold">Download Pdf File</span>
               <span className="text-white bg-blackish-color p-4 rounded-full">
-                <DownloadIcon size={40} />
-              </span>
-            </Link>
-
-            <Link
-              href="#"
-              download={true}
-              className="flex justify-between items-center rounded-full px-8 py-3 mt-4 bg-link-color-hover gap-2"
-            >
-              <span>
-                <BsFilePdf size={40} className="text-white" />
-              </span>
-              <span className="uppercase text-white font-bold">
-                Download Pdf File
-              </span>
-              <span className="text-link-color-hover    bg-white p-4 rounded-full">
                 <DownloadIcon size={40} />
               </span>
             </Link>

@@ -46,7 +46,7 @@ module.exports = {
         about: `url('/assets/images/about-bg.png')`,
         service: `url('/assets/images/service-bg.png')`,
         contact: `url('/assets/images/demo-1-contact-bg.png')`,
-        tryOurOil: `url('/assets/images/CTA-bg-image.jpg')`,
+        tryOurOil: `url('/assets/images/banner-1.png')`,
         footer: `url('/assets/images/footer-bg.png')`,
         testimonial: `url('/assets/images/contact-bg-flower.png')`,
         title: `url('/assets/images/banner2.png')`,

@@ -19,7 +19,7 @@ const mulish = Mulish({
   weight: ["200", "400", "500", "600", "700", "800", "900"],
 });
 export const metadata = {
-  title: "Spaville",
+  title: "Rejuva Glow Beauty",
   description: "Helps you to reach the best of version of yourself",
 };
 

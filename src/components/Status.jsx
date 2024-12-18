@@ -30,7 +30,7 @@ export const Status = () => {
       <div className={"w-full h-[1px] bg-gray-200"}></div>
       <div
         ref={sectionRef}
-        className="grid grid-rows-1 grid-cols-4 max-sm:grid-rows-4 max-sm:grid-cols-1 max-lg:grid-cols-2 max-lg:grid-rows  gap-4 p-20 max-sm:p-10  items-center justify-between"
+        className="grid grid-rows-1 w-full grid-cols-4 max-sm:grid-rows-4 max-sm:grid-cols-1 max-lg:grid-cols-2 max-lg:grid-rows  gap-4 p-20 max-sm:p-10  items-center justify-between"
       >
         <div className="text-center">
           <h1
@@ -50,6 +50,7 @@ export const Status = () => {
             {startCounting && (
               <CountUp className={"text-red"} start={0} end={100} />
             )}
+            {startCounting && "+"}
           </h1>
           <p className={"text-sm uppercase"}>spa accessories</p>
         </div>{" "}
@@ -60,6 +61,7 @@ export const Status = () => {
             {startCounting && (
               <CountUp className={"text-red"} start={0} end={6} />
             )}
+            {startCounting && "+"}
           </h1>
           <p className={"text-sm uppercase"}>years of experience</p>
         </div>{" "}
@@ -70,6 +72,7 @@ export const Status = () => {
             {startCounting && (
               <CountUp className={"text-red"} start={0} end={2} />
             )}
+            {startCounting && "+"}
           </h1>
           <p className={"text-sm uppercase"}>number of centers</p>
         </div>

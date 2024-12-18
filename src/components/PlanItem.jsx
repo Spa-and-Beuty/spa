@@ -11,7 +11,7 @@ export const PlanItem = ({
   price,
 }) => {
   return (
-    <div className={`flex max-sm:flex-col  gap-4 items-center`}>
+    <div className={`flex max-sm:flex-col max-lg:item-start  gap-4 `}>
       <Image
         src={image_url}
         alt={title}
@@ -19,9 +19,9 @@ export const PlanItem = ({
         className={"rounded-lg"}
         height={100}
       />
-      <div className={"p-5"}>
+      <div className={""}>
         <div
-          className={`flex max-sm:flex-col ${hideDot && "flex-col"}  max-sm:order-1  justify-between `}
+          className={`flex max-sm:flex-col   max-sm:order-1  justify-between `}
         >
           <h1 className={`text-2xl mb-3 font-bold`}>{title}</h1>
         </div>

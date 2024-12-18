@@ -31,7 +31,7 @@ export const SocialLinks = ({ size, className, outline = true }) => {
         <BsLinkedin size={size ? size : 20} />
       </Link>
       <Link
-        href="#"
+        href="https://www.instagram.com/rejuvaglow_beauty"
         aria-label="Instagram"
         className={`p-4 rounded-full text-black hover:bg-link-color-hover hover:text-white transition-colors duration-200 ${outline && "bg-white"}`}
       >

@@ -19,37 +19,37 @@ export const Portfolio = () => {
     {
       id: 1,
       title: "Hot Spring",
-      image_url: "/assets/images/portfolio-01.jpg",
+      image_url: "/assets/images/about-1.png",
       tag: "beauty",
     },
     {
       id: 2,
       title: "Facial Crubs",
-      image_url: "/assets/images/portfolio-02.jpg",
+      image_url: "/assets/images/about-2.png",
       tag: "cosmotics",
     },
     {
       id: 3,
       title: "Treatment Herbal Oils",
-      image_url: "/assets/images/portfolio-03.jpg",
+      image_url: "/assets/images/about-3.png",
       tag: "herbal",
     },
     {
       id: 4,
       title: "Wooden Goodie",
-      image_url: "/assets/images/portfolio-04.jpg",
+      image_url: "/assets/images/about-4.png",
       tag: "lifestyle",
     },
     {
       id: 5,
       title: "The Chill Factor",
-      image_url: "/assets/images/portfolio-05.jpg",
+      image_url: "/assets/images/about-5.png",
       tag: "relaxation",
     },
     {
       id: 6,
       title: "The Complete Pack",
-      image_url: "/assets/images/portfolio-06.jpg",
+      image_url: "/assets/images/about-6.png",
       tag: "relaxation",
     },
   ];
@@ -82,9 +82,9 @@ export const Portfolio = () => {
             },
           }}
         >
-          {portfolio.map((service) => (
+          {portfolio.map((service, index) => (
             <SwiperSlide key={service.id}>
-              <PortfolioCard service={service} />
+              <PortfolioCard index={index} service={service} />
             </SwiperSlide>
           ))}
         </Swiper>
