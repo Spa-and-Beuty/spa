@@ -12,7 +12,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import AddService from "@/components/AddService";
+
+import EditService from "@/components/EditService";
+
 import { getManyServices, deleteService } from "@/data/services";
 import { useRouter } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
@@ -147,7 +149,7 @@ export default function Services() {
                             <DialogHeader>
                               <DialogTitle>Edit Service</DialogTitle>
                               <DialogDescription className={"w-full"}>
-                                <AddService service={service} />
+                                <EditService service={service} />
                               </DialogDescription>
                             </DialogHeader>
                           </DialogContent>

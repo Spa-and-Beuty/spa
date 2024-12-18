@@ -127,17 +127,13 @@ export default function Blogs({ blogs }) {
                         <Link href={`/admin/blogs/${blog.id}`}>{blog.id}</Link>
                       </td>
                       <td className="px-2 py-3.5">
-                        <Suspense
-                          fallback={<div className={"w-16 h-16"}></div>}
-                        >
-                          <Image
-                            height={16}
-                            width={16}
-                            src={blog.image}
-                            alt={blog.title}
-                            className="w-16 h-16 object-cover"
-                          />
-                        </Suspense>
+                        <Image
+                          height={16}
+                          width={16}
+                          src={blog.image}
+                          alt={blog.title}
+                          className="w-16 h-16 "
+                        />
                       </td>
                       <td className="px-2 py-3.5">
                         <Suspense

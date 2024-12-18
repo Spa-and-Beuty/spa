@@ -183,7 +183,7 @@ export default function AddPricing() {
                 disabled={isSubmitDisabled}
                 className="bg-link-color-hover transition-colors duration-200 ease-in-out hover:bg-blackish-color disabled:opacity-50 w-1/2 text-white p-2 rounded-lg"
               >
-                {isLoading ? "Saving Employee..." : "Save Employee"}
+                {isLoading ? "Saving Price..." : "Save Price"}
               </button>
               <Link
                 href="/admin/teams"

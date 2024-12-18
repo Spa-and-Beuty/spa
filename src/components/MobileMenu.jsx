@@ -23,10 +23,10 @@ export const MobileMenu = () => {
           <RxHamburgerMenu size={30} />
         </SheetTrigger>
         <SheetContent>
-          <nav className={"mt-20"}>
+          <nav className={"mt-20 flex items-center justify-center "}>
             <ul
               className={
-                "flex flex-col  font-bold uppercase text-link-color-normal items-end gap-4 justify-center"
+                "flex flex-col  font-bold uppercase text-link-color-normal  gap-4 justify-center"
               }
             >
               <li
@@ -41,7 +41,7 @@ export const MobileMenu = () => {
                   "hover:text-link-color-hover transition-colors duration-200"
                 }
               >
-                <Link href={"/team"}>Our Team</Link>
+                <Link href={"/products"}>Products</Link>
               </li>{" "}
               <li
                 className={
@@ -70,6 +70,13 @@ export const MobileMenu = () => {
                 }
               >
                 <Link href={"/contact"}>Contact</Link>
+              </li>
+              <li
+                className={
+                  "hover:text-link-color-hover transition-colors duration-200"
+                }
+              >
+                <Link href={"/pricing"}>Pricing</Link>
               </li>
             </ul>
           </nav>

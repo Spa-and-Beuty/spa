@@ -19,7 +19,7 @@ import { joditConfig } from "../../constants/joditConfig";
 import { X } from "lucide-react";
 import { bitter } from "../../constants";
 
-export default function EditService() {
+export default function EditService({service}) {
   const [imagePreview, setImagePreview] = useState("");
   const [image, setImage] = useState(null);
   const [title, setName] = useState("");
@@ -128,7 +128,7 @@ export default function EditService() {
             <Image
               width={400}
               height={400}
-              src={imagePreview}
+              src={service ? service.image : imagePreview}
               alt="Category"
               className="w-full h-[300px] rounded object-cover"
             />
@@ -139,7 +139,7 @@ export default function EditService() {
           <h1 className="text-xl mt-4 text-[#313b5e]">
             {title || "Service Name"}
           </h1>
-          <p className="text-sm mt-3">{description || "Service Description"}</p>
+          <p className="text-sm mt-3">{service ? service.description : description || "Service Description"}</p>
 
           {error && <p className="text-red-500 mt-2">{error}</p>}
 
@@ -177,6 +177,7 @@ export default function EditService() {
             onChange={handleImageUpload}
             title="image"
             type="file"
+            value = {service.image}
             className="w-full opacity-0 absolute inset-0 h-full"
           />
         </div>
@@ -191,6 +192,7 @@ export default function EditService() {
                   required
                   type="text"
                   id="title"
+                  value = {service.titile}
                   onChange={(e) => setName(e.target.value)}
                   className="px-4 py-2 border"
                   placeholder="Category Name"
@@ -202,6 +204,8 @@ export default function EditService() {
                   required
                   type="text"
                   id="tag"
+                  value = {service.tag}
+
                   onChange={(e) => setSlug(e.target.value)}
                   className="px-4 py-2 border rounded"
                 />
@@ -214,7 +218,7 @@ export default function EditService() {
                   className="dark:bg-[#1e1e1e] text-black"
                   theme="dark"
                   ref={editor}
-                  value={description}
+                  value={service ? service.description : description}
                   config={config}
                   tabIndex={1} // tabIndex of textarea
                   onBlur={(newContent) => setBlogContent(newContent)}

@@ -26,12 +26,8 @@ export const PlanItem = ({
           className={`flex max-sm:flex-col ${hideDot && "flex-col"}  max-sm:order-1  justify-between `}
         >
           <h1 className={`text-2xl mb-3 font-bold`}>{title}</h1>
-          {!hideDot && (
-            <span className={"max-sm:hidden text-2xl"}>
-              ...............................
-            </span>
-          )}
-          <p className={"text-link-color-hover text-3xl"}>${price}</p>
+          
+          
         </div>
         <Link
           href={`/pricing/${id}`}
