@@ -25,7 +25,7 @@ export const AboutSlider = () => {
       title: "Relieving Stress",
       description:
         "The practice that involves acupressure applied to the hands and feet.",
-      image: "/assets/images/static-box-01.jpg",
+      image: "/assets/images/relieving-stress.png",
       Icon: BsPersonXFill,
     },
     {
@@ -33,7 +33,7 @@ export const AboutSlider = () => {
       title: "Face Massage",
       description:
         "provide a wet heat experience by using high humidity and steam ugit quando intell",
-      image: "/assets/images/static-box-02.jpg",
+      image: "/assets/images/face-massage.png",
       Icon: BsPersonXFill,
     },
     {
@@ -41,7 +41,7 @@ export const AboutSlider = () => {
       title: "Sport Massage",
       description:
         "Which is why there’s an entire industry around specifically-tailored sports massage. ",
-      image: "/assets/images/static-box-03.jpg",
+      image: "/assets/images/sport-massage.png",
       Icon: BsPersonArmsUp,
     },
   ];

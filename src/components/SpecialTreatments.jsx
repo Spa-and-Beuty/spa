@@ -8,18 +8,23 @@ export const SpecialTreatments = async () => {
   allProducts.length = 4;
 
   return (
-    <section
-      className={
-        "grid max-sm:px-10 max-lg:px-10 max-lg:grid-rows-2 gap-10 grid-cols-4 max-sm:grid-cols-1 max-lg:grid-cols-2 lg:mt-30 md:mt-20 sm:mt-10 mt-6 flex-wrap "
-      }
-    >
-      {allProducts.map((product) => (
-        <ProductCard
-          loading={false}
-          key={product.id}
-          product={product}
-        ></ProductCard>
-      ))}
+    <section className="max-sm:px-10 lg:mt-30 md:mt-20 sm:mt-10 mt-6 max-lg:px-10">
+      <h1 className={`${bitter.className} font-medium text-4xl mb-10`}>
+        Browse our Products
+      </h1>
+      <section
+        className={
+          "grid  max-lg:grid-rows-2 gap-10 grid-cols-4 max-sm:grid-cols-1 max-lg:grid-cols-2  flex-wrap "
+        }
+      >
+        {allProducts.map((product) => (
+          <ProductCard
+            loading={false}
+            key={product.id}
+            product={product}
+          ></ProductCard>
+        ))}
+      </section>
     </section>
   );
 };

@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
 
@@ -32,19 +33,16 @@ export const TryOurOil = () => {
           </div>
 
           <Dialog>
-            <DialogTrigger>
-              <Link href={"#"} className={"text-lg font-bold text-white"}>
-                {" "}
-                Watch our video
-              </Link>
+            <DialogTrigger className={"text-lg font-bold text-white"}>
+              Watch our video
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogDescription className={"w-full"}>
-                  <video width="320" height="240" controls>
-                    <source src="movie.mp4" type="video/mp4" />
-                    <source src="movie.ogg" type="video/ogg" />
-                    Your browser does not support the video tag.
+                <DialogTitle></DialogTitle>
+                <DialogDescription className={"w-full w-[240px]"}>
+                  <video autoPlay width="320" height="240" controls>
+                    <source src="/public/assets/images/tryoil.mp4" />
+                    Your browser does not support the video tag
                   </video>
                 </DialogDescription>
               </DialogHeader>

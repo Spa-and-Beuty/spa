@@ -54,7 +54,7 @@ export default function ServiceTypes() {
                   </Link>
                   <Link
                     href={`/service/${service.id}`}
-                    className="text-sm hover:rotate-45 transition-all duration-200 hover:text-link-color-hover text-darkish-color"
+                    className="text-sm hover:rotate-45 transition-all duration-200 hover:text-link-color-hover   text-darkish-color"
                   >
                     <BsArrowUpRight />
                   </Link>

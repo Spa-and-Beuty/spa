@@ -20,7 +20,7 @@ export const Header = () => {
   const hide = pathname.split("/").includes("admin");
   const headerLinks = [
     { title: "Home", link: "/" },
-    { title: "Shop", link: "shop" },
+    { title: "Products", link: "products" },
     { title: "Blog", link: "blog" },
     { title: "Service", link: "service" },
     { title: "About Us", link: "about" },
