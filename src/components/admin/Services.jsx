@@ -13,12 +13,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import EditService from "@/components/EditService";
+import AddService from "@/components/AddService";
 
 import { getManyServices, deleteService } from "@/data/services";
 import { useRouter } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import EditService from "./EditService";
 export const dynamic = "force-dynamic";
 export default function Services() {
   // const services = await getManyServices();
@@ -45,7 +46,7 @@ export default function Services() {
     setDeleting(true);
     setMessage("Deleting...");
     const confirm = window.confirm(
-      "Are you sure you want to delete this service?",
+      "Are you sure you want to delete this service?"
     );
     if (confirm) {
       try {
@@ -84,7 +85,7 @@ export default function Services() {
               <DialogHeader>
                 <DialogTitle>Add Service</DialogTitle>
                 <DialogDescription className={"w-full"}>
-                  <AddService />
+                  <EditService service={services} />
                 </DialogDescription>
               </DialogHeader>
             </DialogContent>
@@ -149,7 +150,10 @@ export default function Services() {
                             <DialogHeader>
                               <DialogTitle>Edit Service</DialogTitle>
                               <DialogDescription className={"w-full"}>
-                                <EditService service={service} />
+                                <EditService
+                                  id={service.id}
+                                  service={service}
+                                />
                               </DialogDescription>
                             </DialogHeader>
                           </DialogContent>

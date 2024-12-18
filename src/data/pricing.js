@@ -30,8 +30,8 @@ export async function getOnePlan(id) {
   return res.data;
 }
 
-export async function updateService(id, data) {
-  const res = await fetcher.put(`/categories/${id}`, data);
+export async function updatePlan(id, data) {
+  const res = await fetcher.put(`/api/v1/price/update-price/${id}`, data);
   return res.data;
 }
 

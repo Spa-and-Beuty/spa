@@ -16,6 +16,7 @@ import AddPricing from "@/components/admin/AddPricing";
 import AddProducts from "@/components/admin/AddProducts";
 import { deleteProduct } from "@/data/products";
 import { useRouter } from "next/navigation";
+import EditProduct from "./EditProduct";
 // import { deleteProduct, getManyProducts } from "@/data/products";
 // import { getManyProducts } from "@/data/products";
 
@@ -135,12 +136,19 @@ export default function ProductsList({ products }) {
                     <Link href={"#"} className="p-1 bg-[#8686a7] rounded">
                       <EyeIcon color="white" />
                     </Link>
-                    <Link
-                      href={"#"}
-                      className="p-1 rounded group hover:bg-[#ff6c2f] transition-colors duration-200 bg-[#ff3d5430]"
-                    >
-                      <Edit className="text-[#ff6c2f] group-hover:text-white" />
-                    </Link>
+                    <Dialog>
+                      <DialogTrigger className="p-1 rounded group hover:bg-[#ff6c2f] transition-colors duration-200 bg-[#ff3d5430]">
+                        <Edit className="text-[#ff6c2f] group-hover:text-white" />
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Edit Product</DialogTitle>
+                          <DialogDescription className={"w-full"}>
+                            <EditProduct id={product.id} product={product} />
+                          </DialogDescription>
+                        </DialogHeader>
+                      </DialogContent>
+                    </Dialog>
 
                     <button
                       type="submit"

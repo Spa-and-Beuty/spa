@@ -44,7 +44,10 @@ export async function getOneProduct(id) {
 }
 
 export async function updateProduct(id, data) {
-  const res = await fetcher.put(`/products/${id}`, data);
+  const res = await fetcher.put(
+    `/api/v1/products/update-product-id/${id}`,
+    data
+  );
   return res.data;
 }
 

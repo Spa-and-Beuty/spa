@@ -18,6 +18,7 @@ import dynamic from "next/dynamic";
 import AddBlog from "@/components/admin/AddBlog";
 import { useRouter } from "next/navigation";
 import { deleteProduct } from "@/data/products";
+import EditBlog from "./EditBlog";
 // const AddBlog = dynamic(() => import("@/components/admin/AddBlog"), {
 //   ssr: false,
 // });
@@ -178,12 +179,19 @@ export default function Blogs({ blogs }) {
                           <Link href={"#"} className="p-1 bg-[#8686a7] rounded">
                             <EyeIcon color="white" />
                           </Link>
-                          <Link
-                            href={"#"}
-                            className="p-1 rounded group hover:bg-[#ff6c2f] transition-colors duration-200 bg-[#ff3d5430]"
-                          >
-                            <Edit className="text-[#ff6c2f] group-hover:text-white" />
-                          </Link>
+                          <Dialog>
+                            <DialogTrigger className="p-1 rounded group hover:bg-[#ff6c2f] transition-colors duration-200 bg-[#ff3d5430]">
+                              <Edit className="text-[#ff6c2f] group-hover:text-white" />
+                            </DialogTrigger>
+                            <DialogContent>
+                              <DialogHeader>
+                                <DialogTitle>Edit Service</DialogTitle>
+                                <DialogDescription className={"w-full"}>
+                                  <EditBlog id={blog.id} blog={blog} />
+                                </DialogDescription>
+                              </DialogHeader>
+                            </DialogContent>
+                          </Dialog>
 
                           <button
                             type="submit"

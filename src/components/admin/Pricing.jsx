@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import AddPricing from "@/components/admin/AddPricing";
 import { deletePrice, getManyPriceing } from "@/data/pricing";
+import EditPricing from "./EditPricing";
 
 export default function Pricing() {
   const [pricing, setPricing] = useState([]);
@@ -106,9 +107,19 @@ export default function Pricing() {
                     <botton className="p-1 bg-[#8686a7] rounded">
                       <EyeIcon color="white" />
                     </botton>
-                    <button className="p-1 rounded group hover:bg-[#ff6c2f] transition-colors duration-200 bg-[#ff3d5430]">
-                      <Edit className="text-[#ff6c2f] group-hover:text-white" />
-                    </button>
+                    <Dialog>
+                      <DialogTrigger className="p-1 rounded group hover:bg-[#ff6c2f] transition-colors duration-200 bg-[#ff3d5430]">
+                        <Edit className="text-[#ff6c2f] group-hover:text-white" />
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Edit Service</DialogTitle>
+                          <DialogDescription className={"w-full"}>
+                            <EditPricing id={plan.id} plan={plan} />
+                          </DialogDescription>
+                        </DialogHeader>
+                      </DialogContent>
+                    </Dialog>
                     <button
                       onClick={() => deletePriceing(plan.id)}
                       className="p-1 rounded group hover:bg-hero transition-colors duration-200 bg-[#ff3d5430]"

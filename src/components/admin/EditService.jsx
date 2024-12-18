@@ -1,5 +1,5 @@
 "use client";
-// import { createCategory } from "@/data/category";
+
 import { CloudUpload } from "lucide-react";
 import Link from "next/link";
 import React, { useMemo, useRef, useState } from "react";
@@ -11,57 +11,48 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-// import { createBlogCategory } from "@/data/blogCategories";
 import Image from "next/image";
-import { createService } from "@/data/services";
 import JoditEditor from "jodit-react";
-import { joditConfig } from "../../constants/joditConfig";
+// import { joditConfig } from "../../../constants";
+// import { bitter } from "../../../constants";
 import { X } from "lucide-react";
-import { bitter } from "../../constants";
+import { joditConfig } from "../../../constants/joditConfig";
+import { bitter } from "../../../constants";
+import { updateService } from "@/data/services";
 
-export default function EditService({service}) {
-  const [imagePreview, setImagePreview] = useState("");
+export default function EditService({ service }) {
+  const [imagePreview, setImagePreview] = useState(
+    service ? service.imageUrl : ""
+  );
   const [image, setImage] = useState(null);
-  const [title, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [tag, setSlug] = useState("");
+  const [title, setName] = useState(service ? service.title : "");
+  const [description, setDescription] = useState(
+    service ? service.description : ""
+  );
+  const [tag, setSlug] = useState(service ? service.tag : "");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [forWhat, setForWhat] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  const options = [
-    "bold",
-    "italic",
-    "|",
-    "ul",
-    "ol",
-    "|",
-    "font",
-    "fontsize",
-    "|",
-    "outdent",
-    "indent",
-    "align",
-    "|",
-    "hr",
-    "|",
-    "fullsize",
-    "brush",
-    "|",
-    "table",
-    "link",
-    "|",
-    "undo",
-    "redo",
-  ];
   const editor = useRef(null);
-  const config = useMemo(
-    () => ({
-      ...joditConfig,
-    }),
-    [],
-  );
+
+  const config = useMemo(() => ({ ...joditConfig }), []);
+
+  // const updateService = async (id, updatedData) => {
+  //   const response = await fetch(`/api/v1/service/${id}`, {
+  //     method: "PUT",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(updatedData),
+  //   });
+
+  //   if (!response.ok) {
+  //     throw new Error("Failed to update service");
+  //   }
+
+  //   return response.json();
+  // };
 
   const handleImageUpload = (e) => {
     setError("");
@@ -69,14 +60,13 @@ export default function EditService({service}) {
     if (file) {
       if (
         !["image/png", "image/jpg", "image/jpeg", "image/gif"].includes(
-          file.type,
+          file.type
         )
       ) {
         setError("Only PNG, JPG, and GIF files are allowed.");
         return;
       }
       if (file.size > 5 * 1024 * 1024) {
-        // 5MB limit
         setError("File size exceeds 5MB.");
         return;
       }
@@ -87,59 +77,57 @@ export default function EditService({service}) {
     }
   };
 
-  async function onSubmit(e) {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if (!title || !tag || !description || !image) {
+    if (!title || !tag || !description) {
       setError("All fields are required.");
       return;
     }
 
     setIsLoading(true);
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("tag", tag);
-    formData.append("description", description);
-    if (image) {
-      formData.append("image", image);
-    }
+
+    const updatedData = {
+      title,
+      tag,
+      description,
+      image_url: imagePreview, // Send the image URL if already uploaded
+    };
 
     try {
-      const res = await update(formData);
+      const res = await updateService(service.id, updatedData);
 
       if (res.error) {
         setError(
-          res.message || "An error occurred while creating the category.",
+          res.message || "An error occurred while updating the service."
         );
-        console.log("response", res);
+      } else {
+        setShowModal(true);
       }
-      !res.error && setShowModal(true);
-    } catch (error) {
-      setError("Failed to create category. Please try again.");
+    } catch (err) {
+      setError("Failed to update service. Please try again.");
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   return (
     <section className="flex lg:flex-row flex-col items-start p-10 w-full gap-10">
       <div className="w-1/2 bg-white lg:sticky top-20 p-10 rounded">
-        {imagePreview && (
-          <div className="h-1/2">
-            <Image
-              width={400}
-              height={400}
-              src={service ? service.image : imagePreview}
-              alt="Category"
-              className="w-full h-[300px] rounded object-cover"
-            />
-          </div>
-        )}
+        <div className="h-1/2">
+          <Image
+            width={400}
+            height={400}
+            src={imagePreview || "/placeholder-image.png"}
+            alt="Service"
+            className="w-full h-[300px] rounded object-cover"
+          />
+        </div>
 
         <div>
           <h1 className="text-xl mt-4 text-[#313b5e]">
             {title || "Service Name"}
           </h1>
-          <p className="text-sm mt-3">{service ? service.description : description || "Service Description"}</p>
+          <p className="text-sm mt-3">{description || "Service Description"}</p>
 
           {error && <p className="text-red-500 mt-2">{error}</p>}
 
@@ -147,7 +135,7 @@ export default function EditService({service}) {
             <div className="flex justify-between">
               <input
                 type="submit"
-                value={isLoading ? "Loading..." : "Create Service"}
+                value={isLoading ? "Loading..." : "Update Service"}
                 className="px-4 py-2 bg-link-color-hover transition-colors duration-200 ease-in-out hover:bg-black text-white rounded cursor-pointer"
                 onClick={onSubmit}
               />
@@ -177,7 +165,6 @@ export default function EditService({service}) {
             onChange={handleImageUpload}
             title="image"
             type="file"
-            value = {service.image}
             className="w-full opacity-0 absolute inset-0 h-full"
           />
         </div>
@@ -192,10 +179,10 @@ export default function EditService({service}) {
                   required
                   type="text"
                   id="title"
-                  value = {service.titile}
+                  value={title}
                   onChange={(e) => setName(e.target.value)}
                   className="px-4 py-2 border"
-                  placeholder="Category Name"
+                  placeholder="Service Title"
                 />
               </div>
               <div className="flex flex-col w-1/2">
@@ -204,8 +191,7 @@ export default function EditService({service}) {
                   required
                   type="text"
                   id="tag"
-                  value = {service.tag}
-
+                  value={tag}
                   onChange={(e) => setSlug(e.target.value)}
                   className="px-4 py-2 border rounded"
                 />
@@ -218,28 +204,26 @@ export default function EditService({service}) {
                   className="dark:bg-[#1e1e1e] text-black"
                   theme="dark"
                   ref={editor}
-                  value={service ? service.description : description}
+                  value={description}
                   config={config}
-                  tabIndex={1} // tabIndex of textarea
-                  onBlur={(newContent) => setBlogContent(newContent)}
-                  onChange={(newContent) => {
-                    setDescription(newContent);
-                  }}
+                  tabIndex={1}
+                  onBlur={(newContent) => setDescription(newContent)}
                 />
               </div>
             </div>
           </form>
         </div>
       </div>
+
       {showModal && (
         <div className="fixed z-40 flex items-center justify-center flex-col bg-white shadow-md p-10 rounded-sm border border-gray-300 text-black top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <CheckCircle color="green" fill="green" size={200} />
           <p className={`text-2xl font-bold ${bitter.className}`}>
-            Service successfully added!
+            Service successfully updated!
           </p>
           <button
             onClick={() => setShowModal(!showModal)}
-            className="absolute  z-50 top-4 right-4"
+            className="absolute z-50 top-4 right-4"
           >
             <X size={50} />
           </button>
