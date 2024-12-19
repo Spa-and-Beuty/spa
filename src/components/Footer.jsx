@@ -80,13 +80,13 @@ export const Footer = () => {
             </h1>
             <div className="flex  flex-col gap-10">
               <h1>Monday to Sunday by schedule</h1>
-              <div>
+              <div className="relative">
                 <Image
                   src={"/assets/images/expert.jpg"}
-                  width={400}
-                  height={400}
+                  width={250}
+                  height={200}
                   alt={"expert"}
-                  className="w-[300px] h-[200px] object-cover"
+                  className="w-full absolute rounded-md  h-[200px] object-contain"
                 />
               </div>
             </div>
