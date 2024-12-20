@@ -30,11 +30,11 @@ export default function Login() {
     try {
       const user = await login({ email, password });
       console.log(user);
-      console.log(email, password);
+      console.log("email, password", email, password);
       if (user.error) {
         setError(error);
       }
-      router.push("/admin");
+      if(user){router.push("/admin")}
     } catch (error) {
       console.log(error);
     } finally {
