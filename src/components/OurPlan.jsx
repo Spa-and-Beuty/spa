@@ -8,7 +8,7 @@ import { bitter } from "../../constants";
 import { getManyPriceing } from "@/data/pricing";
 import PlanItem from "./PlanItem";
 
-export const OurPlan = ({ home = false, hideDot }) => {
+export default function OurPlan({ home = false, hideDot }) {
   const [data, setData] = useState([]);
   const controls = useAnimation();
   const [ref, inView] = useInView({
@@ -78,4 +78,4 @@ export const OurPlan = ({ home = false, hideDot }) => {
       </div>
     </section>
   );
-};
+}
