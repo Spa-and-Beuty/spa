@@ -21,6 +21,7 @@
     "cookie": "^1.0.2",
     "framer-motion": "^11.13.1",
     "gsap": "^3.12.5",
+    "ioredis": "^5.4.1",
     "jodit-react": "^4.1.2",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",

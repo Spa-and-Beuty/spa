@@ -29,12 +29,15 @@ export default function Login() {
     setIsLoading(true);
     try {
       const user = await login({ email, password });
-      console.log(user);
-      console.log("email, password", email, password);
+
+      console.log(user.user);
+
       if (user.error) {
-        setError(error);
+        setError(user.error);
       }
-      if(user){router.push("/admin")}
+      if (user.user) {
+        router.push("/admin");
+      }
     } catch (error) {
       console.log(error);
     } finally {

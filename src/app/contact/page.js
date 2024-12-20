@@ -19,7 +19,7 @@ export const metadata = {
 export default function page() {
   const contact = {
     id: "1",
-    emails: ["pbminfouser@infotech.com", "noreply@pbminfotech.com"],
+    emails: ["jullian.murray0687@gmail.com", "jullian.murray0687@gmail.com"],
     workingDays: "Monday to sunday by schedule",
     location: "6900 Wisconsin Ave, Bethesda MD 2081.5",
     phoneNumber: {
