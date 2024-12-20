@@ -1,4 +1,4 @@
-import { OurPlan } from "@/components/OurPlan";
+import OurPlan from "@/components/OurPlan";
 import React from "react";
 export const dynamic = "force-dynamic";
 export default function Page() {

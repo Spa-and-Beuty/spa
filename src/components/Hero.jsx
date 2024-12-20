@@ -33,13 +33,13 @@ const slides = [
   {
     id: 2,
     idea: "rejuvenate you today",
-    title: "Revilalize, inner serenity",
+    title: "Beautiful, skin starts here",
     image: "/assets/images/slide2.png",
   },
   {
     id: 3,
     idea: "shine with perfection",
-    title: "Rejuvenation, beautiful cover",
+    title: "Beautiful, skin starts here",
     image: "/assets/images/slide1.png",
   },
 ];

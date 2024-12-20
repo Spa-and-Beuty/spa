@@ -11,7 +11,7 @@ export default async function Page({ params }) {
       <h1 className={` text-4xl text-center font-bold mt-10`}>
         {singlePlan.title}
       </h1>
-      <div className="flex shadow rounded max-sm:flex-col  lg:min-w-[900px] m-auto mt-10 gap-10 items-center justify-center">
+      <div className="flex flex-col shadow rounded max-sm:flex-col  lg:min-w-[900px] m-auto mt-10 gap-10 items-center justify-center">
         <Image
           src={singlePlan.image}
           width={400}

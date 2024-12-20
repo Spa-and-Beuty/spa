@@ -1,3 +1,4 @@
+import { Jodit } from "jodit-react";
 export const joditConfig = {
   zIndex: 0,
   readonly: false,

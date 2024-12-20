@@ -1,10 +1,10 @@
 "use client";
-
+import {Jodit} from "jodit-react"
 import React, { useMemo, useRef, useState } from "react";
 import { CloudUpload, Delete } from "lucide-react";
 import Link from "next/link";
 // import Image from "next/image";
-import { PlanItem } from "@/components/PlanItem";
+import  PlanItem  from "@/components/PlanItem";
 import { createPricing } from "@/data/pricing";
 import { X } from "lucide-react";
 import { bitter } from "../../../constants";
@@ -81,6 +81,7 @@ export default function AddPricing() {
   const config = useMemo(
     () => ({
       ...joditConfig,
+ defaultMode: Jodit.MODE_SOURCE,
     }),
     []
   );
