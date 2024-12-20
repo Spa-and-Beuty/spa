@@ -24,14 +24,16 @@ import Rating from "@/components/Rating";
 import { AiOutlineFacebook } from "react-icons/ai";
 import { Facebook } from "lucide-react";
 import TestimonialCard from "./TestimonialCard";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getManyEmployees } from "@/data/employee";
 import AbouUsGrid from "@/components/AbouUsGrid";
 import AboutExpert from "./AboutExpert";
+import gsap from "gsap";
 export const OurExperts = () => {
   const [experts, setExperts] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const sectionRef = useRef(null);
+  const headingRef = useRef(null);
   useEffect(() => {
     setLoading(true);
     async function fetchExperts() {
@@ -45,9 +47,34 @@ export const OurExperts = () => {
       }
     }
     fetchExperts();
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        headingRef.current,
+        {
+          x: 100,
+          opacity: 0,
+        },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            end: "top 50%",
+            scrub: 1,
+          },
+        }
+      );
+    }, sectionRef);
+
+    // Clean up
+    return () => ctx.revert();
   }, []);
   return (
     <section
+      ref={sectionRef}
       className={
         "mx-10  rounded-3xl max-sm:py-10 max-lg:py-16 px-10 py-24 bg-secondary-color bg-expert bg-left-bottom bg-no-repeat"
       }
@@ -62,6 +89,7 @@ export const OurExperts = () => {
         </span>
         <div className={"flex items-center justify-between"}>
           <h1
+            ref={headingRef}
             className={`${bitter.className} max-lg:text-4xl max-sm:text-4xl text-5xl font-semibold mb-7 my-5 `}
           >
             Meet Our Expert

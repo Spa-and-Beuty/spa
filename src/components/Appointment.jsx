@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { bitter } from "../../constants";
 import { BsArrowBarRight, BsBox } from "react-icons/bs";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { getManyServices } from "@/data/services";
 import { createAppointment } from "@/data/appointment";
+import gsap from "gsap";
 
 export const Appointment = () => {
   const [fullName, setFullName] = useState("");
@@ -23,7 +24,8 @@ export const Appointment = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
-
+  const headingRef = useRef(null);
+  const sectionRef = useRef(null);
   useEffect(() => {
     async function getService() {
       setIsLoading(true);
@@ -37,6 +39,30 @@ export const Appointment = () => {
       }
     }
     getService();
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        headingRef.current,
+        {
+          x: 100,
+          opacity: 0,
+        },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            end: "top 50%",
+            scrub: 1,
+          },
+        }
+      );
+    }, sectionRef);
+
+    // Clean up
+    return () => ctx.revert();
   }, []);
 
   async function onSubmit(e) {
@@ -80,7 +106,11 @@ export const Appointment = () => {
   }
 
   return (
-    <section id={"appointment"} className={"px-16 max-lg:px-4 mt-10"}>
+    <section
+      ref={sectionRef}
+      id={"appointment"}
+      className={"px-16 max-lg:px-4 mt-10"}
+    >
       <div className={"flex max-lg:flex-col pt-20 gap-10"}>
         <Image
           src={"/assets/images/contact-col-bg.jpg"}
@@ -102,6 +132,7 @@ export const Appointment = () => {
             Appointment
           </span>
           <h1
+            ref={headingRef}
             className={`${bitter.className} max-lg:w-full w-4/5 my-5 max-lg:text-4xl max-sm:text-2xl text-white text-6xl font-semibold `}
           >
             {"We're"} a Spa & Wellness Center Since 2000

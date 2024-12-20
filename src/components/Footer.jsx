@@ -1,120 +1,145 @@
 "use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import {
-  BsArrowUp,
-  BsFacebook,
-  BsInstagram,
-  BsLinkedin,
-  BsTwitterX,
-} from "react-icons/bs";
+import { ArrowUp, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import { bitter } from "../../constants";
 import { usePathname } from "next/navigation";
 import { SocialLinks } from "@/components/SocialLinks";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const usefulLinks = [
+  { name: "Homepage", href: "/" },
+  { name: "Shop", href: "/shop" },
+  { name: "Massage", href: "/services" },
+  { name: "Oil Therapy", href: "/services" },
+  { name: "Treatments", href: "/services" },
+  { name: "Blogs", href: "/blog" },
+  { name: "FAQ", href: "/faq" },
+  { name: "Stone Spa", href: "/services" },
+];
 
 export const Footer = () => {
   const pathname = usePathname();
   const hide = pathname.split("/").includes("admin");
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    // const ctx = gsap.context(() => {
+    //   gsap.from(footerRef.current, {
+    //     y: 100,
+    //     opacity: 0,
+    //     duration: 1,
+    //     ease: "power3.out",
+    //     scrollTrigger: {
+    //       trigger: footerRef.current,
+    //       start: "top bottom",
+    //       end: "top 80%",
+    //       scrub: 1,
+    //     },
+    //     repeat: false,
+    //   });
+    // }, footerRef);
+    // return () => ctx.revert();
+  }, []);
+
+  if (hide) return null;
+
   return (
     <footer
-      className={`${hide && "hidden"} bg-footer  mt-20 bg-secondary-color`}
+      ref={footerRef}
+      className="bg-secondary-color  lg:pl-10 text-blackish-color pt-16 pb-8 mt-20"
     >
-      <div className="container mx-auto px-10">
-        <div className="grid grid-cols-3  max-lg:grid-cols-2 max-sm:grid-cols-1  gap-12 lg:gap-0">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
           {/* Useful Links Section */}
-          <div className="pt-16">
-            <h1 className={`font-bold mb-5 text-lg ${bitter.className}`}>
+          <div>
+            <h2 className={`${bitter.className} text-2xl font-bold mb-6`}>
               Useful Links
-            </h1>
-            <div className="flex gap-10">
-              <ul>
-                <li className="pb-4">
-                  <Link href="#">Homepage</Link>
-                </li>
-                <li className="pb-4">
-                  <Link href="/shop">Shop</Link>
-                </li>
-                <li className="pb-4">
-                  <Link href="/services">Massage</Link>
-                </li>
-                <li className="pb-4">
-                  <Link href="/services">Oil Therapy</Link>
-                </li>
-              </ul>
-              <ul>
-                <li className="pb-4">
-                  <Link href="/services">Treatments</Link>
-                </li>
-                <li className="pb-4">
-                  <Link href="/blog">Blogs</Link>
-                </li>
-                <li className="pb-4">
-                  <Link href="/faq">FAQ</Link>
-                </li>
-                <li className="pb-4">
-                  <Link href="/services">Stone Spa</Link>
-                </li>
-              </ul>
+            </h2>
+            <div className="grid grid-cols-2 gap-4">
+              {usefulLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className="hover:text-link-color-hover transition-colors duration-200"
+                >
+                  {link.name}
+                </Link>
+              ))}
             </div>
           </div>
 
           {/* Logo and About Section */}
-          <div className="flex flex-col gap-5  items-center max-sm:items-center max-lg:items-start pt-10 justify-center  ">
+          <div className="flex flex-col items-center text-center">
             <Image
               src="/assets/images/butt_log.png"
-              alt="logo"
+              alt="Rejuva Glow Beauty Logo"
               width={200}
               height={100}
+              className="mb-4"
             />
-            <p className="mt-3 w-2/3">
-              Peerly is the best Spa therapy for achieving relaxation and
-              balance.
+            <p className="mt-3 max-w-md">
+              Rejuva Glow Beauty is the best Spa therapy for achieving
+              relaxation and balance.
             </p>
-            <SocialLinks />
+            <SocialLinks className="mt-6" />
           </div>
 
           {/* Working Hours Section */}
-          <div className="pt-16 max-sm:place-self-center  place-self-end self-start text-left max-lg:text-left">
-            <h1 className={`font-bold mb-5 text-lg ${bitter.className}`}>
+          <div className="lg:text-right flex flex-col items-center">
+            <h2 className={`${bitter.className} text-2xl font-bold mb-6`}>
               Working Hours
-            </h1>
-            <div className="flex  flex-col gap-10">
-              <h1>Monday to Sunday by schedule</h1>
-              <div className="relative">
-                <Image
-                  src={"/assets/images/expert.jpg"}
-                  width={250}
-                  height={200}
-                  alt={"expert"}
-                  className="w-full absolute rounded-md  h-[200px] object-contain"
-                />
-              </div>
+            </h2>
+            <p className="mb-4">Monday to Sunday by schedule</p>
+            <div className="relative w-60 border h-48 rounded-lg overflow-hidden">
+              <Image
+                src="/assets/images/expert.jpg"
+                alt="Spa expert"
+                layout="fill"
+                objectFit="cover"
+                className="transition-transform duration-300 hover:scale-105"
+              />
             </div>
           </div>
         </div>
-        <div
-          className={
-            "flex max-sm:flex-col max-sm:gap-4 max-sm:px-10 items-center mt-10 justify-between p-4 px-8 max-sm:rounded-lg rounded-full bg-white shadow-md"
-          }
-        >
-          <p className={"text-center max-sm:order-1"}>
-            &copy;Copyright 2024 Rejuva Glow Beauty All Rights Reserved
+
+        <Separator className="my-8" />
+
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-sm  sm:text-left">
+            &copy; {new Date().getFullYear()} Rejuva Glow Beauty. All Rights
+            Reserved.
           </p>
-          <Link
-            href={"#"}
-            className={
-              "bg-link-color-hover  max-sm:order-1 text-white p-4 rounded-full hover:bg-blackish-color transition-all duration-200"
-            }
-          >
-            <BsArrowUp size={30} />
-          </Link>
-          <div
-            className={"flex max-sm:gap-2 max-sm:flex-col items-center gap-5"}
-          >
-            <Link href={"#"}>Terms and conditions</Link>
-            <span className={"max-sm:hidden"}>|</span>
-            <Link href={"#"}>Privacy Policy</Link>
+          <div className="flex items-center justify-between gap-4">
+            <Link
+              href="#"
+              className="text-sm hover:text-link-color-hover transition-colors duration-200"
+            >
+              Terms and Conditions
+            </Link>
+            <Separator orientation="vertical" className="h-4" />
+            <Link
+              href="#"
+              className="text-sm hover:text-link-color-hover transition-colors duration-200"
+            >
+              Privacy Policy
+            </Link>
           </div>
+          <Button
+            size="icon"
+            variant="outline"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="rounded-full hover:bg-link-color-hover hover:text-white transition-colors duration-200"
+          >
+            <ArrowUp className="h-4 w-4" />
+          </Button>
         </div>
       </div>
     </footer>

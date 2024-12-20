@@ -1,55 +1,115 @@
+"use client";
+
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { bitter } from "../../constants";
-import {
-  BsArrowLeftRight,
-  BsArrowUpRight,
-  BsCheckCircle,
-} from "react-icons/bs";
+import { ArrowUpRight, CheckCircle } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function AboutExpert({ className = "" }) {
+  const sectionRef = useRef(null);
+  const imageRef = useRef(null);
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(imageRef.current, {
+        x: -100,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          end: "top 50%",
+          scrub: 1,
+        },
+      });
+
+      gsap.from(contentRef.current, {
+        x: 100,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          end: "top 50%",
+          scrub: 1,
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div
-      className={`flex justify-between w-full   gap-32 mt-5 max-sm:flex-col max-lg:flex-col`}
-    >
-      <div
-        className={`flex-1 ${className} border order-1 max-lg:px-10 relative`}
-      >
-        <Image
-          src="/assets/images/expert.jpg"
-          alt="mask image"
-          width={400}
-          height={400}
-          className=" rounded-3xl h-auto"
-        />
-      </div>
-      <div className="flex h-full flex-1 max-lg:px-10 gap-4 w-full flex-col items-start">
-        <span
-          className={`text-blackish-color  bg-white px-6 py-3 text-sm rounded-full uppercase`}
-        >
-          about us
-        </span>
-
-        <p>
-          {
-            "  Rejuva Glow Beauty, LLC - Empowering Beauty As the CEO and Founder of Rejuva Glow Beauty, LLC, I am Adriene Murray. Since 2009, I’ve been a licensed cosmetologist. My journey began with a personal struggle with my own skincare, losing a lot of hair and self-esteem, leading to a loss of confidence. This experience ignited my passion for skincare and beauty. I am committed to helping, educating, and treating women with similar concerns, knowing the impact of feeling confident due to improved skin. Specializing in skincare and cosmetics, I stay updated on the latest trends and techniques. Building personal relationships with each client is my priority, and I aim to provide exceptional, meaningful services. Join me on this journey and let’s embrace beauty, confidence, and empowerment together."
-          }
-        </p>
-
-        <div className={`justify-self-end mt-5 `}>
-          <Link
-            href={"/contact"}
-            className={
-              "items-center flex max-sm:mt-4 gap-4 bg-blackish-color text-white hover:bg-secondary-color hover:text-blackish hover:text-blackish-color transition-colors duration-200  px-6 py-3 rounded-full"
-            }
-          >
-            {" "}
-            Contact Us
-            <BsArrowUpRight size={20} />
-          </Link>
+    <section ref={sectionRef} className="py-20 ">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
+          <div ref={imageRef} className="lg:w-1/2">
+            <Card className="overflow-hidden">
+              <CardContent className="p-0">
+                <Image
+                  src="/assets/images/expert.jpg"
+                  alt="Adriene Murray, CEO and Founder of Rejuva Glow Beauty"
+                  width={600}
+                  height={400}
+                  className="w-full  object-cover transition-transform duration-300 hover:scale-105"
+                />
+              </CardContent>
+            </Card>
+          </div>
+          <div ref={contentRef} className="lg:w-1/2 space-y-6">
+            <span className="inline-block px-4 py-2 bg-secondary-color text-blackish-color text-sm font-semibold rounded-full uppercase tracking-wider">
+              About Us
+            </span>
+            <h2
+              className={`${bitter.className} text-4xl font-bold text-blackish-color mb-4`}
+            >
+              Empowering Beauty Since 2009
+            </h2>
+            <div className="space-y-4 text-gray-700">
+              <p>
+                As the CEO and Founder of Rejuva Glow Beauty, LLC, I, Adriene
+                Murray, have been on a transformative journey in the world of
+                beauty and skincare since 2009.
+              </p>
+              <p>
+                My passion for skincare was born from personal struggles, which
+                led me to dedicate my career to helping women regain their
+                confidence through improved skin health.
+              </p>
+              <ul className="space-y-2">
+                <li className="flex items-center">
+                  <CheckCircle className="mr-2 h-5 w-5 text-green-500" />
+                  <span>Licensed cosmetologist since 2009</span>
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="mr-2 h-5 w-5 text-green-500" />
+                  <span>Specializing in skincare and cosmetics</span>
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="mr-2 h-5 w-5 text-green-500" />
+                  <span>Committed to education and personalized care</span>
+                </li>
+              </ul>
+            </div>
+            <Button asChild className="mt-6">
+              <Link href="/contact" className="inline-flex items-center">
+                Contact Us
+                <ArrowUpRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

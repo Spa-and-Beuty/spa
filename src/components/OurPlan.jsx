@@ -1,12 +1,20 @@
 "use client";
-import Image from "next/image";
-import { bitter } from "../../constants";
-import { PlanItem } from "@/components/PlanItem";
-import { getManyPriceing } from "@/data/pricing";
-import { useEffect, useState } from "react";
 
-export const OurPlan = ({ hideDot }) => {
+import { useEffect, useState } from "react";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { bitter } from "../../constants";
+// import { PlanItem } from "./PlanItem";
+import { getManyPriceing } from "@/data/pricing";
+import PlanItem from "./PlanItem";
+
+export const OurPlan = ({ home = false, hideDot }) => {
   const [data, setData] = useState([]);
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
 
   useEffect(() => {
     async function getPlan() {
@@ -15,43 +23,59 @@ export const OurPlan = ({ hideDot }) => {
     }
     getPlan();
   }, []);
-  data.length = 4;
 
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+
+  const headingVariants = {
+    hidden: { x: 100, opacity: 0 },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: { duration: 1, ease: "easeOut" },
+    },
+  };
+  if (home) {
+    data.length = 6;
+  }
   return (
-    <div className={"flex max-lg:px-10  mt-20 flex-col items-center"}>
-      <span
-        className={
-          "px-8 uppercase text-sm  py-1 rounded-full bg-secondary-color"
-        }
-      >
-        {" "}
-        Best Plans
-      </span>
-      <h1
-        className={`text-blackish-color my-3 mb-10 max-lg:text-center max-lg:text-4xl max-sm:text-4xl text-6xl font-semibold ${bitter.className}`}
-      >
-        Our Flexible Pricing Plan
-      </h1>
-      <div className="flex items-center justify-center">
-        <div
-          className={
-            "grid  grid-cols-2 max-lg:grid-cols-2 max-lg:gap-x-10 max-lg:grid-y-4 max-lg:grid-rows-1  gap-x-20 gap-y-10"
-          }
+    <section className="lg:w-2/3 m-auto px-4 py-20">
+      <div className="text-center mb-16">
+        <span className="inline-block px-4 py-2 rounded-full bg-secondary-color text-sm uppercase text-white">
+          Best Plans
+        </span>
+        <motion.h1
+          ref={ref}
+          initial="hidden"
+          animate={controls}
+          variants={headingVariants}
+          className={`text-4xl md:text-5xl lg:text-6xl font-semibold mt-4 ${bitter.className} text-blackish-color`}
         >
-          {" "}
-          {data.map((plan) => (
+          Our Flexible Pricing Plan
+        </motion.h1>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {data.map((plan, index) => (
+          <motion.div
+            key={plan.id}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+          >
             <PlanItem
-              hideDot={hideDot}
-              key={plan.id}
               id={plan.id}
               image_url={plan.image}
               title={plan.title}
               price={plan.price}
               description={plan.description}
+              hideDot={hideDot}
             />
-          ))}
-        </div>
+          </motion.div>
+        ))}
       </div>
-    </div>
+    </section>
   );
 };

@@ -14,7 +14,37 @@ import { BsArrowRight, BsQuote } from "react-icons/bs";
 import { bitter } from "../../constants";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import Rating from "@/components/Rating";
+import gsap from "gsap";
+import { useEffect, useRef } from "react";
 export const Testimonials = () => {
+  const headingRef = useRef(null);
+  const sectionRef = useRef(null);
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        headingRef.current,
+        {
+          x: 100,
+          opacity: 0,
+        },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            end: "top 50%",
+            scrub: 1,
+          },
+        }
+      );
+    }, sectionRef);
+
+    // Clean up
+    return () => ctx.revert();
+  }, []);
   const testimonials = [
     {
       id: 1,
@@ -74,8 +104,9 @@ export const Testimonials = () => {
   ];
   return (
     <section
+      ref={sectionRef}
       className={
-        "max-lg:px-10 py-32 bg-testimonial bg-left-bottom bg-no-repeat"
+        "max-lg:px-10 py-32 pt-10 bg-testimonial bg-left-bottom bg-no-repeat"
       }
     >
       <div
@@ -90,6 +121,7 @@ export const Testimonials = () => {
         </span>
         <div className={"flex items-center justify-between"}>
           <h1
+            ref={headingRef}
             className={`${bitter.className} max-lg:text-4xl max-sm:text-4xl text-6xl font-semibold mb-7 my-5 `}
           >
             What Our Clients Say

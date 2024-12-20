@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { jwtDecode } from "jwt-decode";
 
 const roleRoutes = ["/admin"];
-const protectedRoutes = [...roleRoutes, "/profile", "/checkout", "/carts"];
+const protectedRoutes = [...roleRoutes, "/admin/:*"];
 const authRoutes = ["/auth"];
 const homeRoutes = ["/"];
 
@@ -19,7 +19,7 @@ export async function middleware(request) {
   const isRolePath = roleRoutes.some((route) => pathname.startsWith(route));
   const isHomePath = homeRoutes.includes(pathname);
   const isProtectedPath = protectedRoutes.some((route) =>
-    pathname.startsWith(route),
+    pathname.startsWith(route)
   );
 
   if (authUser?.userId && authUser.role) {
@@ -28,7 +28,7 @@ export async function middleware(request) {
     if (isRolePath && !pathname.startsWith(userRolePath)) {
       const currentPath = pathname.replace(
         new RegExp(roleRoutes.join("|")),
-        userRolePath,
+        userRolePath
       );
       if (roleRoutes.includes(userRolePath)) {
         return NextResponse.redirect(new URL(currentPath, request.url));

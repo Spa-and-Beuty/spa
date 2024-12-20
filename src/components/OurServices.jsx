@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y, Autoplay, Navigation } from "swiper/modules";
 import "swiper/css/autoplay";
@@ -8,17 +9,21 @@ import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import "swiper/css/a11y";
 import "swiper/css";
-import Image from "next/image";
-import Link from "next/link";
-import { BsArrowRight } from "react-icons/bs";
 import { bitter } from "../../constants";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import ServiceCard from "./ServiceCard";
-import { useEffect, useState } from "react";
 import { getManyServices } from "@/data/services";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 export const OurServices = () => {
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const sectionRef = useRef(null);
+  const headingRef = useRef(null);
+
   useEffect(() => {
     async function getAllServices() {
       setIsLoading(true);
@@ -34,11 +39,39 @@ export const OurServices = () => {
       }
     }
     getAllServices();
+
+    // GSAP animation
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        headingRef.current,
+        {
+          x: 100,
+          opacity: 0,
+        },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            end: "top 50%",
+            scrub: 1,
+          },
+        }
+      );
+    }, sectionRef);
+
+    // Clean up
+    return () => ctx.revert();
   }, []);
+
   return (
     <section
+      ref={sectionRef}
       className={
-        "bg-service max-sm:px-10 max-lg:px-10 bg-secondary-color relative max-lg:py-10 py-32  bg-no-repeat"
+        "bg-service max-sm:px-10 max-lg:px-10 bg-secondary-color relative max-lg:py-10 py-32 bg-no-repeat overflow-hidden"
       }
     >
       <div
@@ -49,7 +82,8 @@ export const OurServices = () => {
         <span className={"px-4 rounded-full bg-light-color"}>Our Services</span>
         <div className={"flex items-center justify-between"}>
           <h1
-            className={`${bitter.className} max-lg:text-4xl max-sm:text-4xl text-6xl font-semibold mb-7 my-5 `}
+            ref={headingRef}
+            className={`${bitter.className} max-lg:text-4xl max-sm:text-4xl text-6xl font-semibold mb-7 my-5`}
           >
             The luxury experience
           </h1>

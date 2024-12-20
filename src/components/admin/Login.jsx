@@ -1,15 +1,20 @@
 "use client";
-import Image from "next/image";
 
 import { useState } from "react";
-import { login } from "@/data/login";
 import { useRouter } from "next/navigation";
-import { EyeOpenIcon } from "@radix-ui/react-icons";
-import { EyeClosedIcon } from "lucide-react";
-import { GoEyeClosed } from "react-icons/go";
-import { PiEyeClosedBold } from "react-icons/pi";
-import { RiEyeCloseFill } from "react-icons/ri";
+import { login } from "@/data/login";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 import { bitter } from "../../../constants";
 
 export default function Login() {
@@ -19,19 +24,13 @@ export default function Login() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-  function handleSetShowPassword(state) {
-    setShowPassword(!state);
-  }
 
   async function onSubmit(e) {
-    console.log(email, password);
     e.preventDefault();
     setIsLoading(true);
+    setError("");
     try {
       const user = await login({ email, password });
-
-      console.log(user.user);
-
       if (user.error) {
         setError(user.error);
       }
@@ -39,69 +38,78 @@ export default function Login() {
         router.push("/admin");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      setError("An unexpected error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
   }
-  return (
-    <section className="container  h-screen flex items-center justify-center  m-auto">
-      <div className={" items-center justify-center"}>
-        {/*<Image*/}
-        {/*  src={"/assets/images/new_logo.jpg"}*/}
-        {/*  alt={"logo"}*/}
-        {/*  width={200}*/}
-        {/*  height={200}*/}
-        {/*/>*/}
 
-        <div className={"text-center space-y-4"}>
-          <h1 className={`text-6xl ${bitter.className} text-6xl font-bold `}>
-            Welcome
-          </h1>
-          <span>Please login to admin dashboard</span>
-          <form onSubmit={onSubmit} className={"space-y-4  w-[500px]"}>
-            <div>
-              {" "}
-              <input
-                onChange={(e) => setEmail(e.target.value)}
-                className={"w-full p-4 border border-gray-200"}
-                type={"email"}
+  return (
+    <div className="container h-screen flex items-center justify-center">
+      <Card className="w-full max-w-md">
+        <CardHeader className="space-y-1">
+          <CardTitle
+            className={`text-3xl font-bold text-center ${bitter.className}`}
+          >
+            Welcome Back
+          </CardTitle>
+          <CardDescription className="text-center">
+            Enter your credentials to access the admin dashboard
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={onSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="you@example.com"
                 required
-                placeholder={"EMAIL"}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className={"relative"}>
-              {" "}
-              <input
-                hidden={false}
-                onChange={(e) => setPassword(e.target.value)}
-                type={showPassword ? "text" : "password"}
-                required
-                className={"w-full p-4 border border-gray-200 "}
-                placeholder={"PASSWORD"}
-              />
-              <div
-                onClick={() => setShowPassword(!showPassword)}
-                className={"absolute right-4 top-1/2 -translate-y-1/2"}
-              >
-                {!showPassword ? (
-                  <GoEyeClosed size={30} />
-                ) : (
-                  <EyeOpenIcon scale={3} className={"text-[30px]"} />
-                )}
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-2 top-1/2 -translate-y-1/2"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <EyeOffIcon className="h-4 w-4" />
+                  ) : (
+                    <EyeIcon className="h-4 w-4" />
+                  )}
+                  <span className="sr-only">
+                    {showPassword ? "Hide password" : "Show password"}
+                  </span>
+                </Button>
               </div>
             </div>
-            <p className={"text-sm text-red-500"}>{error}</p>
-            <button
-              disabled={isLoading}
-              type={"submit"}
-              className={`px-6 w-full py-3 ${isLoading ? "bg-gray-600" : "bg-link-color-hover"} text-white rounded`}
-            >
+            {error && (
+              <p className="text-sm text-red-500 text-center" role="alert">
+                {error}
+              </p>
+            )}
+            <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? "Logging In..." : "Login"}
-            </button>
+            </Button>
           </form>
-        </div>
-      </div>
-    </section>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

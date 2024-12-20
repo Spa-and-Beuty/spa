@@ -25,7 +25,7 @@ export default function Home() {
       <AboutUs />
       <OurServices />
       <BannerScroll />
-      <OurPlan />
+      <OurPlan home={true} />
       <Appointment />
       <Testimonials />
       <Status />
