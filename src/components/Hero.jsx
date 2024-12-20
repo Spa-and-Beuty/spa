@@ -14,7 +14,6 @@ import {
   Autoplay,
 } from "swiper/modules";
 import { bitter } from "../../constants";
-import Skeleton from "react-loading-skeleton";
 import gsap from "gsap";
 
 import "swiper/css";
@@ -23,7 +22,6 @@ import "swiper/css/virtual";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import "swiper/css/autoplay";
-import "react-loading-skeleton/dist/skeleton.css";
 
 const slides = [
   {
@@ -51,57 +49,80 @@ export const Hero = () => {
   const swiperRef = useRef(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.set([".hero", ".idea", ".detail"], { opacity: 0, y: 50 });
-    }, heroRef);
+    const animateSlide = (slideEl) => {
+      if (!slideEl) return;
 
-    return () => ctx.revert();
+      const elements = slideEl.querySelectorAll(".animate-text");
+      if (elements.length === 0) return;
+
+      const timeline = gsap.timeline();
+
+      timeline
+        .fromTo(
+          elements,
+          { opacity: 0, x: -50 },
+          { opacity: 1, x: 0, duration: 0.8, stagger: 0.2, ease: "power2.out" }
+        )
+        .to(
+          elements,
+          {
+            opacity: 0,
+            x: -50,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power2.in",
+          },
+          "+=2.5"
+        );
+
+      return timeline;
+    };
+
+    let currentAnimation;
+
+    const handleSlideChange = (swiper) => {
+      if (currentAnimation) {
+        currentAnimation.kill();
+      }
+
+      const activeSlide = swiper.slides[swiper.activeIndex];
+      if (activeSlide) {
+        currentAnimation = animateSlide(activeSlide);
+      }
+    };
+
+    if (swiperRef.current) {
+      const swiper = swiperRef.current;
+
+      swiper.on("slideChange", handleSlideChange);
+      handleSlideChange(swiper); // Animate the initial slide
+
+      return () => {
+        swiper.off("slideChange", handleSlideChange);
+        if (currentAnimation) {
+          currentAnimation.kill();
+        }
+      };
+    }
   }, []);
 
-  const handleSlideChange = (swiper) => {
-    const currentSlide = swiper.slides[swiper.activeIndex];
-    if (!currentSlide) return;
-
-    const heroHeadings = currentSlide.querySelectorAll(".hero");
-    const ideas = currentSlide.querySelectorAll(".idea");
-    const details = currentSlide.querySelectorAll(".detail");
-
-    gsap.to([heroHeadings, ideas, details], {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      stagger: 0.2,
-      ease: "power2.out",
-    });
-  };
-
-  const handleSlideChangeTransitionStart = () => {
-    if (swiperRef.current) {
-      const currentSlide =
-        swiperRef.current.slides[swiperRef.current.activeIndex];
-      if (currentSlide) {
-        gsap.set([".hero", ".idea", ".detail"], { opacity: 0, y: 50 });
-      }
-    }
-  };
-
   return (
-    <div ref={heroRef} className="lg:px-6 lg:rounded-3xl h-[500px]">
+    <div
+      ref={heroRef}
+      className="lg:px-6 lg:rounded-3xl h-[550px] sm:h-[450px] md:h-[550px]"
+    >
       <Swiper
-        virtual={true}
         modules={[Navigation, EffectFade, Autoplay, Virtual, Pagination, A11y]}
         pagination={{ clickable: true }}
         loop={true}
         autoplay={{
-          delay: 4000,
+          delay: 5000,
           disableOnInteraction: false,
         }}
         effect={"fade"}
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
         }}
-        onSlideChange={handleSlideChange}
-        onSlideChangeTransitionStart={handleSlideChangeTransitionStart}
         spaceBetween={0}
         slidesPerView={1}
         className="h-full"
@@ -120,12 +141,12 @@ export const Hero = () => {
                   className="lg:rounded-3xl"
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-30 lg:rounded-3xl" />
-                <div className="flex absolute items-start justify-start flex-col gap-6 text-white-color top-1/2 max-sm:pl-4 pl-20 -translate-y-1/2 z-10">
-                  <span className="px-4 uppercase idea text-sm py-1 border-2 inline-block border-white rounded-full transition-all duration-300 ease-out">
+                <div className="flex absolute items-start justify-start flex-col gap-4 sm:gap-6 text-white-color top-1/2 max-sm:pl-4 pl-8 sm:pl-12 md:pl-20 -translate-y-1/2 z-10 overflow-hidden">
+                  <span className="px-3 sm:px-4 uppercase idea text-xs sm:text-sm py-1 border-2 inline-block border-white rounded-full transition-all duration-300 ease-out animate-text">
                     {slide.idea}
                   </span>
                   <h1
-                    className={`${bitter.className} hero text-3xl md:text-5xl lg:text-6xl flex flex-col gap-2 transition-all duration-300 ease-out`}
+                    className={`${bitter.className} hero text-2xl sm:text-3xl md:text-4xl lg:text-5xl flex flex-col gap-1 sm:gap-2 transition-all duration-300 ease-out animate-text`}
                   >
                     <span className="font-bold">
                       {slide.title.split(",")[0]}
@@ -134,7 +155,7 @@ export const Hero = () => {
                   </h1>
                   <Link
                     href="#"
-                    className="flex detail items-center gap-1 bg-white text-blackish-color px-4 py-2 rounded-full transition-all duration-300 ease-out hover:bg-opacity-90"
+                    className="flex detail items-center gap-1 bg-white text-blackish-color px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base rounded-full transition-all duration-300 ease-out hover:bg-opacity-90 animate-text"
                   >
                     More Detail <BsArrowBarRight />
                   </Link>

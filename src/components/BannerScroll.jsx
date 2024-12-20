@@ -7,21 +7,21 @@ export const BannerScroll = () => {
     {
       type: "icon",
       content: (
-        <BsAsterisk className="text-link-color-hover text-8xl max-lg:text-6xl max-sm:text-4xl font-extrabold" />
+        <BsAsterisk className="text-link-color-hover text-6xl max-lg:text-6xl max-sm:text-4xl font-extrabold" />
       ),
     },
     { type: "text", content: "relax" },
     {
       type: "icon",
       content: (
-        <BsAsterisk className="text-link-color-hover text-8xl max-lg:text-6xl max-sm:text-4xl font-extrabold" />
+        <BsAsterisk className="text-link-color-hover text-6xl max-lg:text-6xl max-sm:text-4xl font-extrabold" />
       ),
     },
     { type: "text", content: "renew" },
     {
       type: "icon",
       content: (
-        <BsAsterisk className="text-link-color-hover text-8xl  max-lg:text-6xl max-sm:text-4xl font-extrabold" />
+        <BsAsterisk className="text-link-color-hover text-6xl  max-lg:text-6xl max-sm:text-4xl font-extrabold" />
       ),
     },
     { type: "text", content: "refresh" },
@@ -33,7 +33,7 @@ export const BannerScroll = () => {
         {slides.concat(slides).map((slide, index) => (
           <div
             key={index}
-            className="flex-none text-9xl max-lg:text-6xl font-extrabold uppercase text-blackish-color"
+            className="flex-none text-7xl max-lg:text-6xl font-extrabold uppercase text-blackish-color"
           >
             {slide.type === "icon" ? (
               slide.content
