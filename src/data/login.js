@@ -19,7 +19,7 @@ export async function login(formData) {
       cookieStore.set({
         name: "token",
         value: data.token,
-        secure: process.env.NODE_ENV === "production",
+
         httpOnly: true,
         sameSite: "strict",
         path: "/",
